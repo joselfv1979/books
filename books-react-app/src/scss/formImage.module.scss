@@ -1,0 +1,13 @@
+.photo {
+    width: 3rem;
+    height: 3rem;
+    border-radius: 2px;
+    margin-right: 0.5rem;
+}
+
+.photo_container {
+    width: 7rem;
+    white-space: nowrap;
+    text-overflow: ellipsis;
+    overflow: hidden;
+}

@@ -1,0 +1,19 @@
+.bookForm {
+    width: 30rem;
+    margin: 5rem auto;
+
+    .flex_col {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+    }
+
+    .upload_button {
+        width: 6rem;
+    }
+}
+
+.bookFormButton {
+    margin: 1rem auto;
+    width: 5rem;
+}

@@ -1,0 +1,19 @@
+.bookForm {
+    width: 30rem;
+    margin: 5rem auto;
+
+    h1 {
+        margin-bottom: 2rem;
+    }
+}
+
+.buttonGroup {
+    display: flex;
+
+    justify-content: center;
+
+    button {
+        width: 5rem;
+        margin: 1rem 2rem;
+    }
+}
