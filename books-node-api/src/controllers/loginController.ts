@@ -1,5 +1,4 @@
 import { NextFunction, Request, Response } from "express";
-import User from "../models/User";
 import { CustomError } from "../models/CustomError";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt.utils";
