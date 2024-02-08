@@ -4,13 +4,14 @@ import java.util.List;
 
 public class UserInfoResponse {
 	private String token;
-    private int id;
+	private String id;
 	private String fullname;
 	private String username;
 	private String email;
 	private List<String> roles;
 
-	public UserInfoResponse(String token, int id, String fullname, String username, String email, List<String> roles) {
+	public UserInfoResponse(String token, String id, String fullname, String username, String email,
+			List<String> roles) {
 		this.token = token;
 		this.id = id;
 		this.fullname = fullname;
@@ -27,11 +28,11 @@ public class UserInfoResponse {
 		this.token = token;
 	}
 
-	public int getId() {
+	public String getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(String id) {
 		this.id = id;
 	}
 

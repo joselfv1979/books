@@ -1,22 +1,20 @@
-package com.jose.books.services;
+package com.jose.books.service;
 
 import java.util.List;
 import java.util.Optional;
 
-import com.jose.books.models.User;
-import com.jose.books.repositories.UserRepository;
+import com.jose.books.model.User;
+import com.jose.books.repository.UserRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 @Service
-public class UserService implements IUserService {
- 
+public class UserServiceImpl implements UserService {
+
     UserRepository userRepository;
-    
-    @Autowired
-    public UserService(UserRepository userRepository) {
-    	this.userRepository = userRepository;
+
+    public UserServiceImpl(UserRepository userRepository) {
+        this.userRepository = userRepository;
     }
 
     @Override
@@ -25,8 +23,11 @@ public class UserService implements IUserService {
     }
 
     @Override
-    public Optional<User> findById(int id) {
-        return userRepository.findById(id);
+    public Optional<User> findById(String id) {
+        if (id != null) {
+            return userRepository.findById(id);
+        }
+        return Optional.empty();
     }
 
     @Override
@@ -41,11 +42,12 @@ public class UserService implements IUserService {
 
     // @Override
     // public User save(User usr) {
-    //     return userRepository.save(usr);
+    // return userRepository.save(usr);
     // }
 
     @Override
-    public void deleteById(int id) {
-        userRepository.deleteById(id);
+    public void deleteById(String id) {
+        if (id != null)
+            userRepository.deleteById(id);
     }
 }

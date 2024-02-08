@@ -1,9 +1,8 @@
 package com.jose.books.security.services;
 
-import com.jose.books.models.User;
-import com.jose.books.repositories.UserRepository;
+import com.jose.books.model.User;
+import com.jose.books.repository.UserRepository;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -15,7 +14,6 @@ public class UserDetailsServiceImpl implements UserDetailsService {
 
     UserRepository userRepository;
 
-    @Autowired
     public UserDetailsServiceImpl(UserRepository userRepository) {
         this.userRepository = userRepository;
     }

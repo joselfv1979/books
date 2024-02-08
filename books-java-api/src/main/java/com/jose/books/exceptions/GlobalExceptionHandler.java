@@ -13,11 +13,11 @@ import org.springframework.web.context.request.WebRequest;
 import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
 
 public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
-    @Override
+
     protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
             HttpHeaders headers, HttpStatus status, WebRequest request) {
 
-        List<String> details = new ArrayList<String>();
+        List<String> details = new ArrayList<>();
         details.add(ex.getMessage());
 
         ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.BAD_REQUEST, "Malformed JSON request", details);
@@ -29,7 +29,7 @@ public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
     public ResponseEntity<Object> handleResourceNotFoundException(
             ResourceNotFoundException ex) {
 
-        List<String> details = new ArrayList<String>();
+        List<String> details = new ArrayList<>();
         details.add(ex.getMessage());
 
         ApiError err = new ApiError(
