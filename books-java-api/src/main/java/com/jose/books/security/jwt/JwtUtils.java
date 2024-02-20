@@ -15,9 +15,11 @@ import java.security.Key;
 @Component
 public class JwtUtils {
   private static final Logger logger = LoggerFactory.getLogger(JwtUtils.class);
-  @Value("${jose.app.jwtSecret}")
+
+  @Value("${books.api.jwtSecret}")
   private String jwtSecret;
-  @Value("${jose.app.jwtExpirationMs}")
+
+  @Value("${books.api.jwtExpirationMs}")
   private int jwtExpirationMs;
 
   public String getUserNameFromJwtToken(String token) {

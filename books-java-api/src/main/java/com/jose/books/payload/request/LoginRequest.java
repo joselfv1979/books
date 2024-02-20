@@ -1,6 +1,6 @@
 package com.jose.books.payload.request;
 
-import javax.validation.constraints.NotBlank;
+import jakarta.validation.constraints.*;
 
 public class LoginRequest {
 	@NotBlank(message = "Username can't be empty")

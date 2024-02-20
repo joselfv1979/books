@@ -1,19 +1,22 @@
 package com.jose.books.service;
 
 import java.util.List;
-import java.util.Optional;
-
-import com.jose.books.model.User;
+import com.jose.books.dto.UserDto;
+import com.jose.books.payload.request.SignupRequest;
 
 public interface UserService {
-    List<User> getAllUsers();
 
-    Optional<User> findById(String id);
+    List<UserDto> getAllUsers();
 
-    Optional<User> findByEmail(String email);
+    UserDto findById(String id);
 
-    Optional<User> findByUsername(String username);
+    UserDto findByEmail(String email);
 
-    // User save(User usr);
-    void deleteById(String id);
+    UserDto findByUsername(String username);
+
+    UserDto createUser(SignupRequest user);
+
+    UserDto updateUser(UserDto user);
+
+    void deleteUser(String id);
 }
