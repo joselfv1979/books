@@ -123,6 +123,7 @@ local.properties
 hs_err_pid*
 
 ### Maven ###
+**/target
 target/
 pom.xml.tag
 pom.xml.releaseBackup
@@ -198,4 +199,4 @@ README.html
 *.iml
 .idea
 .exercism
-/book-images
+**/static
