@@ -22,6 +22,8 @@ public class BookServiceImpl implements BookService {
     @Autowired
     private ModelMapper modelMapper;
 
+    private static final String BOOK_NOT_FOUND = "Book not found";
+
     @Override
     public List<BookDto> getAllBooks() {
 
@@ -37,7 +39,7 @@ public class BookServiceImpl implements BookService {
     public BookDto findById(String id) {
 
         Book book = this.bookRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Book not found"));
+                () -> new ResourceNotFoundException(BOOK_NOT_FOUND));
 
         return this.modelMapper.map(book, BookDto.class);
     }
@@ -56,7 +58,7 @@ public class BookServiceImpl implements BookService {
     public void deleteBook(String id) {
 
         Book book = this.bookRepository.findById(id).orElseThrow(
-                () -> new ResourceNotFoundException("Book not found"));
+                () -> new ResourceNotFoundException(BOOK_NOT_FOUND));
 
         this.bookRepository.delete(book);
     }

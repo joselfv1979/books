@@ -3,9 +3,10 @@ package com.jose.books.controller;
 import java.io.IOException;
 import java.util.List;
 import java.util.UUID;
-import javax.validation.Valid;
+import jakarta.validation.*;
 
 import com.jose.books.dto.BookDto;
+import com.jose.books.payload.response.ApiResponse;
 import com.jose.books.service.BookService;
 import com.jose.books.util.FileUploadUtil;
 
@@ -17,31 +18,39 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 
 @CrossOrigin(origins = "*")
-@RequestMapping("/api")
 @RestController
+@RequestMapping("/api")
 public class BookController {
 
         @Autowired
         private BookService bookService;
 
         @GetMapping(value = "/books")
-        public ResponseEntity<List<BookDto>> getAllBooks() {
+        public ResponseEntity<ApiResponse<List<BookDto>>> getAllBooks() {
 
                 List<BookDto> bookDTOs = bookService.getAllBooks();
 
-                return ResponseEntity.ok().body(bookDTOs);
+                ApiResponse<List<BookDto>> response = new ApiResponse<>();
+                response.setSuccess(true);
+                response.setData(bookDTOs);
+
+                return ResponseEntity.ok().body(response);
         }
 
         @GetMapping(value = "/books/{id}")
-        public ResponseEntity<BookDto> getBook(@PathVariable String id) {
+        public ResponseEntity<ApiResponse<BookDto>> getBook(@PathVariable String id) {
 
                 BookDto bookDto = bookService.findById(id);
 
-                return ResponseEntity.ok().body(bookDto);
+                ApiResponse<BookDto> response = new ApiResponse<>();
+                response.setSuccess(true);
+                response.setData(bookDto);
+
+                return ResponseEntity.ok().body(response);
         }
 
         @PostMapping(value = "/books", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-        public ResponseEntity<BookDto> addBook(@Valid BookDto book, @RequestParam MultipartFile image)
+        public ResponseEntity<ApiResponse<BookDto>> addBook(@Valid BookDto book, @RequestParam MultipartFile image)
                         throws IOException {
 
                 String fileName = null;
@@ -59,11 +68,16 @@ public class BookController {
 
                 FileUploadUtil.saveFile(uploadDir, fileName, image);
 
-                return ResponseEntity.ok().body(savedBook);
+                ApiResponse<BookDto> response = new ApiResponse<>();
+                response.setSuccess(true);
+                response.setMessage("Book created with success");
+                response.setData(savedBook);
+
+                return ResponseEntity.ok().body(response);
         }
 
         @PutMapping(value = "/books/{id}", consumes = { MediaType.MULTIPART_FORM_DATA_VALUE })
-        public ResponseEntity<BookDto> updateBook(@PathVariable String id, @Valid BookDto newBook,
+        public ResponseEntity<ApiResponse<BookDto>> updateBook(@PathVariable String id, @Valid BookDto book,
                         MultipartFile image) throws IOException {
 
                 String fileName = null;
@@ -74,28 +88,37 @@ public class BookController {
                         uploadDir = "./books-java-api/src/main/resources/static/";
                         FileUploadUtil.saveFile(uploadDir, fileName, image);
                 } else {
-                        fileName = newBook.getImagePath();
+                        fileName = book.getImagePath();
                 }
 
                 BookDto bookDto = bookService.findById(id);
 
-                bookDto.setTitle(newBook.getTitle());
-                bookDto.setAuthor(newBook.getAuthor());
-                bookDto.setPrice(newBook.getPrice());
-                bookDto.setPages(newBook.getPages());
+                bookDto.setTitle(book.getTitle());
+                bookDto.setAuthor(book.getAuthor());
+                bookDto.setPrice(book.getPrice());
+                bookDto.setPages(book.getPages());
                 bookDto.setImagePath(fileName);
 
                 BookDto savedBook = bookService.save(bookDto);
 
-                return ResponseEntity.ok().body(savedBook);
+                ApiResponse<BookDto> response = new ApiResponse<>();
+                response.setSuccess(true);
+                response.setMessage("Book updated with success");
+                response.setData(savedBook);
+
+                return ResponseEntity.ok().body(response);
         }
 
         @DeleteMapping(value = "/books/{id}")
-        public ResponseEntity<String> deleteBook(@PathVariable String id) {
+        public ResponseEntity<ApiResponse<String>> deleteBook(@PathVariable String id) {
 
                 bookService.deleteBook(id);
 
-                return ResponseEntity.ok().body("Book deleted with success");
+                ApiResponse<String> response = new ApiResponse<>();
+                response.setSuccess(true);
+                response.setMessage("Book deleted with success");
+
+                return ResponseEntity.ok().body(response);
         }
 
 }
