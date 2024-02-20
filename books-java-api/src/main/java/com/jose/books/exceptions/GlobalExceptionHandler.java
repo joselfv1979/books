@@ -1,43 +1,68 @@
 package com.jose.books.exceptions;
 
-import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
-import org.springframework.http.HttpHeaders;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
-import org.springframework.http.converter.HttpMessageNotReadableException;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.web.bind.annotation.ExceptionHandler;
-import org.springframework.web.context.request.WebRequest;
-import org.springframework.web.servlet.mvc.method.annotation.ResponseEntityExceptionHandler;
+import org.springframework.validation.FieldError;
+import org.springframework.web.bind.MethodArgumentNotValidException;
+import org.springframework.web.bind.annotation.RestControllerAdvice;
 
-public class GlobalExceptionHandler extends ResponseEntityExceptionHandler {
+import com.jose.books.payload.response.ApiResponse;
 
-    protected ResponseEntity<Object> handleHttpMessageNotReadable(HttpMessageNotReadableException ex,
-            HttpHeaders headers, HttpStatus status, WebRequest request) {
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.stream.Collectors;
 
-        List<String> details = new ArrayList<>();
-        details.add(ex.getMessage());
+@RestControllerAdvice
+public class GlobalExceptionHandler {
 
-        ApiError err = new ApiError(LocalDateTime.now(), HttpStatus.BAD_REQUEST, "Malformed JSON request", details);
+    private ApiResponse<List<String>> response = new ApiResponse<>(false);
 
-        return ResponseEntityBuilder.build(err);
+    @ExceptionHandler(MethodArgumentNotValidException.class)
+    public ResponseEntity<ApiResponse<List<String>>> handleValidationErrors(
+            MethodArgumentNotValidException ex) {
+        List<String> errors = ex.getBindingResult().getFieldErrors()
+                .stream().map(FieldError::getDefaultMessage).collect(Collectors.toList());
+
+        response.setErrors(getErrorsMap(errors));
+
+        return ResponseEntity.badRequest().body(response);
     }
 
-    @ExceptionHandler(ResourceNotFoundException.class)
-    public ResponseEntity<Object> handleResourceNotFoundException(
-            ResourceNotFoundException ex) {
+    @ExceptionHandler(UsernameNotFoundException.class)
+    public ResponseEntity<ApiResponse<List<String>>> handleNotFoundException(
+            UsernameNotFoundException ex) {
+        List<String> errors = Collections.singletonList(ex.getMessage());
 
-        List<String> details = new ArrayList<>();
-        details.add(ex.getMessage());
+        response.setErrors(getErrorsMap(errors));
 
-        ApiError err = new ApiError(
-                LocalDateTime.now(),
-                HttpStatus.NOT_FOUND,
-                "Resource Not Found YYYYYYYOOOOOO",
-                details);
-
-        return ResponseEntityBuilder.build(err);
+        return ResponseEntity.badRequest().body(response);
     }
+
+    @ExceptionHandler(Exception.class)
+    public ResponseEntity<ApiResponse<List<String>>> handleGeneralExceptions(Exception ex) {
+        List<String> errors = Collections.singletonList(ex.getMessage());
+
+        response.setErrors(getErrorsMap(errors));
+
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    @ExceptionHandler(RuntimeException.class)
+    public ResponseEntity<ApiResponse<List<String>>> handleRuntimeExceptions(RuntimeException ex) {
+        List<String> errors = Collections.singletonList(ex.getMessage());
+
+        response.setErrors(getErrorsMap(errors));
+
+        return ResponseEntity.badRequest().body(response);
+    }
+
+    private List<String> getErrorsMap(List<String> errors) {
+        List<String> errorResponse = new ArrayList<>();
+        errors.forEach(errorResponse::add);
+        return errorResponse;
+    }
+
 }
