@@ -15,7 +15,7 @@ const options = {
 //connection mongodb atlas
 export const connect = () => {
   mongoose
-    .connect(DB_CONN_STRING, options)
+    .connect(DB_CONN_STRING as string, options)
     .then(() => console.log("Database connected!"))
     .catch((err) => console.log(err));
 };
@@ -24,4 +24,3 @@ process.on("uncaughtException", (error) => {
   console.error(error);
   mongoose.disconnect();
 });
-
