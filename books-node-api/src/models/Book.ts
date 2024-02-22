@@ -3,18 +3,19 @@ import { Schema, model, Document } from "mongoose";
 export interface IBook extends Document {
   title: string;
   author: string;
-  price: Number;
-  pages: Number;
+  price: number;
+  pages: number;
   imagePath: string;
 }
 
 const BookSchema = new Schema({
-  title: { type: String, required: true },
+  title: { type: String, unique: true, required: true },
   author: { type: String, required: true },
   price: { type: Number, required: true },
   pages: { type: Number, required: true },
   imagePath: { type: String },
-  createdAt: { type: Date, default: Date.now },
+}, {
+  timestamps: true,
 });
 
 BookSchema.set("toJSON", {
