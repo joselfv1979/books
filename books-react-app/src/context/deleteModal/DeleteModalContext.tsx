@@ -1,12 +1,13 @@
 import { createContext, useContext } from 'react';
-import { IBook, initialBook } from '../../types/Book';
-import { initialUser, IUser } from '../../types/User';
+import { Book, initialBook } from '../../types/Book';
+import { User } from '../../types/User';
+import { initialUser } from '../../data/ConstantUtils';
 
 export type DeleteModalContent = {
-    book: IBook;
-    setBook: (book: IBook) => void;
-    user: IUser;
-    setUser: (user: IUser) => void;
+    book: Book;
+    setBook: (book: Book) => void;
+    user: User;
+    setUser: (user: User) => void;
     showDeleteModal: boolean;
     setShowDeleteModal: (showDeleteModal: boolean) => void;
 };
