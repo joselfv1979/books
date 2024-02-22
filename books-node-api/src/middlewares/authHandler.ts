@@ -1,13 +1,15 @@
-import jwt from "jsonwebtoken";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../models/CustomError";
 
-export interface AuthRequest extends Request {
-  userId: string;
+export interface CustomJwt extends JwtPayload {
+  id: string,
+  username: string,
+  role?: string
 }
 
 const authHandler = (
-  request: AuthRequest,
+  request: Request,
   response: Response,
   next: NextFunction
 ) => {
@@ -32,7 +34,7 @@ const authHandler = (
     return next(new CustomError(401, "token missing or invalid"));
   }
 
-  let decodedToken = jwt.verify(token, process.env.SECRET);
+  let decodedToken = <CustomJwt>jwt.verify(token, process.env.SECRET as string);
 
   if (!decodedToken) {
     return next(new CustomError(401, "token missing or invalid"));
@@ -40,7 +42,7 @@ const authHandler = (
 
   const { id: userId } = decodedToken;
 
-  request.userId = userId;
+  request.params.userId = userId;
 
   next();
 };

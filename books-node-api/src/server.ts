@@ -3,13 +3,13 @@ import express from "express";
 import cors from "cors";
 import helmet from "helmet";
 import { connect } from "./config/connect";
+import authRouter from "./routes/authRoutes";
 import usersRouter from "./routes/userRoutes";
 import booksRouter from "./routes/bookRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import { createAdminUser } from "./utils/createAdmin";
 import path from "path";
 import morgan from "morgan";
-import loginRouter from "./routes/loginRoutes";
 
 if (!PORT) {
   process.exit(1);
@@ -30,7 +30,7 @@ app.use("/public", express.static(path.join(__dirname, "..", "/public")));
 createAdminUser();
 
 // Routes
-app.use("/api/login", loginRouter);
+app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/books", booksRouter);
 

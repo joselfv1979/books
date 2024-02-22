@@ -11,7 +11,7 @@ export function generateToken(id: string, username: string, role: string) {
     role
   };
   // read private key value
-  const privateKey = process.env.SECRET;
+  const privateKey = process.env.SECRET as string;
 
   const signInOptions: SignOptions = {
     expiresIn: '24h'
