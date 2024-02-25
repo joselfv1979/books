@@ -1,9 +1,11 @@
 export const getHeaders = () => {
-    const state = localStorage.getItem('state');
-    const token = state ? JSON.parse(state).users.loggedUser.token : null;
+
+    const storedToken = localStorage.getItem("token");
+
+    const token = storedToken ? JSON.parse(storedToken) : null;
 
     return {
-        'Content-Type': 'application/json',
+        "Content-Type": "application/json",
         authorization: `bearer ${token}`,
     };
 };
