@@ -1,63 +1,66 @@
-import axios from 'axios';
-import { IUser } from '../types/User';
-import { Auth } from '../types/Auth';
 import { Result } from '../types/Result';
 import { handleError } from '../utils/handleError';
 import { getHeaders } from '../utils/authHeader';
+import { AuthRequest, User } from '../types/User';
+import axios from 'axios';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/api`;
 
-export const getAllUsers = async (): Promise<Result<IUser[]>> => {
+export const getAllUsers = async (): Promise<Result<User[], string>> => {
     try {
         const { data } = await axios.get(`${baseUrl}/users`, { headers: getHeaders() });
-        return { success: true, value: data };
+        return { success: true, value: data.data };
     } catch (error) {
-        return handleError(error);
+        return { success: false, message: handleError(error) };
     }
 };
 
-export const getUser = async (id: string): Promise<Result<IUser>> => {
+export const getUser = async (id: string): Promise<Result<User, string>> => {
     try {
+        console.log('id', id);
+
         const { data } = await axios.get(`${baseUrl}/users/${id}`, { headers: getHeaders() });
-        return { success: true, value: data };
+        return { success: true, value: data.data };
     } catch (error) {
-        return handleError(error);
+        return { success: false, message: handleError(error) };
     }
 };
 
-export const createUser = async (user: FormData): Promise<Result<IUser>> => {
+export const createUser = async (user: User): Promise<Result<User, string>> => {
     try {
-        const { data } = await axios.post(`${baseUrl}/users`, user);
-        return { success: true, value: data, message: 'User registered successfully' };
+        const { data } = await axios.post(`${baseUrl}/auth/register`, user);
+        return { success: true, value: data.data };
     } catch (error) {
-        return handleError(error);
+        console.log(error);
+
+        return { success: false, message: handleError(error) };
     }
 };
 
-export const removeUser = async (user: IUser): Promise<Result<IUser>> => {
+export const removeUser = async (id: string): Promise<Result<User, string>> => {
     try {
-        await axios.delete(`${baseUrl}/users/${user.id}`, { headers: getHeaders() });
-        return { success: true, value: user, message: 'User deleted successfully' };
+        const { data } = await axios.delete(`${baseUrl}/users/${id}`, { headers: getHeaders() });
+        return { success: true, value: data.data };
     } catch (error) {
-        return handleError(error);
+        return { success: false, message: handleError(error) };
     }
 };
 
-export const updateUser = async (user: FormData): Promise<Result<IUser>> => {
-    const id = user.get('id');
+export const updateUser = async (user: User): Promise<Result<User, string>> => {
     try {
-        const { data } = await axios.put(`${baseUrl}/users/${id}`, user, { headers: getHeaders() });
-        return { success: true, value: data, message: 'User updated successfully' };
+        const { data } = await axios.put(`${baseUrl}/users/${user.id}`, user, { headers: getHeaders() });
+        return { success: true, value: data.data };
     } catch (error) {
-        return handleError(error);
+        return { success: false, message: handleError(error) };
     }
 };
 
-export const loginUser = async (user: Auth): Promise<Result<IUser>> => {
+export const loginUser = async (user: AuthRequest): Promise<Result<User, string>> => {
     try {
-        const { data } = await axios.post(`${baseUrl}/login`, user);
-        return { success: true, value: data };
+        const { data } = await axios.post(`${baseUrl}/auth/login`, user);
+        console.log('login', data);
+        return { success: true, value: data.data };
     } catch (error) {
-        return handleError(error);
+        return { success: false, message: handleError(error) };
     }
 };
