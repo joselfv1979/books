@@ -1,12 +1,2 @@
-export type Success<T> = {
-    success: true;
-    message?: string;
-    value: T;
-};
+export type Result<T, Err> = { success: true; value: T } | { success: false; message: Err };
 
-export type Failure = {
-    success: false;
-    message: string;
-};
-
-export type Result<T> = Success<T> | Failure;

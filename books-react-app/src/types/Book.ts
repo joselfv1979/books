@@ -1,19 +1,27 @@
-export type IBook = {
+export type Book = {
     id: string;
     title: string;
     author: string;
-    price: number | string;
-    pages: number | string;
+    price: number;
+    pages: number;
     image?: File;
     imagePath: string;
 };
 
-export const initialBook: IBook = {
+export interface BookState {
+    books: Book[];
+    book: Book | null;
+    errorMessage?: string;
+    successMessage?: string;
+    loading: boolean;
+}
+
+export const initialBook: Book = {
     id: '',
     title: '',
     author: '',
-    price: '',
-    pages: '',
+    price: 0,
+    pages: 0,
     image: undefined,
     imagePath: '',
 };
