@@ -1,20 +1,21 @@
 import React from 'react';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { IBook } from '../types/Book';
-import styles from '../scss/bookList.module.scss';
-import { useTypedSelector } from '../hooks/useTypeSelector';
+import { Book } from '../types/Book';
+import styles from '../assets/scss/BookList.module.scss';
+import { useAppSelector } from '../hooks/redux-hooks';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
+import { isAdmin } from '../store/userSlice';
 
 type Props = {
-    book: IBook;
+    book: Book;
 };
 
 const BookCardButtons = ({ book }: Props) => {
     const navigate = useNavigate();
 
-    const { loggedUser } = useTypedSelector((state) => state.users);
-    const isAdmin = loggedUser?.roles?.includes('admin') ? true : false;
+    const admin = useAppSelector(isAdmin);
+
     const { setBook, setShowDeleteModal } = useDeleteModalContext();
 
     const deleteBook = () => {
@@ -24,7 +25,7 @@ const BookCardButtons = ({ book }: Props) => {
 
     return (
         <>
-            {isAdmin ? (
+            {admin ? (
                 <div className={styles.buttonGroup}>
                     <Button variant="primary" onClick={() => navigate(`/book-edit/${book.id}`)}>
                         Edit
