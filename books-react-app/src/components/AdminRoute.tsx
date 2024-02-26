@@ -1,16 +1,16 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
-import { useTypedSelector } from '../hooks/useTypeSelector';
+import { useAppSelector } from '../hooks/redux-hooks';
+import { isAdmin } from '../store/userSlice';
 
 type Props = {
     children: JSX.Element;
 };
 
 const AdminRoute = ({ children }: Props) => {
-    const { loggedUser } = useTypedSelector((state) => state.users);
-    const isAdmin = loggedUser?.roles?.includes('admin') ? true : false;
+    const admin = useAppSelector(isAdmin);
 
-    return isAdmin ? children : <Navigate to="/login" />;
+    return admin ? children : <Navigate to="/login" />;
 };
 
 export default AdminRoute;
