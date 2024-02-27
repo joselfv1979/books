@@ -1,6 +1,6 @@
-import { Result } from '../types/Result';
+import { Result } from "../types/Result";
 
-export const validateBook = (book: FormData): Result<FormData> => {
+export const validateBook = (book: FormData): Result<FormData, string> => {
     const data = Object.fromEntries(book.entries());
     const { title, author, price, pages } = data;
     if (!title) {
@@ -16,4 +16,5 @@ export const validateBook = (book: FormData): Result<FormData> => {
         return { success: false, message: 'Pages is required' };
     }
     return { success: true, value: book };
-};
+
+}
