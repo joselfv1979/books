@@ -2,8 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../models/CustomError";
 import bcrypt from "bcrypt";
 import { generateToken } from "../utils/jwt.utils";
-import { createUserService, getEmailService, getRoleService, getUsernameService } from "../services/userService";
-import { IRole } from "../models/Role";
+import { createUserService, getEmailService, getUsernameService } from "../services/userService";
 import User, { IUser, LoggedUser } from "../models/User";
 import { ResBody } from "../models/Response";
 
@@ -29,12 +28,10 @@ export async function loginController(
 
     const token = generateToken(user.id, username, JSON.stringify(user.roles));
 
-    const roleList = user.roles.map(role => role.name);
-
     const loggedUser: LoggedUser = {
       id: user.id,
       username,
-      roles: roleList,
+      roles: user.roles,
       token
     }
 
@@ -67,14 +64,12 @@ export async function registerController(
 
     const passwordHash = await bcrypt.hash(password, 10);
 
-    let roleList: IRole[] = await getRoleService(roles);
-
     let newUser: IUser = new User({
       fullname,
       username,
       email,
       password: passwordHash,
-      roles: roleList,
+      roles,
       imagePath: filePath,
     });
 

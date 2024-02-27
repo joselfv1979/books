@@ -5,9 +5,7 @@ import {
   getUsersService,
   updateUserService,
   deleteUserService,
-  getRoleService,
 } from "../services/userService";
-import { IRole } from "../models/Role";
 import { ResBody } from "../models/Response";
 import { IUser } from "../models/User";
 
@@ -33,7 +31,7 @@ export async function getUserController(
     const { id } = req.params;
     if (!id) return next(new CustomError(400, "Bad request"));
 
-    const user = await getUserService(id);
+    let user = await getUserService(id);
     if (!user) return next(new CustomError(404, "User not found"));
 
     res.status(200).json({ success: true, data: user });
@@ -49,16 +47,14 @@ export async function updateUserController(
 ) {
   try {
     const { id } = req.params;
-    const { fullname, username, email, image, roles } = req.body;
+    const { fullname, username, email, image } = req.body;
     const fileImage = req.file ? req.file.path : image;
 
     if (!id || !fullname || !username || !email) {
       return next(new CustomError(400, "Bad request"));
     }
 
-    let roleList: IRole[] = await getRoleService(roles);
-
-    const newBody = { ...req.body, roles: roleList, imagePath: fileImage };
+    const newBody = { ...req.body, imagePath: fileImage };
 
     const user = await updateUserService(id, newBody);
     if (!user) return next(new CustomError(404, "User not found"));
