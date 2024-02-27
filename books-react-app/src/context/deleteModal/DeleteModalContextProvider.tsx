@@ -1,8 +1,8 @@
 import React, { ReactNode, useState } from 'react';
-import { Book, initialBook } from '../../types/Book';
+import { Book } from '../../types/Book';
 import { User } from '../../types/User';
 import { DeleteModalContext } from './DeleteModalContext';
-import { initialUser } from '../../data/ConstantUtils';
+import { initialBook, initialUser } from '../../data/ConstantUtils';
 
 type Props = {
     children: ReactNode;

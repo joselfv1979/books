@@ -3,10 +3,11 @@ import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useAppSelector } from '../hooks/redux-hooks';
 import styles from '../assets/scss/bookForm.module.scss';
-import { Book, initialBook } from '../types/Book';
+import { Book } from '../types/Book';
 import { castBookToFormData } from '../utils/castFormData';
 import CurrentImage from './CurrentImage';
 import ImagePreview from './ImagePreview';
+import { initialBook } from 'data/ConstantUtils';
 
 export type Props = {
     saveBook: (data: FormData) => Promise<void>;

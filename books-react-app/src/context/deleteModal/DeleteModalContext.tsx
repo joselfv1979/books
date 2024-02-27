@@ -1,7 +1,7 @@
 import { createContext, useContext } from 'react';
-import { Book, initialBook } from '../../types/Book';
+import { Book } from '../../types/Book';
 import { User } from '../../types/User';
-import { initialUser } from '../../data/ConstantUtils';
+import { initialUser, initialBook } from '../../data/ConstantUtils';
 
 export type DeleteModalContent = {
     book: Book;
