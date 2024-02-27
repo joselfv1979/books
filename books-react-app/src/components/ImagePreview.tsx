@@ -1,5 +1,5 @@
 import React from 'react';
-import styles from '../scss/formImage.module.scss';
+import styles from '../assets/scss/formImage.module.scss';
 
 type Props = {
     image?: File;

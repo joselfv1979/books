@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
-import { useTypedSelector } from '../hooks/useTypeSelector';
-import styles from '../scss/bookForm.module.scss';
-import { IBook, initialBook } from '../types/Book';
+import { useAppSelector } from '../hooks/redux-hooks';
+import styles from '../assets/scss/bookForm.module.scss';
+import { Book, initialBook } from '../types/Book';
 import { castBookToFormData } from '../utils/castFormData';
 import CurrentImage from './CurrentImage';
 import ImagePreview from './ImagePreview';
@@ -14,12 +14,12 @@ export type Props = {
 
 const BookForm = ({ saveBook }: Props) => {
     const { pathname } = useLocation();
-    const editing = pathname === '/newBook' ? false : true;
+    const editing = pathname !== '/newBook';
 
-    const { book } = useTypedSelector((state) => state.books);
+    const { book } = useAppSelector((state) => state.book);
     const currentBook = editing && book ? book : initialBook;
 
-    const [values, setValues] = useState<IBook>(currentBook);
+    const [values, setValues] = useState<Book>(currentBook);
 
     const [preview, setPreview] = useState<string>();
     const fileInput = useRef<HTMLInputElement>(null);

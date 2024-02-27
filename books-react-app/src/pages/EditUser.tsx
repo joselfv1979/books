@@ -1,40 +1,46 @@
-import React, { useEffect } from 'react';
-import { useTypedSelector } from '../hooks/useTypeSelector';
-import { useDispatch } from 'react-redux';
-import { editUser, fetchUser, removeUserError, removeUserMessage } from '../redux/actionCreators/user';
-import Message from '../components/Message';
-import UserForm from '../components/UserForm';
-import { Spinner } from 'react-bootstrap';
-import globalStyles from '../scss/globalStyles.module.scss';
-import { useParams } from 'react-router-dom';
+import React, { useEffect } from "react";
+import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
+import Message from "../components/Message";
+import UserForm from "../components/UserForm";
+import { Spinner } from "react-bootstrap";
+import globalStyles from "../assets/scss/globalStyles.module.scss";
+import { useParams } from "react-router-dom";
+import { getMessage } from "../utils/handleMessage";
+import { User } from "../types/User";
+import { editUser, fetchUser } from "../store/userActions";
+
 
 const EditUser = () => {
     const { id } = useParams();
 
-    const { error, message, status, user } = useTypedSelector((state) => state.users);
-    const note = error || message;
+    const { loading, errorMessage, successMessage, user } = useAppSelector(
+        (state) => state.user
+    );
+
+    const message = getMessage(errorMessage, successMessage);
+
+    const dispatch = useAppDispatch();
 
     useEffect(() => {
         if (id) dispatch(fetchUser(id));
     }, []);
 
-    const dispatch = useDispatch();
-
-    const saveUser = async (data: FormData) => {
-        if (dispatch(editUser(data))) {
-            setTimeout(() => dispatch(removeUserMessage()), 2000);
-        }
+    const saveUser = async (data: User) => {
+        dispatch(editUser(data));
     };
 
     const cancelMessage = () => {
-        if (error) dispatch(removeUserError());
-        if (message) dispatch(removeUserMessage());
+        if (message) {
+            console.log(message);
+        }
     };
 
     return (
         <>
-            {status === 'loading' && <Spinner animation="border" className={globalStyles.spinner} />}
-            {note && <Message error={error} success={message} cancelMessage={cancelMessage} />}
+            {loading && (
+                <Spinner animation="border" className={globalStyles.spinner} />
+            )}
+            {message && <Message message={message} cancelMessage={cancelMessage} />}
             {user && <UserForm saveUser={saveUser} />}
         </>
     );

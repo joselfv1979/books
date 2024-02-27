@@ -1,37 +1,42 @@
 import React from 'react';
 import { Navigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
-import { Auth } from '../types/Auth';
 import { Container, Spinner } from 'react-bootstrap';
 import Message from '../components/Message';
-import styles from '../scss/login.module.scss';
-import globalStyles from '../scss/globalStyles.module.scss';
-import { useTypedSelector } from '../hooks/useTypeSelector';
-import { login, removeUserError } from '../redux/actionCreators/user';
-import { useDispatch } from 'react-redux';
+import styles from '../assets/scss/login.module.scss';
+import globalStyles from '../assets/scss/globalStyles.module.scss';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { getMessage } from '../utils/handleMessage';
+import { AuthRequest } from '../types/User';
+import { login, removeUserMessage } from '../store/userActions';
+
 
 const Login = () => {
-    const { status, error, loggedUser } = useTypedSelector((state) => state.users);
+    const { loading, errorMessage, successMessage, authUser } = useAppSelector((state) => state.user);
 
-    const dispatch = useDispatch();
+    const message = getMessage(errorMessage, successMessage);
 
-    const loginUser = (userData: Auth) => {
-        dispatch(login(userData));
+    const dispatch = useAppDispatch();
+
+    const loginUser = (user: AuthRequest) => {
+        dispatch(login(user));
     };
 
     const cancelMessage = () => {
-        dispatch(removeUserError());
+        if (message) {
+            dispatch(removeUserMessage());
+        }
     };
 
-    if (loggedUser) return <Navigate to="/" />;
+    if (authUser) return <Navigate to="/" />;
 
     return (
         <>
-            {status === 'loading' ? (
+            {loading ? (
                 <Spinner animation="border" className={globalStyles.spinner} />
             ) : (
                 <Container className={styles.loginContainer}>
-                    {error && <Message error={error} cancelMessage={cancelMessage} />}
+                    {message && <Message message={message} cancelMessage={cancelMessage} />}
                     <LoginForm loginUser={loginUser} />
                 </Container>
             )}
@@ -40,3 +45,4 @@ const Login = () => {
 };
 
 export default Login;
+

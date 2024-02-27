@@ -1,15 +1,15 @@
 import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import styles from '../scss/login.module.scss';
+import styles from '../assets/scss/login.module.scss';
 import { Auth } from '../types/Auth';
 
 export type Props = {
-    loginUser: (userData: Auth) => void;
+    loginUser: (user: Auth) => void;
 };
 
 const LoginForm = ({ loginUser }: Props) => {
-    const initialState: Auth = {
+    const initialState = {
         username: '',
         password: '',
     };
@@ -33,7 +33,7 @@ const LoginForm = ({ loginUser }: Props) => {
     return (
         <Form className={styles.loginForm} data-testid="login-form" onSubmit={handleLogin}>
             <h1>Login</h1>
-            <Form.Group as={Row} className="mb-3" controlId="formBasicUsername">
+            <Form.Group as={Row} className="m-4" controlId="formBasicUsername">
                 <Form.Label column sm={3}>
                     Username
                 </Form.Label>
@@ -41,7 +41,7 @@ const LoginForm = ({ loginUser }: Props) => {
                     <Form.Control name="username" type="text" placeholder="Enter username" onChange={onChange} />
                 </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="formBasicPassword">
+            <Form.Group as={Row} className="m-4" controlId="formBasicPassword">
                 <Form.Label column sm={3}>
                     Password
                 </Form.Label>
@@ -51,12 +51,13 @@ const LoginForm = ({ loginUser }: Props) => {
             </Form.Group>
             <Form.Group>
                 <Row className="col-md-4 mx-auto">
-                    <span className={styles.accountText} onClick={() => navigate('/register')}>
+                    <button type="button" className="btn btn-link text-decoration-none"
+                        onClick={() => navigate("/register")}>
                         Create an account
-                    </span>
+                    </button>
                 </Row>
             </Form.Group>
-            <Form.Group>
+            <Form.Group className="m-4">
                 <Row className="col-md-4 mx-auto">
                     <Button variant="primary" type="submit" className={styles.loginButton}>
                         Submit

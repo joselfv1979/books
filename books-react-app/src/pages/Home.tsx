@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import styles from '../scss/home.module.scss';
+import styles from '../assets/scss/home.module.scss';
 
 const Home = () => {
     const navigate = useNavigate();

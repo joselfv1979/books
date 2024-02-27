@@ -2,7 +2,7 @@ import React from 'react';
 import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
-import styles from '../scss/globalStyles.module.scss';
+import styles from '../assets/scss/globalStyles.module.scss';
 
 export type Props = {
     removeBook?: () => void;

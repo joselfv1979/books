@@ -1,19 +1,19 @@
 import React from 'react';
 import { useLocation } from 'react-router-dom';
-import { IBook } from '../types/Book';
+import { Book } from '../types/Book';
 import { Card } from 'react-bootstrap';
 import library from './../assets/library.jpg';
 import BookCardButtons from './BookCardButtons';
 
 type Props = {
-    book: IBook;
+    book: Book;
     styles: { readonly [key: string]: string };
 };
 
 const BookCard = ({ book, styles }: Props) => {
     const { pathname } = useLocation();
 
-    const setButtons = pathname === '/books' ? true : false;
+    const setButtons = pathname === '/books';
 
     const image = book.imagePath ? `${process.env.REACT_APP_API_URL}/${book.imagePath}` : library;
 

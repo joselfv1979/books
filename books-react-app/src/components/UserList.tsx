@@ -1,10 +1,10 @@
 import React from 'react';
 import { Row, Col } from 'react-bootstrap';
-import { IUser } from '../types/User';
+import { User } from '../types/User';
 import UserCard from './UserCard';
 
 type Props = {
-    users: Array<IUser>;
+    users: User[];
 };
 const UserList = ({ users }: Props) => {
     return (
@@ -12,9 +12,9 @@ const UserList = ({ users }: Props) => {
             <h1>Users</h1>
             <Row>
                 {users.length ? (
-                    users.map((user, i) => {
+                    users.map((user) => {
                         return (
-                            <Col key={i} sm={4}>
+                            <Col key={user.id} sm={4}>
                                 <UserCard user={user} />
                             </Col>
                         );

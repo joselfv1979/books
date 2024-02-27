@@ -1,40 +1,40 @@
 import React, { useEffect } from 'react';
-import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../hooks/useTypeSelector';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { Spinner } from 'react-bootstrap';
-import { deleteUser, getUsers, removeUserError, removeUserMessage } from '../redux/actionCreators/user';
 import UserList from '../components/UserList';
 import Message from '../components/Message';
-import globalStyles from '../scss/globalStyles.module.scss';
+import globalStyles from '../assets/scss/globalStyles.module.scss';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
 import DeleteModal from '../components/DeleteModal';
+import { getMessage } from '../utils/handleMessage';
+import { deleteUser, fetchUsers } from '../store/userActions';
+
 
 const Users = () => {
-    const { status, error, message, users } = useTypedSelector((state) => state.users);
+    const { loading, errorMessage, successMessage, users } = useAppSelector((state) => state.user);
 
-    const note = error || message;
+    const message = getMessage(errorMessage, successMessage);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
     const { user, showDeleteModal } = useDeleteModalContext();
 
     useEffect(() => {
-        if (status === 'idle') dispatch(getUsers());
+        dispatch(fetchUsers());
     }, []);
 
     const removeUser = () => {
-        dispatch(deleteUser(user));
-        setTimeout(() => dispatch(removeUserMessage()), 2000);
+        if (user.id) dispatch(deleteUser(user.id));
     };
 
     const cancelMessage = () => {
-        if (error) dispatch(removeUserError());
-        if (message) dispatch(removeUserMessage());
+        if (message) console.log(message);
     };
+
     return (
         <>
-            {status === 'loading' && <Spinner animation="border" className={globalStyles.spinner} />}
-            {note && <Message error={error} success={message} cancelMessage={cancelMessage} />}
+            {loading && <Spinner animation="border" className={globalStyles.spinner} />}
+            {message && <Message message={message} cancelMessage={cancelMessage} />}
             {users && <UserList users={users} />}
             {showDeleteModal && <DeleteModal removeUser={removeUser} />}
         </>

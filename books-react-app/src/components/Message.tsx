@@ -1,19 +1,19 @@
 import React from 'react';
 import { Alert } from 'react-bootstrap';
-import styles from '../scss/globalStyles.module.scss';
+import { IMessage } from '../types/Message';
+import styles from '../assets/scss/globalStyles.module.scss';
 
 type Props = {
-    error: string | null;
-    success?: string | null;
+    message: IMessage;
     cancelMessage: () => void;
 };
 
-const Message = ({ error, success, cancelMessage }: Props) => {
-    const variant = error ? 'danger' : 'success';
+const Message = ({ message, cancelMessage }: Props) => {
+    const variant = message.type === 'ERROR' ? 'danger' : 'success';
 
     return (
         <Alert variant={variant} className={styles.alert} onClose={cancelMessage} dismissible>
-            {error || success}
+            {message.text}
         </Alert>
     );
 };

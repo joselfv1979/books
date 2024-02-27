@@ -1,55 +1,35 @@
-import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import React, { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
 import { Button, Form, Row, Col } from 'react-bootstrap';
-import styles from '../scss/userForm.module.scss';
-import { initialUser, IUser } from '../types/User';
-import { castUserToFormData } from '../utils/castFormData';
-import CurrentImage from './CurrentImage';
-import ImagePreview from './ImagePreview';
-import { useTypedSelector } from '../hooks/useTypeSelector';
+import styles from '../assets/scss/userForm.module.scss';
+import { User } from '../types/User';
+import { useAppSelector } from '../hooks/redux-hooks';
+import { initialUser } from '../data/ConstantUtils';
 
 export type Props = {
-    saveUser: (data: FormData) => Promise<void>;
+    saveUser: (data: User) => Promise<void>;
 };
 
 const UserForm = ({ saveUser }: Props) => {
     const { pathname } = useLocation();
-    const editing = pathname === '/register' ? false : true;
+    const editing = pathname !== '/register';
 
-    const { user } = useTypedSelector((state) => state.users);
+    const { user } = useAppSelector((state) => state.user);
     const currentUser = editing && user ? user : initialUser;
 
-    const [values, setValues] = useState<IUser>(currentUser);
+    const [values, setValues] = useState<User>(currentUser);
 
-    const [preview, setPreview] = useState<string>();
-    const fileInput = useRef<HTMLInputElement>(null);
+    // const [preview, setPreview] = useState<string>();
+    //   const fileInput = useRef<HTMLInputElement>(null);
 
     const submit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        const data = castUserToFormData(values);
 
-        await saveUser(data);
+        await saveUser(values);
     };
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
         setValues({ ...values, [event.target.name]: event.target.value });
-    };
-
-    const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
-        const target = event.target as HTMLInputElement;
-
-        if (target.files) {
-            setValues({ ...values, image: target.files[0] });
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreview(reader.result as string);
-            };
-            reader.readAsDataURL(target.files[0]);
-        }
-    };
-
-    const handleClick = () => {
-        fileInput.current?.click();
     };
 
     const navigate = useNavigate();
@@ -58,7 +38,7 @@ const UserForm = ({ saveUser }: Props) => {
         <Form className={styles.userForm} onSubmit={submit} data-testid="user-form">
             {editing ? <h1>Edit Profile</h1> : <h1>Register</h1>}
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicFullname">
+            <Form.Group as={Row} className="m-4" controlId="formBasicFullname">
                 <Form.Label column sm={3}>
                     Full name
                 </Form.Label>
@@ -73,7 +53,7 @@ const UserForm = ({ saveUser }: Props) => {
                 </Col>
             </Form.Group>
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicUsername">
+            <Form.Group as={Row} className="m-4" controlId="formBasicUsername">
                 <Form.Label column sm={3}>
                     Username
                 </Form.Label>
@@ -87,7 +67,7 @@ const UserForm = ({ saveUser }: Props) => {
                     />
                 </Col>
             </Form.Group>
-            <Form.Group as={Row} className="mb-3" controlId="formBasicEmail">
+            <Form.Group as={Row} className="m-4" controlId="formBasicEmail">
                 <Form.Label column sm={3}>
                     Email
                 </Form.Label>
@@ -103,7 +83,7 @@ const UserForm = ({ saveUser }: Props) => {
             </Form.Group>
 
             {!editing ? (
-                <Form.Group as={Row} className="mb-3" controlId="formBasicPassword">
+                <Form.Group as={Row} className="m-4" controlId="formBasicPassword">
                     <Form.Label column sm={3}>
                         Password
                     </Form.Label>
@@ -119,37 +99,19 @@ const UserForm = ({ saveUser }: Props) => {
                 </Form.Group>
             ) : null}
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicFile">
+            {/* <Form.Group as={Row} className="m-4" controlId="formBasicFile">
                 <Form.Label column sm={3}>
                     Photo
                 </Form.Label>
-                <Col sm={7} className={styles.flex_col}>
-                    <Form.Control
-                        name="image"
-                        type="file"
-                        style={{ display: 'none' }}
-                        ref={fileInput}
-                        onChange={handleImage}
-                    />
-                    <Button variant="primary" className={styles.upload_button} onClick={handleClick}>
-                        Upload
-                    </Button>
-                    {values.image ? (
-                        <ImagePreview image={values.image} preview={preview} />
-                    ) : (
-                        <CurrentImage imageUrl={values.imagePath} />
-                    )}
-                </Col>
-            </Form.Group>
-            {editing ? (
-                <Form.Group as={Row} className="mb-3">
-                    <Form.Label column sm={3}></Form.Label>
-                    <Col sm={7}>
-                        Do you have an account?
-                        <span className={styles.login_span} onClick={() => navigate('/login')}>
+            </Form.Group> */}
+            {!editing ? (
+                <Form.Group as={Row} className="mb-2">
+                    <Row className="col mx-auto">
+                        <span className="text-center">Do you have an account?</span>
+                        <button type="button" className="btn btn-link text-decoration-none m-auto" onClick={() => navigate("/login")}>
                             Login here
-                        </span>
-                    </Col>
+                        </button>
+                    </Row>
                 </Form.Group>
             ) : null}
 
