@@ -1,4 +1,4 @@
-import { RootState } from '../redux/reducers/combine';
+import { RootState } from "../store";
 
 const saveToLocalStorage = (state: RootState) => {
     try {

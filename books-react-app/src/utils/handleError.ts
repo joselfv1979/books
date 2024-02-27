@@ -1,15 +1,12 @@
 import axios from 'axios';
-import { Failure } from '../types/Result';
 
-export const handleError = (error: unknown): Failure => {
-    console.log({ error });
+// Error handling function
+export const handleError = (error: unknown): string => {
 
-    if (axios.isAxiosError(error) && error.response?.data) {
-        console.log(error.response);
-        return { success: false, message: error.response.data };
-        // if (error.response.data.errors) {
-        //     return { success: false, message: error.response.data.errors[0].defaultMessage };
-        // }
+    if (axios.isAxiosError(error)) {
+        console.log(error.response?.data);
+        return error.response?.data.errors[0];
     }
-    return { success: false, message: 'something went wrong!' };
+
+    return "Couldn't perform action, try it later!";
 };
