@@ -1,11 +1,22 @@
 import { Schema, model, Document } from "mongoose";
 import { IBook } from "./Book";
+import { IRole } from "./Role";
 
 export interface IUser extends Document {
   fullname: string;
   username: string;
   email: string;
   password: string;
+  roles: Array<IRole>;
+  imagePath: string;
+  books: Array<IBook>;
+}
+
+export interface UserResponse {
+  id: string;
+  fullname: string;
+  username: string;
+  email: string;
   roles: Array<string>;
   imagePath: string;
   books: Array<IBook>;
@@ -23,7 +34,12 @@ const UserSchema = new Schema({
   email: { type: String, required: true, unique: true },
   password: { type: String, required: true },
   imagePath: { type: String },
-  roles: [{ type: String }],
+  roles: [
+    {
+      type: Schema.Types.ObjectId,
+      ref: "Role",
+    },
+  ],
   books: [
     {
       type: Schema.Types.ObjectId,

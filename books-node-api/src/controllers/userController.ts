@@ -5,18 +5,23 @@ import {
   getUsersService,
   updateUserService,
   deleteUserService,
+  userToUserResponse,
+  getRoleService,
 } from "../services/userService";
 import { ResBody } from "../models/Response";
-import { IUser } from "../models/User";
+import { UserResponse } from "../models/User";
+import { IRole } from "../models/Role";
 
 export async function getUsersController(
   req: Request,
-  res: Response<ResBody<IUser[]>>,
+  res: Response<ResBody<UserResponse[]>>,
   next: NextFunction
 ) {
   try {
     const users = await getUsersService();
-    res.json({ success: true, data: users });
+    const userList = users.map(user => userToUserResponse(user));
+
+    res.json({ success: true, data: userList });
   } catch (error) {
     next(new CustomError(500, "Couldn't fetch users, try it later"));
   }
@@ -24,7 +29,7 @@ export async function getUsersController(
 
 export async function getUserController(
   req: Request,
-  res: Response<ResBody<IUser>>,
+  res: Response<ResBody<UserResponse>>,
   next: NextFunction
 ) {
   try {
@@ -34,7 +39,9 @@ export async function getUserController(
     let user = await getUserService(id);
     if (!user) return next(new CustomError(404, "User not found"));
 
-    res.status(200).json({ success: true, data: user });
+    const userResponse = userToUserResponse(user);
+
+    res.status(200).json({ success: true, data: userResponse });
   } catch (error) {
     next(new CustomError(404, "User not found"));
   }
@@ -42,24 +49,27 @@ export async function getUserController(
 
 export async function updateUserController(
   req: Request,
-  res: Response<ResBody<IUser>>,
+  res: Response<ResBody<UserResponse>>,
   next: NextFunction
 ) {
   try {
     const { id } = req.params;
-    const { fullname, username, email, image } = req.body;
+    const { fullname, username, email, image, roles } = req.body;
     const fileImage = req.file ? req.file.path : image;
 
     if (!id || !fullname || !username || !email) {
       return next(new CustomError(400, "Bad request"));
     }
 
-    const newBody = { ...req.body, imagePath: fileImage };
+    let roleList: IRole[] = await getRoleService(roles);
+    const newBody = { ...req.body, roles: roleList, imagePath: fileImage };
 
     const user = await updateUserService(id, newBody);
     if (!user) return next(new CustomError(404, "User not found"));
 
-    res.status(201).json({ success: true, data: user });
+    const userResponse = userToUserResponse(user);
+
+    res.status(201).json({ success: true, data: userResponse });
   } catch (error) {
     next(new CustomError(404, "User not found"));
   }
