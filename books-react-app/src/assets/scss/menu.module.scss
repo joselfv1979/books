@@ -1,29 +1,33 @@
 ul {
-    display: flex;
-    align-items: center;
-    height: 10vh;
-    padding-right: 2rem;
-    margin: 0;
+  display: flex;
+  align-items: center;
+  height: 10vh;
+  padding-right: 2rem;
+  margin: 0;
 }
 
 li {
-    list-style: none;
-    margin: 1rem;
+  list-style: none;
+  margin: 1rem;
+}
+
+.nonUnderlined {
+  text-decoration: none;
 }
 
 .userSubmenu {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
+  margin-left: auto;
+  display: flex;
+  align-items: center;
 
-    .logoutIcon {
-        color: red;
-        cursor: pointer;
-        height: 1.5rem;
-        width: 1.5rem;
-    }
+  .logoutIcon {
+    color: red;
+    cursor: pointer;
+    height: 1.5rem;
+    width: 1.5rem;
+  }
 
-    .username {
-        margin-right: 1rem;
-    }
+  .username {
+    margin-right: 1rem;
+  }
 }
