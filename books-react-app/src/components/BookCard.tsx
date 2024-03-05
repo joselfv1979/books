@@ -1,4 +1,3 @@
-import React from 'react';
 import { useLocation } from 'react-router-dom';
 import { Book } from '../types/Book';
 import { Card } from 'react-bootstrap';

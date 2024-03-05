@@ -46,7 +46,7 @@ const LoginForm = ({ loginUser }: Props) => {
                     Password
                 </Form.Label>
                 <Col sm={7}>
-                    <Form.Control name="password" type="password" placeholder="Password" onChange={onChange} />
+                    <Form.Control name="password" type="password" placeholder="Password" autoComplete="off" onChange={onChange} />
                 </Col>
             </Form.Group>
             <Form.Group>

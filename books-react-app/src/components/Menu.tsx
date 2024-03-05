@@ -10,24 +10,24 @@ const Menu = () => {
     const loggedUser = useAppSelector(authUser);
 
     return (
-        <ul className="text-white bg-dark">
+        <ul className="text-white bg-dark m-0">
             <li>
-                <Link to="/">Welcome</Link>
+                <Link className={styles.nonUnderlined} to="/">Welcome</Link>
             </li>
             <li>
-                <Link to="/books">Books</Link>
+                <Link className={styles.nonUnderlined} to="/books">Books</Link>
             </li>
             <li>
-                <Link to="/contact">Contact</Link>
+                <Link className={styles.nonUnderlined} to="/contact">Contact</Link>
             </li>
             {loggedUser && <li>
-                {<Link to={`users/${loggedUser?.id}`}>Profile</Link>}
+                {<Link className={styles.nonUnderlined} to={`users/${loggedUser?.id}`}>Profile</Link>}
             </li>}
             {admin && <li>
-                <Link to="/newBook">New Book</Link>
+                <Link className={styles.nonUnderlined} to="/newBook">New Book</Link>
             </li>}
             {admin && <li>
-                <Link to="/users">Users</Link>
+                <Link className={styles.nonUnderlined} to="/users">Users</Link>
             </li>}
             <li className={styles.userSubmenu}>
                 <UserLogMenu />

@@ -1,23 +1,25 @@
-import React, { ChangeEvent, FormEvent, useState } from 'react';
-import { useNavigate, useLocation } from 'react-router-dom';
+import { ChangeEvent, FormEvent, useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Button, Form, Row, Col } from 'react-bootstrap';
 import styles from '../assets/scss/userForm.module.scss';
 import { User } from '../types/User';
 import { useAppSelector } from '../hooks/redux-hooks';
 import { initialUser } from '../data/ConstantUtils';
 
-export type Props = {
+type Props = {
     saveUser: (data: User) => Promise<void>;
+    editing?: boolean;
 };
 
-const UserForm = ({ saveUser }: Props) => {
-    const { pathname } = useLocation();
-    const editing = pathname !== '/register';
+const UserForm = ({ saveUser, editing = false }: Props) => {
 
+    // UserEdit view gets the user from the store
     const { user } = useAppSelector((state) => state.user);
-    const currentUser = editing && user ? user : initialUser;
 
-    const [values, setValues] = useState<User>(currentUser);
+    // UserAdd view uses an empty User object (initialUser)
+    const currentUser = user ?? initialUser;
+
+    const [userData, setUserData] = useState<User>(currentUser);
 
     // const [preview, setPreview] = useState<string>();
     //   const fileInput = useRef<HTMLInputElement>(null);
@@ -25,11 +27,14 @@ const UserForm = ({ saveUser }: Props) => {
     const submit = async (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
-        await saveUser(values);
+        await saveUser(userData);
     };
 
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setValues({ ...values, [event.target.name]: event.target.value });
+        setUserData((prevState) => ({
+            ...prevState,
+            [event.target.name]: event.target.value,
+        }));
     };
 
     const navigate = useNavigate();
@@ -42,11 +47,11 @@ const UserForm = ({ saveUser }: Props) => {
                 <Form.Label column sm={3}>
                     Full name
                 </Form.Label>
-                <Col sm={7}>
+                <Col sm={8}>
                     <Form.Control
                         name="fullname"
                         type="text"
-                        value={values.fullname}
+                        value={userData.fullname}
                         placeholder="Enter full name"
                         onChange={onChange}
                     />
@@ -57,11 +62,11 @@ const UserForm = ({ saveUser }: Props) => {
                 <Form.Label column sm={3}>
                     Username
                 </Form.Label>
-                <Col sm={7}>
+                <Col sm={8}>
                     <Form.Control
                         name="username"
                         type="text"
-                        value={values.username}
+                        value={userData.username}
                         placeholder="Enter username"
                         onChange={onChange}
                     />
@@ -71,11 +76,11 @@ const UserForm = ({ saveUser }: Props) => {
                 <Form.Label column sm={3}>
                     Email
                 </Form.Label>
-                <Col sm={7}>
+                <Col sm={8}>
                     <Form.Control
                         name="email"
                         type="email"
-                        value={values.email}
+                        value={userData.email}
                         placeholder="Enter email"
                         onChange={onChange}
                     />
@@ -87,12 +92,13 @@ const UserForm = ({ saveUser }: Props) => {
                     <Form.Label column sm={3}>
                         Password
                     </Form.Label>
-                    <Col sm={7}>
+                    <Col sm={8}>
                         <Form.Control
                             name="password"
                             type="password"
-                            value={values.password}
+                            value={userData.password}
                             placeholder="Password"
+                            autoComplete="off"
                             onChange={onChange}
                         />
                     </Col>
