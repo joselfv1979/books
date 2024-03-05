@@ -3,22 +3,35 @@ import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
 import styles from '../assets/scss/globalStyles.module.scss';
+import { Book } from 'types/Book';
+import { deleteBook, removeBookMessage } from 'store/bookActions';
+import { useAppDispatch } from 'hooks/redux-hooks';
+import { User } from 'types/User';
+import { deleteUser, removeUserMessage } from 'store/userActions';
 
 export type Props = {
-    removeBook?: () => void;
-    removeUser?: () => void;
+    book?: Book;
+    user?: User;
 };
 
-const DeleteModal = ({ removeBook, removeUser }: Props) => {
+const DeleteModal = ({ book, user }: Props) => {
     const { showDeleteModal, setShowDeleteModal } = useDeleteModalContext();
 
     const handleClose = () => setShowDeleteModal(false);
+    const dispatch = useAppDispatch();
 
     const deleteItem = () => {
-        removeBook ? removeBook() : null;
-        removeUser ? removeUser() : null;
+        if (user) {
+            dispatch(deleteUser(user.id));
+            dispatch(removeUserMessage());
+        }
+        if (book) {
+            dispatch(deleteBook(book.id));
+            dispatch(removeBookMessage());
+        }
         setShowDeleteModal(false);
     };
+
     return (
         <Modal size="sm" show={showDeleteModal} onHide={handleClose}>
             <Modal.Header closeButton>
