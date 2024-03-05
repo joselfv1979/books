@@ -1,8 +1,8 @@
-import { IBook } from '../types/Book';
-import { IUser } from '../types/User';
+import { Book } from '../types/Book';
+import { User } from '../types/User';
 
-export const castUserToFormData = (user: IUser) => {
-    const { id, fullname, username, email, password, roles, image, imagePath } = user;
+export const castUserToFormData = (user: User) => {
+    const { id, fullname, username, email, password, roles } = user;
     const formData = new FormData();
 
     formData.append('id', id);
@@ -10,16 +10,15 @@ export const castUserToFormData = (user: IUser) => {
     formData.append('username', username);
     formData.append('email', email);
     formData.append('password', password);
-    formData.append('image', image ? image : imagePath);
 
     for (const role of roles) {
-        formData.append('roles', role);
+        formData.append('roles', role.toString());
     }
 
     return formData;
 };
 
-export const castBookToFormData = (book: IBook) => {
+export const castBookToFormData = (book: Book) => {
     const { id, title, author, price, pages, image, imagePath } = book;
     const formData = new FormData();
 
@@ -28,7 +27,8 @@ export const castBookToFormData = (book: IBook) => {
     formData.append('author', author);
     formData.append('price', price.toString());
     formData.append('pages', pages.toString());
-    formData.append('image', image ? image : imagePath);
+    image ? formData.append('image', image)
+        : formData.append('imagePath', imagePath);
 
     return formData;
 };
