@@ -1,28 +1,28 @@
 import { Row, Col } from 'react-bootstrap';
-import { User } from '../types/User';
 import UserCard from './UserCard';
+import { useAppSelector } from 'hooks/redux-hooks';
 
-type Props = {
-    users: User[];
-};
-const UserList = ({ users }: Props) => {
+const UserList = () => {
+
+    const { users } = useAppSelector((state) => state.user);
+
     return (
-        <div className='p-3'>
-            <h1>Users</h1>
-            <Row>
-                {users.length ? (
-                    users.map((user) => {
+        users.length > 0 ?
+            <div className='p-3'>
+                <h1>Users</h1>
+                <Row>
+                    {users.map((user) => {
                         return (
                             <Col key={user.id} sm={4}>
                                 <UserCard user={user} />
                             </Col>
                         );
-                    })
-                ) : (
-                    <p style={{ textAlign: 'center' }}>No users found</p>
-                )}
-            </Row>
-        </div>
+                    })}
+                </Row>
+            </div>
+            : <div className='h-100 d-flex justify-content-center align-items-center pb-5'>
+                <h2 className='mb-5 text-center text-dark'>No books found</h2>
+            </div>
     );
 };
 

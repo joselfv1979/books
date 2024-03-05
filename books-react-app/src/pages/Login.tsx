@@ -1,4 +1,3 @@
-import React from 'react';
 import { Navigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
 import { Container, Spinner } from 'react-bootstrap';
@@ -31,16 +30,11 @@ const Login = () => {
     if (authUser) return <Navigate to="/" />;
 
     return (
-        <>
-            {loading ? (
-                <Spinner animation="border" className={globalStyles.spinner} />
-            ) : (
-                <Container className={styles.loginContainer}>
-                    {message && <Message message={message} cancelMessage={cancelMessage} />}
-                    <LoginForm loginUser={loginUser} />
-                </Container>
-            )}
-        </>
+        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+            : <Container className={styles.loginContainer}>
+                {message && <Message message={message} cancelMessage={cancelMessage} />}
+                <LoginForm loginUser={loginUser} />
+            </Container>
     );
 };
 

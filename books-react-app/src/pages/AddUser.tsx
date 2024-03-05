@@ -1,33 +1,33 @@
-import React from 'react';
-import { addUser, removeUserError, removeUserMessage } from '../redux/actionCreators/user';
-import { useDispatch } from 'react-redux';
-import { useTypedSelector } from '../hooks/useTypeSelector';
+import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks';
 import Message from '../components/Message';
 import UserForm from '../components/UserForm';
+import globalStyles from '../assets/scss/globalStyles.module.scss';
+import { Spinner } from 'react-bootstrap';
+import { getMessage } from '../utils/handleMessage';
+import { User } from '../types/User';
+import { addUser, removeUserMessage } from '../store/userActions';
 
 const AddUser = () => {
-    const { error, message } = useTypedSelector((state) => state.users);
+    const { loading, errorMessage, successMessage } = useAppSelector((state) => state.user);
 
-    const note = error || message;
+    const message = getMessage(errorMessage, successMessage);
 
-    const dispatch = useDispatch();
+    const dispatch = useAppDispatch();
 
-    const saveUser = async (data: FormData) => {
-        if (dispatch(addUser(data))) {
-            setTimeout(() => dispatch(removeUserMessage()), 2000);
-        }
+    const saveUser = async (data: User) => {
+        dispatch(addUser(data));
     };
 
     const cancelMessage = () => {
-        if (error) dispatch(removeUserError());
-        if (message) dispatch(removeUserMessage());
+        dispatch(removeUserMessage());
     };
 
     return (
-        <>
-            {note && <Message error={error} success={message} cancelMessage={cancelMessage} />}
-            <UserForm saveUser={saveUser} />
-        </>
+        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+            : <>
+                {message && <Message message={message} cancelMessage={cancelMessage} />}
+                <UserForm saveUser={saveUser} />
+            </>
     );
 };
 

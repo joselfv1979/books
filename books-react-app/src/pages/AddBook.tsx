@@ -1,4 +1,4 @@
-import React from 'react';
+
 import Message from '../components/Message';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import BookForm from '../components/BookForm';
@@ -8,6 +8,7 @@ import { getMessage } from '../utils/handleMessage';
 import { addBook, removeBookMessage } from '../store/bookActions';
 
 const AddBook = () => {
+
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.book);
 
     const message = getMessage(errorMessage, successMessage);
@@ -19,15 +20,15 @@ const AddBook = () => {
     };
 
     const cancelMessage = () => {
-        if (message) dispatch(removeBookMessage());
+        dispatch(removeBookMessage());
     }
 
     return (
-        <>
-            {loading && <Spinner animation="border" className={globalStyles.spinner} />}
-            {message && <Message message={message} cancelMessage={cancelMessage} />}
-            <BookForm saveBook={saveBook} />
-        </>
+        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+            : <>
+                {message && <Message message={message} cancelMessage={cancelMessage} />}
+                <BookForm saveBook={saveBook} />
+            </>
     );
 };
 

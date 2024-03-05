@@ -1,4 +1,3 @@
-import React from 'react';
 import { useNavigate } from 'react-router-dom';
 import styles from '../assets/scss/home.module.scss';
 
@@ -7,7 +6,7 @@ const Home = () => {
 
     return (
         <div className={styles.library}>
-            <h2 onClick={() => navigate('/books')}>View our Library</h2>
+            <button className={styles.viewLink} onClick={() => navigate('/books')}>View our Library</button>
         </div>
     );
 };

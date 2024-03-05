@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { Spinner } from 'react-bootstrap';
 import UserList from '../components/UserList';
@@ -7,11 +7,11 @@ import globalStyles from '../assets/scss/globalStyles.module.scss';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
 import DeleteModal from '../components/DeleteModal';
 import { getMessage } from '../utils/handleMessage';
-import { deleteUser, fetchUsers } from '../store/userActions';
+import { fetchUsers } from '../store/userActions';
 
 
 const Users = () => {
-    const { loading, errorMessage, successMessage, users } = useAppSelector((state) => state.user);
+    const { loading, errorMessage, successMessage } = useAppSelector((state) => state.user);
 
     const message = getMessage(errorMessage, successMessage);
 
@@ -21,23 +21,19 @@ const Users = () => {
 
     useEffect(() => {
         dispatch(fetchUsers());
-    }, []);
-
-    const removeUser = () => {
-        if (user.id) dispatch(deleteUser(user.id));
-    };
+    }, [dispatch]);
 
     const cancelMessage = () => {
         if (message) console.log(message);
     };
 
     return (
-        <>
-            {loading && <Spinner animation="border" className={globalStyles.spinner} />}
-            {message && <Message message={message} cancelMessage={cancelMessage} />}
-            {users && <UserList users={users} />}
-            {showDeleteModal && <DeleteModal removeUser={removeUser} />}
-        </>
+        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+            : <>
+                {message && <Message message={message} cancelMessage={cancelMessage} />}
+                {showDeleteModal && <DeleteModal user={user} />}
+                <UserList />
+            </>
     );
 };
 
