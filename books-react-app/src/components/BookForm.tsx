@@ -2,12 +2,11 @@ import React, { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Button, Col, Form, Row } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import { useAppSelector } from '../hooks/redux-hooks';
-import styles from '../assets/scss/bookForm.module.scss';
 import { Book } from '../types/Book';
 import { castBookToFormData } from '../utils/castFormData';
-import CurrentImage from './CurrentImage';
-import ImagePreview from './ImagePreview';
 import { initialBook } from 'data/ConstantUtils';
+import LoadFile from './LoadFile';
+import styles from '../assets/scss/bookForm.module.scss';
 
 export type Props = {
     saveBook: (data: FormData) => Promise<void>;
@@ -22,7 +21,6 @@ const BookForm = ({ saveBook }: Props) => {
 
     const [values, setValues] = useState<Book>(currentBook);
 
-    const [preview, setPreview] = useState<string>();
     const fileInput = useRef<HTMLInputElement>(null);
 
     const submit = async (event: FormEvent<HTMLFormElement>) => {
@@ -35,19 +33,6 @@ const BookForm = ({ saveBook }: Props) => {
         setValues({ ...values, [event.target.name]: event.target.value });
     };
 
-    const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
-        const target = event.target as HTMLInputElement;
-
-        if (target.files) {
-            setValues({ ...values, image: target.files[0] });
-            const reader = new FileReader();
-            reader.onloadend = () => {
-                setPreview(reader.result as string);
-            };
-            reader.readAsDataURL(target.files[0]);
-        }
-    };
-
     const handleClick = () => {
         fileInput.current?.click();
     };
@@ -56,7 +41,7 @@ const BookForm = ({ saveBook }: Props) => {
         <Form className={styles.bookForm} onSubmit={submit} data-testid="book-form">
             {editing ? <h1>Edit Book</h1> : <h1>New Book</h1>}
 
-            <Form.Group as={Row} className="mb-4" controlId="formBasicFullName">
+            <Form.Group as={Row} className="my-4" controlId="formBasicFullName">
                 <Form.Label column sm={2}>
                     Title
                 </Form.Label>
@@ -71,7 +56,7 @@ const BookForm = ({ saveBook }: Props) => {
                 </Col>
             </Form.Group>
 
-            <Form.Group as={Row} className="mb-4" controlId="formBasicFullName">
+            <Form.Group as={Row} className="my-4" controlId="formBasicFullName">
                 <Form.Label column sm={2}>
                     Author
                 </Form.Label>
@@ -86,7 +71,7 @@ const BookForm = ({ saveBook }: Props) => {
                 </Col>
             </Form.Group>
 
-            <Form.Group as={Row} className="mb-4" controlId="formBasicFullName">
+            <Form.Group as={Row} className="my-4" controlId="formBasicFullName">
                 <Form.Label column sm={2}>
                     Price
                 </Form.Label>
@@ -101,7 +86,7 @@ const BookForm = ({ saveBook }: Props) => {
                 </Col>
             </Form.Group>
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicFullName">
+            <Form.Group as={Row} className="my-4" controlId="formBasicFullName">
                 <Form.Label column sm={2}>
                     Pages
                 </Form.Label>
@@ -116,33 +101,24 @@ const BookForm = ({ saveBook }: Props) => {
                 </Col>
             </Form.Group>
 
-            <Form.Group as={Row} className="mb-3" controlId="formBasicFile">
+            <Form.Group as={Row} className="my-5" controlId="formBasicFile">
                 <Form.Label column sm={3}>
                     Photo
                 </Form.Label>
                 <Col sm={7} className={styles.flex_col}>
-                    <Form.Control
-                        name="image"
-                        type="file"
-                        style={{ display: 'none' }}
-                        ref={fileInput}
-                        onChange={handleImage}
-                    />
                     <Button variant="primary" className={styles.upload_button} onClick={handleClick}>
                         Upload
                     </Button>
-                    {values.image ? (
-                        <ImagePreview image={values.image} preview={preview} />
-                    ) : (
-                        <CurrentImage imageUrl={values.imagePath} />
-                    )}
+                    <LoadFile values={values} fileInput={fileInput} setValues={setValues} />
                 </Col>
             </Form.Group>
 
-            <Form.Group as={Row} className="mb-3">
-                <Button className={styles.bookFormButton} variant="primary" type="submit">
-                    Submit
-                </Button>
+            <Form.Group>
+                <Row className="col-md-4 mx-auto">
+                    <Button variant="primary" className={styles.bookFormButton} type="submit">
+                        Submit
+                    </Button>
+                </Row>
             </Form.Group>
         </Form>
     );
