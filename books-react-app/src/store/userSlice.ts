@@ -1,11 +1,12 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { AuthUser, Role, User, UserState } from '../types/User';
 import { RootState } from '.';
+import { initialUser } from 'data/ConstantUtils';
 
 
 const initialUserState: UserState = {
     users: [],
-    user: null,
+    user: initialUser,
     loading: false,
 };
 
@@ -14,11 +15,6 @@ export const userSlice = createSlice({
     name: 'user',
     initialState: initialUserState,
     reducers: {
-        loginUserPending: (state) => {
-            state.loading = true;
-            state.successMessage = undefined;
-            state.errorMessage = undefined;
-        },
         loginUserSuccess: (state, action: PayloadAction<AuthUser>) => {
             state.authUser = action.payload;
             state.loading = false;
@@ -29,13 +25,14 @@ export const userSlice = createSlice({
         },
         logoutUser: (state) => {
             state.authUser = undefined;
-            state.user = null;
+            state.user = initialUser;
             state.successMessage = undefined;
             state.errorMessage = undefined;
         },
         setUsersPending: (state) => {
             state.loading = true;
             state.users = [];
+            state.user = null;
             state.successMessage = undefined;
             state.errorMessage = undefined;
         },
@@ -49,11 +46,6 @@ export const userSlice = createSlice({
             state.errorMessage = action.payload;
             state.loading = false;
         },
-        setUserPending: (state) => {
-            state.loading = true;
-            state.successMessage = undefined;
-            state.errorMessage = undefined;
-        },
         setUserSuccess: (state, action: PayloadAction<User>) => {
             state.user = action.payload;
             state.loading = false;
@@ -64,14 +56,10 @@ export const userSlice = createSlice({
             state.errorMessage = action.payload;
             state.loading = false;
         },
-        createUserPending: (state) => {
-            state.loading = true;
-            state.successMessage = undefined;
-            state.errorMessage = undefined;
-        },
         createUserSuccess: (state, action: PayloadAction<User>) => {
             state.users = [...state.users, action.payload];
             state.successMessage = 'User created succesfully';
+            state.user = initialUser;
             state.loading = false;
             state.errorMessage = undefined;
         },

@@ -9,9 +9,9 @@ const { actions } = userSlice;
 // Action to sign in one user
 export const login = (user: AuthRequest): AppThunk =>
     async (dispatch) => {
-        dispatch(actions.loginUserPending());
-        const response = await loginUser(user);
+        dispatch(actions.setUsersPending());
 
+        const response = await loginUser(user);
         if (response.success) {
             dispatch(actions.loginUserSuccess(response.value));
             localStorage.setItem('token', JSON.stringify(response.value.token));
@@ -29,8 +29,8 @@ export const logout = (): AppThunk => async (dispatch) => {
 // Action to fetch all users
 export const fetchUsers = (): AppThunk => async (dispatch) => {
     dispatch(actions.setUsersPending());
-    const response = await getAllUsers();
 
+    const response = await getAllUsers();
     response.success
         ? dispatch(actions.setUsersSuccess(response.value))
         : dispatch(actions.setUsersFail(response.message));
@@ -39,9 +39,9 @@ export const fetchUsers = (): AppThunk => async (dispatch) => {
 // Action to fetch one user by id
 export const fetchUser = (id: string): AppThunk =>
     async (dispatch) => {
-        dispatch(actions.setUserPending());
-        const response = await getUser(id);
+        dispatch(actions.setUsersPending());
 
+        const response = await getUser(id);
         response.success
             ? dispatch(actions.setUserSuccess(response.value))
             : dispatch(actions.setUserFail(response.message));
@@ -50,9 +50,9 @@ export const fetchUser = (id: string): AppThunk =>
 // Action to create a new user, previous validation
 export const addUser = (user: User): AppThunk =>
     async (dispatch) => {
-        dispatch(actions.createUserPending());
-        const validUser = validateUser(user, false);
+        dispatch(actions.setUsersPending());
 
+        const validUser = validateUser(user, false);
         if (!validUser.success) {
             dispatch(actions.createUserFail(validUser.message));
             return;
@@ -67,9 +67,9 @@ export const addUser = (user: User): AppThunk =>
 // Action to delete one user by id
 export const deleteUser = (id: string): AppThunk =>
     async (dispatch) => {
-        dispatch(actions.eliminateUserPending);
-        const response = await removeUser(id);
+        dispatch(actions.setUsersPending());
 
+        const response = await removeUser(id);
         response.success
             ? dispatch(actions.eliminateUserSuccess(id))
             : dispatch(actions.eliminateUserFail(response.message));
@@ -78,9 +78,9 @@ export const deleteUser = (id: string): AppThunk =>
 // Action to update one user by id, previous validation
 export const editUser = (user: User): AppThunk =>
     async (dispatch) => {
-        dispatch(actions.modifyUserPending());
-        const validUser = validateUser(user, true);
+        dispatch(actions.setUsersPending());
 
+        const validUser = validateUser(user, true);
         if (!validUser.success) {
             dispatch(actions.modifyUserFail(validUser.message));
             return;
@@ -94,5 +94,5 @@ export const editUser = (user: User): AppThunk =>
 
 // Action to remove any message from UserState
 export const removeUserMessage = (): AppThunk => (dispatch) => {
-    dispatch(actions.eliminateUserMessage());
+    setTimeout(() => dispatch(actions.eliminateUserMessage()), 3000);
 };

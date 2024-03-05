@@ -1,6 +1,5 @@
 import { AppThunk } from ".";
 import { createBook, getAllBooks, getBook, removeBook, updateBook } from "../services/books";
-import { Book } from "../types/Book";
 import { validateBook } from "../utils/validateBook";
 import { bookSlice } from "./bookSlice";
 
@@ -8,33 +7,30 @@ const { actions } = bookSlice;
 
 // Action to fetch all books
 export const getBooks = (): AppThunk => async (dispatch) => {
-    dispatch(actions.booksPending());
+    dispatch(actions.setBooksPending());
 
     const response = await getAllBooks();
-
     response.success
         ? dispatch(actions.setBooksSuccess(response.value))
         : dispatch(actions.setBookFail(response.message));
 };
 
 // Action to fetch one book by id
-export const fetchBook =
-    (id: string): AppThunk =>
+export const fetchBook = (id: string): AppThunk =>
     async (dispatch) => {
-        dispatch(actions.bookPending());
+        dispatch(actions.setBooksPending());
 
         const response = await getBook(id);
-
         response.success
             ? dispatch(actions.setBookSuccess(response.value))
             : dispatch(actions.setBookFail(response.message));
     };
 
 // Action to create a new book
-export const addBook =
-    (book: FormData): AppThunk =>
+export const addBook = (book: FormData): AppThunk =>
     async (dispatch) => {
-        dispatch(actions.booksPending());
+        dispatch(actions.setBooksPending());
+
         const validBook = validateBook(book);
         if (!validBook.success) {
             dispatch(actions.createBookFail(validBook.message));
@@ -48,22 +44,22 @@ export const addBook =
     };
 
 // Action to delete one product by id,
-export const deleteBook =
-    (book: Book): AppThunk =>
+export const deleteBook = (id: string): AppThunk =>
     async (dispatch) => {
-        const response = await removeBook(book);
+        dispatch(actions.setBooksPending());
+
+        const response = await removeBook(id);
         response.success
-            ? dispatch(actions.eliminateBookSuccess(book.id))
+            ? dispatch(actions.eliminateBookSuccess(id))
             : dispatch(actions.eliminateBookFail(response.message));
     };
 
 // Action to update one product by id
-export const editBook =
-    (book: FormData): AppThunk =>
+export const editBook = (book: FormData): AppThunk =>
     async (dispatch) => {
-        dispatch(actions.booksPending());
-        const validBook = validateBook(book);
+        dispatch(actions.setBooksPending());
 
+        const validBook = validateBook(book);
         if (!validBook.success) {
             dispatch(actions.modifyBookFail(validBook.message));
             return;
@@ -77,5 +73,5 @@ export const editBook =
 
 // Action to remove any message from ProductState
 export const removeBookMessage = (): AppThunk => async (dispatch) => {
-    dispatch(actions.eliminateBookMessage());
+    setTimeout(() => dispatch(actions.eliminateBookMessage()), 3000);
 };
