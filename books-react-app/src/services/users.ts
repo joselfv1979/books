@@ -17,8 +17,6 @@ export const getAllUsers = async (): Promise<Result<User[], string>> => {
 
 export const getUser = async (id: string): Promise<Result<User, string>> => {
     try {
-        console.log('id', id);
-
         const { data } = await axios.get(`${baseUrl}/users/${id}`, { headers: getHeaders() });
         return { success: true, value: data.data };
     } catch (error) {
@@ -31,8 +29,6 @@ export const createUser = async (user: User): Promise<Result<User, string>> => {
         const { data } = await axios.post(`${baseUrl}/auth/register`, user);
         return { success: true, value: data.data };
     } catch (error) {
-        console.log(error);
-
         return { success: false, message: handleError(error) };
     }
 };
@@ -58,7 +54,6 @@ export const updateUser = async (user: User): Promise<Result<User, string>> => {
 export const loginUser = async (user: AuthRequest): Promise<Result<User, string>> => {
     try {
         const { data } = await axios.post(`${baseUrl}/auth/login`, user);
-        console.log('login', data);
         return { success: true, value: data.data };
     } catch (error) {
         return { success: false, message: handleError(error) };
