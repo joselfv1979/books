@@ -15,13 +15,3 @@ export interface BookState {
     successMessage?: string;
     loading: boolean;
 }
-
-export const initialBook: Book = {
-    id: '',
-    title: '',
-    author: '',
-    price: 0,
-    pages: 0,
-    image: undefined,
-    imagePath: '',
-};
