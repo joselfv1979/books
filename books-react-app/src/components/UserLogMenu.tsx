@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link, useNavigate } from 'react-router-dom';
 import { BoxArrowRight } from 'react-bootstrap-icons';
 import styles from '../assets/scss/menu.module.scss';
@@ -17,16 +16,12 @@ const UserLogMenu = () => {
     };
 
     return (
-        <>
-            {authUser ? (
-                <>
-                    <span className={styles.username}> {authUser.username}</span>{' '}
-                    <BoxArrowRight className={styles.logoutIcon} onClick={logoutUser} />{' '}
-                </>
-            ) : (
-                <Link className={styles.nonUnderlined} to="/login">Login</Link>
-            )}
-        </>
+        authUser ?
+            <>
+                <span className={styles.username}> {authUser.username}</span>{' '}
+                <BoxArrowRight className={styles.logoutIcon} onClick={logoutUser} />{' '}
+            </>
+            : <Link className={styles.nonUnderlined} to="/login">Login</Link>
     );
 };
 
