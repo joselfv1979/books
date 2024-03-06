@@ -14,7 +14,6 @@ export const bookSlice = createSlice({
     initialState: initialBookState,
     reducers: {
         setBooksPending: (state) => {
-            state.books = [];
             state.book = null;
             state.loading = true;
             state.successMessage = undefined;

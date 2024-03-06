@@ -31,7 +31,6 @@ export const userSlice = createSlice({
         },
         setUsersPending: (state) => {
             state.loading = true;
-            state.users = [];
             state.user = null;
             state.successMessage = undefined;
             state.errorMessage = undefined;
