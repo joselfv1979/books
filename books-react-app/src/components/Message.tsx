@@ -1,18 +1,25 @@
-import React from 'react';
 import { Alert } from 'react-bootstrap';
 import { IMessage } from '../types/Message';
-import styles from '../assets/scss/globalStyles.module.scss';
+import { useAppDispatch } from 'hooks/redux-hooks';
+import { removeBookMessage } from 'store/bookActions';
+import { removeUserMessage } from 'store/userActions';
 
 type Props = {
     message: IMessage;
-    cancelMessage: () => void;
 };
 
-const Message = ({ message, cancelMessage }: Props) => {
+const Message = ({ message }: Props) => {
+
+    const dispatch = useAppDispatch();
+
+    const removeMessage = () => {
+        dispatch(removeUserMessage());
+        dispatch(removeBookMessage());
+    };
     const variant = message.type === 'ERROR' ? 'danger' : 'success';
 
     return (
-        <Alert variant={variant} className={styles.alert} onClose={cancelMessage} dismissible>
+        <Alert variant={variant} className="w-100 text-center m-0" onClose={removeMessage} dismissible>
             {message.text}
         </Alert>
     );

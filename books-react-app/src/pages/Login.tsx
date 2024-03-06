@@ -1,18 +1,17 @@
 import { Navigate } from 'react-router-dom';
 import LoginForm from '../components/LoginForm';
-import { Container, Spinner } from 'react-bootstrap';
-import Message from '../components/Message';
+import { Spinner } from 'react-bootstrap';
 import styles from '../assets/scss/login.module.scss';
 import globalStyles from '../assets/scss/globalStyles.module.scss';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { getMessage } from '../utils/handleMessage';
 import { AuthRequest } from '../types/User';
-import { login, removeUserMessage } from '../store/userActions';
+import { login } from '../store/userActions';
+import { getMessage } from 'utils/handleMessage';
+import Message from 'components/Message';
 
 
 const Login = () => {
-    const { loading, errorMessage, successMessage, authUser } = useAppSelector((state) => state.user);
-
+    const { loading, authUser, errorMessage, successMessage } = useAppSelector((state) => state.user);
     const message = getMessage(errorMessage, successMessage);
 
     const dispatch = useAppDispatch();
@@ -21,20 +20,14 @@ const Login = () => {
         dispatch(login(user));
     };
 
-    const cancelMessage = () => {
-        if (message) {
-            dispatch(removeUserMessage());
-        }
-    };
-
     if (authUser) return <Navigate to="/" />;
 
     return (
         loading ? <Spinner animation="border" className={globalStyles.spinner} />
-            : <Container className={styles.loginContainer}>
-                {message && <Message message={message} cancelMessage={cancelMessage} />}
+            : <div className={styles.loginContainer}>
+                {message && <Message message={message} />}
                 <LoginForm loginUser={loginUser} />
-            </Container>
+            </div>
     );
 };
 
