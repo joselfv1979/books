@@ -1,6 +1,6 @@
 import BookCard from './BookCard';
 import { Row, Col } from 'react-bootstrap';
-import styles from '../assets/scss/BookList.module.scss';
+import styles from '../assets/scss/bookList.module.scss';
 import { useAppSelector } from '../hooks/redux-hooks';
 import { Book } from '../types/Book';
 
