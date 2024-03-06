@@ -1,43 +1,37 @@
 .app {
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
 }
 
 .spinner {
-    position: absolute;
-    top: 0;
-    left: 0;
-    bottom: 0;
-    right: 0;
-    margin: auto;
-}
-
-.alert {
-    height: 4rem;
-    width: 100%;
-    text-align: center;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  margin: auto;
 }
 
 .modalButtons {
-    display: flex;
-    justify-content: space-around;
+  display: flex;
+  justify-content: space-around;
 
-    button {
-        width: 5rem;
-    }
+  button {
+    width: 5rem;
+  }
 }
 
 .modalText {
-    text-align: center;
-    font-weight: bold;
+  text-align: center;
+  font-weight: bold;
 }
 
 main {
-    display: flex;
-    flex-direction: column;
-    height: 90vh;
+  display: flex;
+  flex-direction: column;
+  height: 90vh;
 }
 
 a {
-    text-decoration: none;
+  text-decoration: none;
 }
