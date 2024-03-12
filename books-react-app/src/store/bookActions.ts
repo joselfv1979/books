@@ -73,5 +73,9 @@ export const editBook = (book: FormData): AppThunk =>
 
 // Action to remove any message from ProductState
 export const removeBookMessage = (): AppThunk => async (dispatch) => {
+    dispatch(actions.eliminateBookMessage());
+};
+
+export const removeDelayBookMessage = (): AppThunk => async (dispatch) => {
     setTimeout(() => dispatch(actions.eliminateBookMessage()), 3000);
 };

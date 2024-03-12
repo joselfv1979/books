@@ -94,5 +94,9 @@ export const editUser = (user: User): AppThunk =>
 
 // Action to remove any message from UserState
 export const removeUserMessage = (): AppThunk => (dispatch) => {
+    dispatch(actions.eliminateUserMessage());
+};
+
+export const removeDelayUserMessage = (): AppThunk => (dispatch) => {
     setTimeout(() => dispatch(actions.eliminateUserMessage()), 3000);
 };
