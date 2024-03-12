@@ -4,12 +4,13 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useLocation, BrowserRouter } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
 import userEvent from '@testing-library/user-event';
 import BookList from '../../components/BookList';
-import { IBook } from '../../types/Book';
+import { Book } from '../../types/Book';
+import { store } from '../../store';
 
-const books: IBook[] = [
+
+const books: Book[] = [
     {
         id: '1',
         title: 'La Colmena',

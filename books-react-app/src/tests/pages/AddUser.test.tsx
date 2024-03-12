@@ -4,7 +4,8 @@ import { render, screen } from '@testing-library/react';
 import { BrowserRouter } from 'react-router-dom';
 import AddUser from '../../pages/AddUser';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
+import { store } from '../../store';
+
 
 describe('user-form', () => {
     type Props = {

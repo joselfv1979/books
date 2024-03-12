@@ -5,9 +5,9 @@ import { useLocation, BrowserRouter } from 'react-router-dom';
 import { act, fireEvent, getByLabelText, render, screen, waitFor } from '@testing-library/react';
 import UserForm from '../../components/UserForm';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
-import { initialUser } from '../../types/User';
 import userEvent from '@testing-library/user-event';
+import { store } from '../../store';
+import { initialUser } from 'data/ConstantUtils';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),

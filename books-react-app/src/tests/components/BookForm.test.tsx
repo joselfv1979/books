@@ -4,9 +4,9 @@ import { renderHook } from '@testing-library/react-hooks';
 import { useLocation, BrowserRouter } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
 import { Provider } from 'react-redux';
-import { store } from '../../redux/store';
 import userEvent from '@testing-library/user-event';
 import BookForm from '../../components/BookForm';
+import { store } from '../../store';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -99,3 +99,4 @@ describe('BookForm tests', () => {
         // });
     });
 });
+
