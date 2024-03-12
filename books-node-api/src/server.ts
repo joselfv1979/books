@@ -7,7 +7,6 @@ import authRouter from "./routes/authRoutes";
 import usersRouter from "./routes/userRoutes";
 import booksRouter from "./routes/bookRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
-import { createAdminUser } from "./utils/createAdmin";
 import path from "path";
 import morgan from "morgan";
 
@@ -25,9 +24,6 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use("/public", express.static(path.join(__dirname, "..", "/public")));
-
-// Create admin app utility
-createAdminUser();
 
 // Routes
 app.use("/api/auth", authRouter);
