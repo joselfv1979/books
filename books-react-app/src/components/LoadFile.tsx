@@ -1,27 +1,31 @@
-import { ChangeEvent, useState } from 'react'
+import { ChangeEvent, RefObject, useState } from 'react'
 import { Form } from 'react-bootstrap'
-import styles from '../assets/scss/bookForm.module.scss';
-import { Book } from 'types/Book';
+import styles from '../assets/scss/loadFile.module.scss';
 
 type Props = {
-    values: Book,
-    fileInput: React.RefObject<HTMLInputElement>
-    setValues: (value: React.SetStateAction<Book>) => void
+    image?: File, // Can receive a file 
+    imagePath: string; // Or a file path
+    fileInput: RefObject<HTMLInputElement>;
+    handleFile: (event: ChangeEvent<HTMLInputElement>) => void // Form file handler
 }
 
-const LoadFile = ({ values, fileInput, setValues }: Props) => {
+// Custom file loader component with loader and image preview
+const LoadFile = ({ image, imagePath, fileInput, handleFile }: Props) => {
 
-    const { image, imagePath } = values;
+    const currentImagePath = `${process.env.REACT_APP_API_URL}/${imagePath}`;
+
     const imageExist = image ?? imagePath;
+    const fileName = image?.name ?? imagePath.replace("public\\", "");
 
-    const [preview, setPreview] = useState<string>('');
+    // Preview state management
+    const [preview, setPreview] = useState<string>(currentImagePath);
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
         const target = event.target as HTMLInputElement;
 
         if (target.files) {
-            setValues({ ...values, image: target.files[0] });
-
+            handleFile(event);
+            // Object to create the preview
             const reader = new FileReader();
             reader.onloadend = () => {
                 setPreview(reader.result as string);
@@ -32,6 +36,7 @@ const LoadFile = ({ values, fileInput, setValues }: Props) => {
 
     return (
         <>
+            <label htmlFor='photo'>Photo</label>
             <Form.Control
                 name="image"
                 type="file"
@@ -39,14 +44,14 @@ const LoadFile = ({ values, fileInput, setValues }: Props) => {
                 ref={fileInput}
                 onChange={handleImage}
             />
-            <div className={styles.photo_container}>
+
+            <div className={styles.photoContainer}>
                 {imageExist ?
-                    <>
-                        <img src={preview || `${process.env.REACT_APP_API_URL}/${imagePath}`} alt='book' className={styles.photo} />
-                        {image?.name}
-                    </>
-                    : <span>No file selected</span>}
+                    <img src={preview} alt='preview' className={styles.photo} />
+                    : <span className={styles.photoNoFileText}>No file selected</span>
+                }
             </div>
+            <span className={styles.photoText}>{fileName}</span>
         </>
     )
 }

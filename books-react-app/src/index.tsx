@@ -4,16 +4,19 @@ import { BrowserRouter } from 'react-router-dom';
 import { Provider } from 'react-redux';
 import App from './App';
 import { DeleteModalContextProvider } from './context/deleteModal/DeleteModalContextProvider';
-import { store } from './store';
+import { persistor, store } from './store';
 import 'bootstrap/dist/css/bootstrap.min.css';
+import { PersistGate } from 'redux-persist/integration/react';
 
 ReactDOM.render(
     <React.StrictMode>
         <BrowserRouter>
             <Provider store={store}>
-                <DeleteModalContextProvider>
-                    <App />
-                </DeleteModalContextProvider>
+                <PersistGate loading={null} persistor={persistor}>
+                    <DeleteModalContextProvider>
+                        <App />
+                    </DeleteModalContextProvider>
+                </PersistGate>
             </Provider>
         </BrowserRouter>
     </React.StrictMode>,

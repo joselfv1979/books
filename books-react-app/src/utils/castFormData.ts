@@ -1,15 +1,22 @@
 import { Book } from '../types/Book';
 import { User } from '../types/User';
 
+// function to create a FormData object from a User object
 export const castUserToFormData = (user: User) => {
-    const { id, fullname, username, email, password, roles } = user;
+    const { id, fullname, username, email, password, roles, image, imagePath } = user;
     const formData = new FormData();
 
     formData.append('id', id);
     formData.append('fullname', fullname);
     formData.append('username', username);
     formData.append('email', email);
-    formData.append('password', password);
+
+    // it's not received when editing users 
+    if (password) formData.append('password', password);
+
+    // if a new file is received, otherwise appends the current file path
+    image ? formData.append('image', image)
+        : formData.append('imagePath', imagePath);
 
     for (const role of roles) {
         formData.append('roles', role.toString());
@@ -18,6 +25,7 @@ export const castUserToFormData = (user: User) => {
     return formData;
 };
 
+// function to create a FormData object from a Book object
 export const castBookToFormData = (book: Book) => {
     const { id, title, author, price, pages, image, imagePath } = book;
     const formData = new FormData();
@@ -27,6 +35,8 @@ export const castBookToFormData = (book: Book) => {
     formData.append('author', author);
     formData.append('price', price.toString());
     formData.append('pages', pages.toString());
+
+    // if a new file is received, otherwise appends the current file path
     image ? formData.append('image', image)
         : formData.append('imagePath', imagePath);
 

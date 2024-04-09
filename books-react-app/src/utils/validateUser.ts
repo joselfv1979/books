@@ -2,9 +2,7 @@ import { type Result } from '../types/Result';
 import { type User } from '../types/User';
 
 // Validate user function
-export const validateUser = (user: User, editing?: boolean): Result<User, string> => {
-
-    console.log(user);
+export const validateUser = (user: User, register = false): Result<User, string> => {
 
     const { fullname, username, email, password } = user;
 
@@ -18,8 +16,9 @@ export const validateUser = (user: User, editing?: boolean): Result<User, string
         return { success: false, message: 'Email is required' };
     } else if (!regex.test(email)) {
         return { success: false, message: 'Enter valid email' };
-    } else if (!editing && (password.length < 4 || password.length > 9)) {
+    } else if (register && (password.length < 4 || password.length > 9)) {
         return { success: false, message: 'passwords must be between 4 and 8 characters long' };
     }
+
     return { success: true, value: user };
 };

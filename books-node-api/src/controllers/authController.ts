@@ -7,6 +7,7 @@ import User, { IUser, LoggedUser, UserResponse } from "../models/User";
 import { ResBody } from "../models/Response";
 import { IRole } from "../models/Role";
 
+// endpoint to login users
 export async function loginController(
   req: Request,
   res: Response<ResBody<LoggedUser>>,
@@ -15,21 +16,23 @@ export async function loginController(
   try {
     const { username, password } = req.body;
 
-    if (!username || !password)
-      return next(new CustomError(400, "Bad request"));
-
+    // retrieve user from database
     const user = await getUsernameService(username);
 
-    const passwordCorrect =
-      user === null ? false : await bcrypt.compare(password, user.password);
+    if (!user) return next(new CustomError(401, "Invalid credentials"));
 
-    if (!user || !passwordCorrect) {
-      return next(new CustomError(401, "Invalid credentials"));
-    }
+    // check password match
+    const passwordCorrect = await bcrypt.compare(password, user.password);
 
+    if (!passwordCorrect) return next(new CustomError(401, "Invalid credentials"));
+
+    // generate token
     const token = generateToken(user.id, username, JSON.stringify(user.roles));
+
+    // create a list of role names
     const roleList = user.roles.map(role => role.name);
 
+    // returning object
     const loggedUser: LoggedUser = {
       id: user.id,
       username,
@@ -50,21 +53,26 @@ export async function registerController(
 ) {
   try {
     const { fullname, username, email, password, roles } = req.body;
-    const filePath = req.file ? req.file.path : "";
+
+    // use path if receiving file, empty string otherwise
+    const photo = req.file ? req.file.path : "";
 
     if (!fullname || !username || !email || !password || !roles) {
       return next(new CustomError(400, "Bad request"));
     }
 
+    // check existing username
     const usernameExists = await getUsernameService(username);
-    if (usernameExists)
-      return next(new CustomError(409, "Username already exists"));
+    if (usernameExists) return next(new CustomError(409, "Username already exists"));
 
+    // check existing email
     const emailExists = await getEmailService(email);
-    if (emailExists)
-      return next(new CustomError(409, "Email address already exists"));
+    if (emailExists) return next(new CustomError(409, "Email address already exists"));
 
+    // encrypt password
     const passwordHash = await bcrypt.hash(password, 10);
+
+    // retieve roles from database
     let roleList: IRole[] = await getRoleService(roles);
 
     let newUser: IUser = new User({
@@ -73,10 +81,13 @@ export async function registerController(
       email,
       password: passwordHash,
       roles: roleList,
-      imagePath: filePath,
+      imagePath: photo,
     });
 
+    // create new user
     const user = await createUserService(newUser);
+
+    // returning UserResponse object
     const userResponse = userToUserResponse(user);
 
     res.status(201).json({ success: true, data: userResponse });

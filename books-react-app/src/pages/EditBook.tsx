@@ -7,19 +7,23 @@ import globalStyles from '../assets/scss/globalStyles.module.scss';
 import { editBook, fetchBook } from '../store/bookActions';
 import { getMessage } from 'utils/handleMessage';
 import Message from 'components/Message';
-
+import { Book } from 'types/Book';
 
 const BookEdit = () => {
     const { id } = useParams();
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.book);
+
+    // Obtains a custom message object
     const message = getMessage(errorMessage, successMessage);
 
     const dispatch = useAppDispatch();
+
     useEffect(() => {
+
         if (id) dispatch(fetchBook(id));
     }, [dispatch]);
 
-    const saveBook = async (values: FormData) => {
+    const saveBook = async (values: Book) => {
         dispatch(editBook(values));
     };
 
@@ -27,7 +31,7 @@ const BookEdit = () => {
         loading ? <Spinner animation="border" className={globalStyles.spinner} />
             : <>
                 {message && <Message message={message} />}
-                <BookForm saveBook={saveBook} />
+                <BookForm saveBook={saveBook} editing={true} />
             </>
     );
 };
