@@ -55,14 +55,14 @@ export async function updateUserController(
   try {
     const { id } = req.params;
     const { fullname, username, email, image, roles } = req.body;
-    const fileImage = req.file ? req.file.path : image;
+    const photo = req.file ? req.file.path : image;
 
     if (!id || !fullname || !username || !email) {
       return next(new CustomError(400, "Bad request"));
     }
 
     let roleList: IRole[] = await getRoleService(roles);
-    const newBody = { ...req.body, roles: roleList, imagePath: fileImage };
+    const newBody = { ...req.body, roles: roleList, imagePath: photo };
 
     const user = await updateUserService(id, newBody);
     if (!user) return next(new CustomError(404, "User not found"));

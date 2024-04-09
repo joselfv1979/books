@@ -1,7 +1,7 @@
 import { useLocation } from 'react-router-dom';
 import { Book } from '../types/Book';
 import { Card } from 'react-bootstrap';
-import library from './../assets/library.jpg';
+import library from './../assets/images/library.jpg';
 import BookCardButtons from './BookCardButtons';
 
 type Props = {
@@ -18,7 +18,7 @@ const BookCard = ({ book, styles }: Props) => {
 
     return (
         <Card className={styles.bookCard}>
-            <Card.Img src={image} className={styles.bookImage} />
+            <Card.Img src={image} variant='top' className={styles.bookImage} />
             <Card.Header>{book.author}</Card.Header>
             <Card.Body>
                 <Card.Title>{book.title}</Card.Title>

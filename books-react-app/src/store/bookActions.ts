@@ -1,3 +1,4 @@
+import { Book } from "types/Book";
 import { AppThunk } from ".";
 import { createBook, getAllBooks, getBook, removeBook, updateBook } from "../services/books";
 import { validateBook } from "../utils/validateBook";
@@ -27,7 +28,7 @@ export const fetchBook = (id: string): AppThunk =>
     };
 
 // Action to create a new book
-export const addBook = (book: FormData): AppThunk =>
+export const addBook = (book: Book): AppThunk =>
     async (dispatch) => {
         dispatch(actions.setBooksPending());
 
@@ -55,7 +56,7 @@ export const deleteBook = (id: string): AppThunk =>
     };
 
 // Action to update one product by id
-export const editBook = (book: FormData): AppThunk =>
+export const editBook = (book: Book): AppThunk =>
     async (dispatch) => {
         dispatch(actions.setBooksPending());
 

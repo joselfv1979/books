@@ -9,8 +9,11 @@ export const initialUser: User = {
     password: '',
     roles: ['USER'],
     email: '',
+    image: undefined,
+    imagePath: '',
 };
 
+// Book empty object
 export const initialBook: Book = {
     id: '',
     title: '',

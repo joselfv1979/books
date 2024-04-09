@@ -1,34 +1,63 @@
 .userForm {
-  margin: 5rem auto;
-  width: 30rem;
+  display: grid;
+  grid-template-columns: 1fr 1fr 2fr 2fr;
+  grid-template-rows: repeat(7 2rem);
+  grid-gap: 1rem 2rem;
+  margin: 3rem auto;
+  width: 80%;
+  font-size: large;
+  font-weight: bold;
 
-  h1 {
-    margin-bottom: 2rem;
+  h2 {
+    grid-column-start: 3;
     text-align: center;
   }
 
-  label {
-    text-align: justify;
-  }
-
-  .submit_button {
-    width: 10rem;
-    margin: 1rem auto;
-  }
-
-  .login_span {
-    color: #0d6efd;
-    cursor: pointer;
-    margin-left: 0.5rem;
-  }
-
-  .flex_col {
+  .photoField {
+    grid-column-start: 2;
+    grid-row-start: 2;
+    grid-row-end: 7;
+    justify-self: center;
     display: flex;
-    justify-content: space-between;
+    flex-direction: column;
     align-items: center;
   }
 
-  .upload_button {
-    width: 6rem;
+  .uploadButton {
+    margin-top: 1rem;
+    height: 2.5rem;
+  }
+
+  .fullnameField {
+    grid-row-start: 2;
+    grid-column: 3 / 3;
+  }
+
+  .usernameField {
+    grid-row-start: 3;
+    grid-column: 3 / 3;
+  }
+
+  .emailField {
+    grid-row-start: 4;
+    grid-column: 3 / 3;
+  }
+
+  .passwordField {
+    grid-row-start: 5;
+    grid-column: 3 / 3;
+  }
+
+  .linkField {
+    grid-row-start: 6;
+    grid-column: 3 / 3;
+    margin-bottom: 0;
+  }
+
+  .submitButton {
+    grid-column-start: 3;
+    width: 12rem;
+    height: 3rem;
+    margin: 0.5rem auto;
   }
 }

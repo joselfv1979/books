@@ -1,5 +1,6 @@
 import { User } from '../types/User';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
+import userImage from './../assets/images/user.svg';
 import styles from '../assets/scss/userCard.module.scss';
 import { Card, Button } from 'react-bootstrap';
 
@@ -15,8 +16,11 @@ const UserCard = ({ user }: Props) => {
         setUser(user);
     };
 
+    const image = user.imagePath ? `${process.env.REACT_APP_API_URL}/${user.imagePath}` : userImage;
+
     return (
         <Card className={styles.userCard}>
+            <Card.Img variant="top" className={styles.photo} src={image} />
             <Card.Header className={styles.header}>
                 <strong>{user.username}</strong>
             </Card.Header>

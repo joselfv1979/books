@@ -52,7 +52,7 @@ export const addUser = (user: User): AppThunk =>
     async (dispatch) => {
         dispatch(actions.setUsersPending());
 
-        const validUser = validateUser(user, false);
+        const validUser = validateUser(user);
         if (!validUser.success) {
             dispatch(actions.createUserFail(validUser.message));
             return;
@@ -80,7 +80,7 @@ export const editUser = (user: User): AppThunk =>
     async (dispatch) => {
         dispatch(actions.setUsersPending());
 
-        const validUser = validateUser(user, true);
+        const validUser = validateUser(user);
         if (!validUser.success) {
             dispatch(actions.modifyUserFail(validUser.message));
             return;

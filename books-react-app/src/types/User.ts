@@ -25,7 +25,8 @@ export interface User extends AuthUser {
   fullname: string;
   password: string;
   email: string;
-  image?: string;
+  image?: File;
+  imagePath: string;
 }
 
 /* The `AuthRequest` interface is defining the shape of an authentication request object in the

@@ -1,0 +1,30 @@
+.photo {
+  max-width: 10rem;
+  max-height: 16rem;
+  border-radius: 2px;
+}
+
+.photoText {
+  width: 10rem;
+  min-height: 1.6rem;
+  white-space: nowrap;
+  text-overflow: ellipsis;
+  overflow: hidden;
+}
+
+.photoNoFileText {
+  font-family: system-ui;
+  font-size: 1rem;
+  color: #6c757d;
+}
+
+.photoContainer {
+  width: 10rem;
+  height: 16rem;
+  border: 1px solid #ced4da;
+  border-radius: 2px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: normal;
+}
