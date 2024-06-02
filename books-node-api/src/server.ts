@@ -8,7 +8,8 @@ import usersRouter from "./routes/userRoutes";
 import booksRouter from "./routes/bookRoutes";
 import { errorHandler } from "./middlewares/errorHandler";
 import path from "path";
-import morgan from "morgan";
+import morganMiddleware from "./middlewares/morganHandler";
+import Logger from "./utils/logger";
 
 if (!PORT) {
   process.exit(1);
@@ -17,7 +18,7 @@ if (!PORT) {
 const app = express();
 
 // Middlewares
-app.use(morgan("dev"));
+app.use(morganMiddleware);
 app.use(helmet());
 app.use(helmet.crossOriginResourcePolicy({ policy: "cross-origin" }));
 app.use(cors());
@@ -35,8 +36,12 @@ app.use(errorHandler);
 
 connect();
 
-console.log(`NODE_ENV=${NODE_ENV}`);
+// For testing purposes 
+app.get("/", (req, res) => {
+  res.send("<h2>It's Working!</h2>");
+});
 
 app.listen(PORT, () => {
-  console.log(`Listening on port ${PORT}`);
+  Logger.info(`NODE_ENV=${NODE_ENV}`);
+  Logger.info(`Server is up and running @ http://localhost:${PORT}`);
 });
