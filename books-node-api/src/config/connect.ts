@@ -1,5 +1,6 @@
 import mongoose from "mongoose";
 import { DB_CONN_STRING } from "./config";
+import Logger from "../utils/logger";
 
 if (!DB_CONN_STRING) {
   console.error("Remember to have environment variables on a  file .env");
@@ -13,14 +14,16 @@ const options = {
 };
 
 //connection mongodb atlas
-export const connect = () => {
-  mongoose
-    .connect(DB_CONN_STRING as string, options)
-    .then(() => console.log("Database connected!"))
-    .catch((err) => console.log(err));
+export const connect = async () => {
+  try {
+    await mongoose.connect(DB_CONN_STRING as string, options);
+    Logger.info("Database connected!");
+  } catch (error) {
+    Logger.debug(error);
+  }
 };
 
 process.on("uncaughtException", (error) => {
-  console.error(error);
+  Logger.debug(error);
   mongoose.disconnect();
 });
