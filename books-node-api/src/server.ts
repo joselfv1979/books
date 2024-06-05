@@ -10,6 +10,7 @@ import { errorHandler } from "./middlewares/errorHandler";
 import path from "path";
 import morganMiddleware from "./middlewares/morganHandler";
 import Logger from "./utils/logger";
+import { createBooks } from "./utils/createBooks";
 
 if (!PORT) {
   process.exit(1);
@@ -34,14 +35,22 @@ app.use("/api/books", booksRouter);
 // Error handler middleware
 app.use(errorHandler);
 
-connect();
-
 // For testing purposes 
-app.get("/", (req, res) => {
+app.get("/", (_req, res) => {
   res.send("<h2>It's Working!</h2>");
 });
 
-app.listen(PORT, () => {
-  Logger.info(`NODE_ENV=${NODE_ENV}`);
-  Logger.info(`Server is up and running @ http://localhost:${PORT}`);
-});
+export const startServer = async () => {
+
+  await connect();
+
+  // Uncomment to populate database
+  // createBooks();
+
+  app.listen(PORT, () => {
+    Logger.info(`NODE_ENV=${NODE_ENV}`);
+    Logger.info(`Server is up and running @ http://localhost:${PORT}`);
+  });
+}
+
+startServer();
