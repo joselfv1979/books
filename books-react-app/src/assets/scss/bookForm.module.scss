@@ -1,7 +1,7 @@
 .bookForm {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 2fr;
-  grid-template-rows: repeat(6 2rem);
+  grid-template-rows: repeat(8 2rem);
   grid-gap: 1rem 2rem;
   margin: 3rem auto;
   width: 80%;
@@ -23,11 +23,6 @@
     align-items: center;
   }
 
-  .uploadButton {
-    margin-top: 1rem;
-    height: 2.5rem;
-  }
-
   .titleField {
     grid-row-start: 2;
     grid-column: 3 / 3;
@@ -38,14 +33,25 @@
     grid-column: 3 / 3;
   }
 
-  .priceField {
+  .publisherField {
     grid-row-start: 4;
     grid-column: 3 / 3;
   }
 
-  .pagesField {
+  .isbnField {
     grid-row-start: 5;
     grid-column: 3 / 3;
+  }
+
+  .pagesField {
+    grid-row-start: 6;
+    grid-column: 3 / 3;
+  }
+
+  .genreField {
+    grid-row-start: 2;
+    grid-row-end: 5;
+    grid-column: 4 / 4;
   }
 
   .submitButton {
@@ -53,5 +59,10 @@
     width: 12rem;
     height: 3rem;
     margin: 0.5rem auto;
+  }
+
+  .uploadButton {
+    margin-top: 1rem;
+    height: 2.5rem;
   }
 }
