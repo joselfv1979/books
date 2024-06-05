@@ -1,8 +1,16 @@
-import Book, { IBook } from "../models/Book";
 import { ObjectId } from "mongodb";
+import Book, { IBook } from "../models/Book";
+import { PaginationRequest } from "../models/Pagination";
 
-export async function getBooksService() {
-  return await Book.find();
+export async function getBooksService(query: PaginationRequest["query"]) {
+
+  const { searchQuery, limit, skip, sort, fields } = query;
+
+  return await Book.find(searchQuery)
+    .limit(parseInt(limit))
+    .skip(parseInt(skip))
+    .sort(sort)
+    .select(fields);
 }
 
 export async function getBookService(id: string) {

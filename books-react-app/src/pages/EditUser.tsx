@@ -4,7 +4,6 @@ import UserForm from "../components/UserForm";
 import { Spinner } from "react-bootstrap";
 import globalStyles from "../assets/scss/globalStyles.module.scss";
 import { useParams } from "react-router-dom";
-import { editUser, fetchUser } from "../store/userActions";
 import { getMessage } from "utils/handleMessage";
 import Message from "components/Message";
 import { User } from "types/User";
@@ -12,18 +11,17 @@ import { User } from "types/User";
 const EditUser = () => {
     const { id } = useParams();
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.user);
+    const { fetchUser, editUser } = useAppDispatch();
 
     // Obtains a custom message object
     const message = getMessage(errorMessage, successMessage);
 
-    const dispatch = useAppDispatch();
-
     useEffect(() => {
-        if (id) dispatch(fetchUser(id));
-    }, [dispatch]);
+        if (id) fetchUser(id);
+    }, []);
 
     const saveUser = async (data: User) => {
-        dispatch(editUser(data));
+        editUser(data);
     };
 
     return (

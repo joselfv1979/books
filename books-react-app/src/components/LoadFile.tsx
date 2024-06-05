@@ -15,7 +15,7 @@ const LoadFile = ({ image, imagePath, fileInput, handleFile }: Props) => {
     const currentImagePath = `${process.env.REACT_APP_API_URL}/${imagePath}`;
 
     const imageExist = image ?? imagePath;
-    const fileName = image?.name ?? imagePath.replace("public\\", "");
+    const fileName = image ?? imagePath ? imagePath.replace("public\\", "") : "";
 
     // Preview state management
     const [preview, setPreview] = useState<string>(currentImagePath);
@@ -56,4 +56,4 @@ const LoadFile = ({ image, imagePath, fileInput, handleFile }: Props) => {
     )
 }
 
-export default LoadFile
+export default LoadFile;

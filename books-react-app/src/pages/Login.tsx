@@ -5,19 +5,18 @@ import styles from '../assets/scss/login.module.scss';
 import globalStyles from '../assets/scss/globalStyles.module.scss';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { AuthRequest } from '../types/User';
-import { login } from '../store/userActions';
 import { getMessage } from 'utils/handleMessage';
 import Message from 'components/Message';
 
 
 const Login = () => {
     const { loading, authUser, errorMessage, successMessage } = useAppSelector((state) => state.user);
+    const { login } = useAppDispatch();
     const message = getMessage(errorMessage, successMessage);
 
-    const dispatch = useAppDispatch();
 
     const loginUser = (user: AuthRequest) => {
-        dispatch(login(user));
+        login(user);
     };
 
     if (authUser) return <Navigate to="/" />;

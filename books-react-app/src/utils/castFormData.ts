@@ -27,13 +27,21 @@ export const castUserToFormData = (user: User) => {
 
 // function to create a FormData object from a Book object
 export const castBookToFormData = (book: Book) => {
-    const { id, title, author, price, pages, image, imagePath } = book;
+    const { id, title, author, publisher, isbn, genre, pages, image, imagePath } = book;
     const formData = new FormData();
 
     formData.append('id', id);
     formData.append('title', title);
     formData.append('author', author);
-    formData.append('price', price.toString());
+    formData.append('publisher', publisher);
+    formData.append('isbn', isbn);
+
+    console.log('genre', genre);
+
+    for (const item of genre) {
+        formData.append('genre', item.toString());
+    }
+
     formData.append('pages', pages.toString());
 
     // if a new file is received, otherwise appends the current file path

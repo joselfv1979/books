@@ -3,6 +3,8 @@ import { persistReducer, persistStore } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
 import bookSlice from './bookSlice';
 import userSlice from './userSlice';
+import * as userActions from './userActions';
+import * as bookActions from './bookActions';
 
 const persistConfig = {
     key: 'root',
@@ -26,6 +28,11 @@ export const store = configureStore({
             serializableCheck: false,
         }),
 });
+
+export default {
+    ...userActions,
+    ...bookActions
+}
 
 // Creates the store with preloaded state
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {

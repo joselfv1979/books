@@ -14,7 +14,7 @@ const RoleSchema = new Schema({
 });
 
 RoleSchema.set("toJSON", {
-    transform: (document, returnedObject) => {
+    transform: (_document, returnedObject) => {
         returnedObject.id = returnedObject._id;
         delete returnedObject._id;
         delete returnedObject.__v;

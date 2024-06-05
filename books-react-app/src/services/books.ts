@@ -4,13 +4,14 @@ import { Result } from '../types/Result';
 import { getHeaders } from '../utils/authHeader';
 import { handleError } from '../utils/handleError';
 import { castBookToFormData } from 'utils/castFormData';
+import { Query, QueryResponse } from 'types/Query';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/api/books`;
 
 // Request to get all books
-export const getAllBooks = async (): Promise<Result<Book[], string>> => {
+export const getAllBooks = async (params: Query): Promise<Result<QueryResponse, string>> => {
     try {
-        const { data } = await axios.get(baseUrl);
+        const { data } = await axios.get(baseUrl, { params });
         return { success: true, value: data.data };
     } catch (error) {
         return { success: false, message: handleError(error) };

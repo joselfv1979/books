@@ -3,14 +3,17 @@ import { AppThunk } from ".";
 import { createBook, getAllBooks, getBook, removeBook, updateBook } from "../services/books";
 import { validateBook } from "../utils/validateBook";
 import { bookSlice } from "./bookSlice";
+import { Query } from "types/Query";
 
 const { actions } = bookSlice;
 
 // Action to fetch all books
-export const getBooks = (): AppThunk => async (dispatch) => {
+export const getBooks = (params: Query): AppThunk => async (dispatch) => {
+
     dispatch(actions.setBooksPending());
 
-    const response = await getAllBooks();
+    // Limit set up to 8 books
+    const response = await getAllBooks({ ...params, limit: 8 });
     response.success
         ? dispatch(actions.setBooksSuccess(response.value))
         : dispatch(actions.setBookFail(response.message));

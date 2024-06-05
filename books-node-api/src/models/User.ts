@@ -38,6 +38,7 @@ const UserSchema = new Schema({
     {
       type: Schema.Types.ObjectId,
       ref: "Role",
+      required: true
     },
   ],
   books: [
@@ -51,7 +52,7 @@ const UserSchema = new Schema({
 });
 
 UserSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
+  transform: (_document, returnedObject) => {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
     delete returnedObject.__v;

@@ -3,7 +3,9 @@ import { Schema, model, Document } from "mongoose";
 export interface IBook extends Document {
   title: string;
   author: string;
-  price: number;
+  publisher: string;
+  isbn: string;
+  genre: string[];
   pages: number;
   imagePath: string;
 }
@@ -11,7 +13,11 @@ export interface IBook extends Document {
 const BookSchema = new Schema({
   title: { type: String, unique: true, required: true },
   author: { type: String, required: true },
-  price: { type: Number, required: true },
+  publisher: { type: String, required: true },
+  isbn: { type: String, required: true },
+  genre: [
+    { type: String, required: true }
+  ],
   pages: { type: Number, required: true },
   imagePath: { type: String },
 }, {
@@ -19,11 +25,12 @@ const BookSchema = new Schema({
 });
 
 BookSchema.set("toJSON", {
-  transform: (document, returnedObject) => {
+  transform: (_document, returnedObject) => {
     returnedObject.id = returnedObject._id;
     delete returnedObject._id;
     delete returnedObject.__v;
   },
 });
+
 
 export default model<IBook>("Book", BookSchema);

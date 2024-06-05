@@ -1,6 +1,7 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
 import { Book, BookState } from '../types/Book';
 import { RootState } from '.';
+import { QueryResponse } from 'types/Query';
 
 const initialBookState: BookState = {
     books: [],
@@ -19,8 +20,13 @@ export const bookSlice = createSlice({
             state.successMessage = undefined;
             state.errorMessage = undefined;
         },
-        setBooksSuccess: (state, action: PayloadAction<Book[]>) => {
-            state.books = action.payload;
+        setBooksSuccess: (state, action: PayloadAction<QueryResponse>) => {
+            state.books = action.payload.books;
+            state.currentPage = action.payload.currentPage;
+            state.lastPage = action.payload.lastPage;
+            state.nextPage = action.payload.nextPage;
+            state.totalDocs = action.payload.totalDocs;
+            state.totalPages = action.payload.totalPages;
             state.loading = false;
             state.successMessage = undefined;
             state.errorMessage = undefined;

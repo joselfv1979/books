@@ -1,4 +1,3 @@
-import React from 'react';
 import { Link } from 'react-router-dom';
 import styles from '../assets/scss/menu.module.scss';
 import UserLogMenu from './UserLogMenu';
@@ -11,23 +10,23 @@ const Menu = () => {
 
     return (
         <ul className="text-white bg-dark m-0">
-            <li>
-                <Link className={styles.nonUnderlined} to="/">Welcome</Link>
+            <li className={styles.subMenu}>
+                <Link to="/">Welcome</Link>
             </li>
-            <li>
-                <Link className={styles.nonUnderlined} to="/books">Books</Link>
+            <li className={styles.subMenu}>
+                <Link to="/books">Books</Link>
             </li>
-            <li>
-                <Link className={styles.nonUnderlined} to="/contact">Contact</Link>
+            <li className={styles.subMenu}>
+                <Link to="/contact">Contact</Link>
             </li>
-            {loggedUser && <li>
-                {<Link className={styles.nonUnderlined} to={`users/${loggedUser?.id}`}>Profile</Link>}
+            {loggedUser && <li className={styles.subMenu}>
+                {<Link to={`users/${loggedUser?.id}`}>Profile</Link>}
             </li>}
-            {admin && <li>
-                <Link className={styles.nonUnderlined} to="/newBook">New Book</Link>
+            {admin && <li className={styles.subMenu}>
+                <Link to="/newBook">New Book</Link>
             </li>}
-            {admin && <li>
-                <Link className={styles.nonUnderlined} to="/users">Users</Link>
+            {admin && <li className={styles.subMenu}>
+                <Link to="/users">Users</Link>
             </li>}
             <li className={styles.userSubmenu}>
                 <UserLogMenu />

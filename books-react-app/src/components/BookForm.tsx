@@ -5,6 +5,7 @@ import { Book } from '../types/Book';
 import { initialBook } from 'data/ConstantUtils';
 import LoadFile from './LoadFile';
 import styles from '../assets/scss/bookForm.module.scss';
+import { TagField } from './TagField';
 
 export type Props = {
     saveBook: (data: Book) => Promise<void>;
@@ -79,14 +80,26 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
                 />
             </fieldset>
 
-            <fieldset className={styles.priceField}>
-                <label htmlFor='price'>Price</label>
+            <fieldset className={styles.publisherField}>
+                <label htmlFor='publisher'>Publisher</label>
                 <Form.Control
-                    name="price"
-                    type="number"
+                    name="publisher"
+                    type="text"
                     autoComplete='off'
-                    value={values.price ?? undefined}
-                    placeholder="Enter Price"
+                    value={values.publisher}
+                    placeholder="Enter Publisher"
+                    onChange={onChange}
+                />
+            </fieldset>
+
+            <fieldset className={styles.isbnField}>
+                <label htmlFor='isbn'>Isbn</label>
+                <Form.Control
+                    name="isbn"
+                    type="text"
+                    autoComplete='off'
+                    value={values.isbn}
+                    placeholder="Enter Isbn"
                     onChange={onChange}
                 />
             </fieldset>
@@ -101,6 +114,11 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
                     placeholder="Enter pages"
                     onChange={onChange}
                 />
+            </fieldset>
+
+            <fieldset className={styles.genreField}>
+                <label htmlFor='genre'>Genre</label>
+                <TagField values={values} setValues={setValues} />
             </fieldset>
 
             <Button variant="primary" className={styles.submitButton} type="submit">

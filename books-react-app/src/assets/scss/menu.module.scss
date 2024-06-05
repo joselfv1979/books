@@ -6,19 +6,23 @@ ul {
   margin: 0;
 }
 
-li {
+.subMenu {
   list-style: none;
   margin: 1rem;
-}
 
-.nonUnderlined {
-  text-decoration: none;
+  a {
+    text-decoration: none;
+  }
 }
 
 .userSubmenu {
   margin-left: auto;
   display: flex;
   align-items: center;
+
+  a {
+    text-decoration: none;
+  }
 
   .logoutIcon {
     color: red;

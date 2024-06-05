@@ -1,8 +1,6 @@
 import { Alert } from 'react-bootstrap';
 import { IMessage } from '../types/Message';
 import { useAppDispatch } from 'hooks/redux-hooks';
-import { removeBookMessage } from 'store/bookActions';
-import { removeUserMessage } from 'store/userActions';
 
 type Props = {
     message: IMessage;
@@ -10,11 +8,11 @@ type Props = {
 
 const Message = ({ message }: Props) => {
 
-    const dispatch = useAppDispatch();
+    const { removeUserMessage, removeBookMessage } = useAppDispatch();
 
     const removeMessage = () => {
-        dispatch(removeUserMessage());
-        dispatch(removeBookMessage());
+        removeUserMessage();
+        removeBookMessage();
     };
     const variant = message.type === 'ERROR' ? 'danger' : 'success';
 
