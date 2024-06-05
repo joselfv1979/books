@@ -5,13 +5,13 @@ import Logger from "../utils/logger";
 
 export const errorHandler = (
   err: Error,
-  req: Request,
+  _req: Request,
   res: Response<ResBody<null>>,
-  next: NextFunction
+  _next: NextFunction
 ) => {
   if (err instanceof CustomError) {
-    Logger.debug(err);
     res.status(err.status).json({ data: null, success: false, errors: [err.message] });
+    Logger.debug(err);
   } else {
     res.status(500).json({ data: null, success: false, errors: ["Something went wrong"] });
   }

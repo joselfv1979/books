@@ -1,9 +1,8 @@
 import { NextFunction, Request, Response } from "express";
 import Book, { IBook } from "../models/Book";
 import { CustomError } from "../models/CustomError";
-
+import { PaginationRequest, PaginationResponse, PaginationResults } from "../models/Pagination";
 import {
-  getBooksService,
   getBookService,
   createBookService,
   updateBookService,
@@ -11,14 +10,26 @@ import {
 } from "../services/bookService";
 import { ResBody } from "../models/Response";
 
-export async function getBooksController(
-  req: Request,
-  res: Response<ResBody<IBook[]>>,
+export const getBooksController = async (
+  _req: PaginationRequest,
+  res: PaginationResponse,
   next: NextFunction
-) {
+) => {
   try {
-    const books = await getBooksService();
-    res.status(200).json({ success: true, data: books });
+    if (res?.paginatedResults) {
+      const { books, next, previous, currentPage, totalDocs, totalPages, lastPage } = res.paginatedResults;
+      const responseObject: PaginationResults = {
+        books,
+        totalDocs: totalDocs || 0,
+        totalPages: totalPages || 0,
+        next,
+        previous,
+        lastPage: lastPage || 0,
+        currentPage: currentPage || 0,
+      };
+
+      return res.status(200).json({ success: true, data: responseObject })
+    }
   } catch (error) {
     next(new CustomError(500, "Couldn't fetch books, try it later"));
   }
@@ -48,17 +59,19 @@ export async function createBookController(
   next: NextFunction
 ) {
   try {
-    const { title, author, price, pages } = req.body;
+    const { title, author, publisher, isbn, genre, pages } = req.body;
     const photo = req.file ? req.file.path : "";
 
-    if (!title || !author || !price || !pages) {
+    if (!title || !author || !publisher || !isbn || !pages) {
       return next(new CustomError(400, "Bad request"));
     }
 
     const newBook: IBook = new Book({
       title,
       author,
-      price,
+      publisher,
+      isbn,
+      genre,
       pages,
       imagePath: photo,
     });
@@ -77,10 +90,10 @@ export async function updateBookController(
 ) {
   try {
     const { id } = req.params;
-    const { title, author, price, pages, image } = req.body;
+    const { title, author, publisher, isbn, pages, image } = req.body;
     const photo = req.file ? req.file.path : image;
 
-    if (!id || !title || !author || !price || !pages) {
+    if (!id || !title || !author || !publisher || !isbn || !pages) {
       return next(new CustomError(400, "Bad request"));
     }
 
