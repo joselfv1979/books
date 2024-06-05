@@ -4,10 +4,8 @@ import Modal from 'react-bootstrap/Modal';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
 import styles from '../assets/scss/globalStyles.module.scss';
 import { Book } from 'types/Book';
-import { deleteBook, removeBookMessage } from 'store/bookActions';
 import { useAppDispatch } from 'hooks/redux-hooks';
 import { User } from 'types/User';
-import { deleteUser, removeUserMessage } from 'store/userActions';
 
 export type Props = {
     book?: Book;
@@ -16,18 +14,18 @@ export type Props = {
 
 const DeleteModal = ({ book, user }: Props) => {
     const { showDeleteModal, setShowDeleteModal } = useDeleteModalContext();
+    const { deleteUser, removeUserMessage, deleteBook, removeBookMessage } = useAppDispatch();
 
     const handleClose = () => setShowDeleteModal(false);
-    const dispatch = useAppDispatch();
 
     const deleteItem = () => {
         if (user) {
-            dispatch(deleteUser(user.id));
-            dispatch(removeUserMessage());
+            deleteUser(user.id);
+            removeUserMessage();
         }
         if (book) {
-            dispatch(deleteBook(book.id));
-            dispatch(removeBookMessage());
+            deleteBook(book.id);
+            removeBookMessage();
         }
         setShowDeleteModal(false);
     };

@@ -1,4 +1,4 @@
-import React, { useEffect } from 'react';
+import { useEffect } from 'react';
 import { Routes, Route, useLocation } from 'react-router-dom';
 import Home from './pages/Home';
 import Books from './pages/Books';
@@ -14,20 +14,17 @@ import NotFound from './pages/NotFound';
 import Users from './pages/Users';
 import EditUser from './pages/EditUser';
 import { useAppDispatch } from './hooks/redux-hooks';
-import { removeBookMessage } from './store/bookActions';
-import { removeUserMessage } from './store/userActions';
 import './assets/scss/globalStyles.module.scss';
 
 const App = () => {
     const { pathname } = useLocation();
-
-    const dispatch = useAppDispatch();
+    const { removeBookMessage, removeUserMessage } = useAppDispatch();
 
     // Removes messages when view is changed
     useEffect(() => {
-        dispatch(removeBookMessage());
-        dispatch(removeUserMessage());
-    }, [dispatch, pathname]);
+        removeBookMessage();
+        removeUserMessage();
+    }, [pathname]);
 
     return (
         <div className="app">
