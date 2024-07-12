@@ -1,20 +1,20 @@
 import { useEffect } from 'react';
-import { Routes, Route, useLocation } from 'react-router-dom';
-import Home from './pages/Home';
-import Books from './pages/Books';
-import AddUser from './pages/AddUser';
-import AddBook from './pages/AddBook';
-import Menu from './components/Menu';
+import { Route, Routes, useLocation } from 'react-router-dom';
+import './assets/scss/globalStyles.module.scss';
 import AdminRoute from './components/AdminRoute';
-import EditBook from './pages/EditBook';
-import Login from './pages/Login';
-import Book from './pages/Book';
+import Menu from './components/Menu';
+import { useAppDispatch } from './hooks/redux-hooks';
 import About from './pages/About';
+import AddBook from './pages/AddBook';
+import AddUser from './pages/AddUser';
+import Book from './pages/Book';
+import Books from './pages/Books';
+import EditBook from './pages/EditBook';
+import EditUser from './pages/EditUser';
+import Home from './pages/Home';
+import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Users from './pages/Users';
-import EditUser from './pages/EditUser';
-import { useAppDispatch } from './hooks/redux-hooks';
-import './assets/scss/globalStyles.module.scss';
 
 const App = () => {
     const { pathname } = useLocation();
@@ -27,7 +27,7 @@ const App = () => {
     }, [pathname]);
 
     return (
-        <div className="app">
+        <>
             <Menu />
             <main>
                 <Routes>
@@ -44,7 +44,7 @@ const App = () => {
                     <Route path="*" element={<NotFound />} />
                 </Routes>
             </main>
-        </div>
+        </>
     );
 };
 

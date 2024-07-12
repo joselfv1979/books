@@ -3,7 +3,6 @@ import { AuthUser, Role, User, UserState } from '../types/User';
 import { RootState } from '.';
 import { initialUser } from 'data/ConstantUtils';
 
-
 const initialUserState: UserState = {
     users: [],
     user: initialUser,

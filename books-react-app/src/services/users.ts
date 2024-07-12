@@ -1,9 +1,9 @@
-import { Result } from '../types/Result';
-import { handleError } from '../utils/handleError';
-import { getHeaders } from '../utils/authHeader';
-import { AuthRequest, User } from '../types/User';
 import axios from 'axios';
 import { castUserToFormData } from 'utils/castFormData';
+import { Result } from '../types/Result';
+import { AuthRequest, User } from '../types/User';
+import { getHeaders } from '../utils/authHeader';
+import { handleError } from '../utils/handleError';
 
 const baseUrl = `${process.env.REACT_APP_API_URL}/api`;
 
