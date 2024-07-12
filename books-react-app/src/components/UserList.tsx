@@ -1,6 +1,6 @@
-import { Row, Col } from 'react-bootstrap';
-import UserCard from './UserCard';
 import { useAppSelector } from 'hooks/redux-hooks';
+import { Col, Row } from 'react-bootstrap';
+import UserCard from './UserCard';
 
 const UserList = () => {
 
@@ -13,7 +13,7 @@ const UserList = () => {
                 <Row>
                     {users.map((user) => {
                         return (
-                            <Col key={user.id} sm={4}>
+                            <Col key={user.id} sm={3}>
                                 <UserCard user={user} />
                             </Col>
                         );

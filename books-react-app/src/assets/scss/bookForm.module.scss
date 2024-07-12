@@ -1,16 +1,19 @@
 .bookForm {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 2fr;
-  grid-template-rows: repeat(8 2rem);
+  grid-template-rows: repeat(7, 4rem);
   grid-gap: 1rem 2rem;
   margin: 3rem auto;
-  width: 80%;
-  font-size: large;
-  font-weight: bold;
+  width: 90%;
+  color: #414a4c;
 
   h2 {
     grid-column-start: 3;
     text-align: center;
+  }
+
+  label {
+    color: rgb(158, 158, 158);
   }
 
   .photoField {
@@ -54,11 +57,18 @@
     grid-column: 4 / 4;
   }
 
-  .submitButton {
-    grid-column-start: 3;
-    width: 12rem;
-    height: 3rem;
-    margin: 0.5rem auto;
+  .buttonGroup {
+    grid-row-start: 7;
+    grid-column: 3 / 3;
+    display: flex;
+    justify-content: space-between;
+    margin-top: 1rem;
+
+    button {
+      width: 10rem;
+      height: 3rem;
+      color: #ffffff;
+    }
   }
 
   .uploadButton {

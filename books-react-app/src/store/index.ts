@@ -1,10 +1,10 @@
-import { combineReducers, configureStore, ThunkAction, PreloadedState, Action } from '@reduxjs/toolkit';
-import { persistReducer, persistStore } from 'redux-persist';
+import { Action, combineReducers, configureStore, PreloadedState, ThunkAction } from '@reduxjs/toolkit';
+import { persistReducer, persistStore, } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import bookSlice from './bookSlice';
-import userSlice from './userSlice';
-import * as userActions from './userActions';
 import * as bookActions from './bookActions';
+import bookSlice from './bookSlice';
+import * as userActions from './userActions';
+import userSlice from './userSlice';
 
 const persistConfig = {
     key: 'root',

@@ -1,15 +1,15 @@
 import { Link } from 'react-router-dom';
 import styles from '../assets/scss/menu.module.scss';
-import UserLogMenu from './UserLogMenu';
 import { useAppSelector } from '../hooks/redux-hooks';
 import { authUser, isAdmin } from '../store/userSlice';
+import UserLogMenu from './UserLogMenu';
 
 const Menu = () => {
     const admin = useAppSelector(isAdmin);
     const loggedUser = useAppSelector(authUser);
 
     return (
-        <ul className="text-white bg-dark m-0">
+        <nav className={styles.menu}>
             <li className={styles.subMenu}>
                 <Link to="/">Welcome</Link>
             </li>
@@ -31,7 +31,7 @@ const Menu = () => {
             <li className={styles.userSubmenu}>
                 <UserLogMenu />
             </li>
-        </ul>
+        </nav>
     );
 };
 

@@ -1,10 +1,11 @@
+import { initialBook } from 'data/ConstantUtils';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
-import { Button, Form } from 'react-bootstrap';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { useNavigate } from 'react-router-dom';
+import styles from '../assets/scss/bookForm.module.scss';
 import { useAppSelector } from '../hooks/redux-hooks';
 import { Book } from '../types/Book';
-import { initialBook } from 'data/ConstantUtils';
 import LoadFile from './LoadFile';
-import styles from '../assets/scss/bookForm.module.scss';
 import { TagField } from './TagField';
 
 export type Props = {
@@ -45,85 +46,116 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
         await saveBook(values);
     };
 
+    const navigate = useNavigate();
+
     return (
         <form className={styles.bookForm} onSubmit={submit} data-testid="book-form">
             {editing ? <h2>Edit Book</h2> : <h2>New Book</h2>}
 
             <fieldset className={styles.photoField}>
-                <LoadFile fileInput={fileInput} image={values.image} imagePath={values.imagePath} handleFile={handleFile} />
+                <LoadFile fileInput={fileInput} image={values.imagePath} handleFile={handleFile} />
                 <Button variant="primary" className={styles.uploadButton} onClick={handleClick}>
                     Upload
                 </Button>
             </fieldset>
 
             <fieldset className={styles.titleField}>
-                <label htmlFor='title'>Title</label>
-                <Form.Control
-                    name="title"
-                    type="text"
-                    autoComplete='off'
-                    value={values.title}
-                    placeholder="Enter title"
-                    onChange={onChange}
-                />
+                <FloatingLabel
+                    controlId="title"
+                    label="Enter title"
+                >
+                    <Form.Control
+                        name="title"
+                        type="text"
+                        autoComplete='off'
+                        value={values.title}
+                        placeholder="Enter title"
+                        onChange={onChange}
+                        className={styles.inputText}
+                    />
+                </FloatingLabel>
             </fieldset>
 
             <fieldset className={styles.authorField}>
-                <label htmlFor='author'>Author</label>
-                <Form.Control
-                    name="author"
-                    type="text"
-                    autoComplete='off'
-                    value={values.author}
-                    placeholder="Enter author"
-                    onChange={onChange}
-                />
+                <FloatingLabel
+                    controlId="author"
+                    label="Enter author"
+                >
+                    <Form.Control
+                        name="author"
+                        type="text"
+                        autoComplete='off'
+                        value={values.author}
+                        placeholder="Enter author"
+                        onChange={onChange}
+                        className={styles.inputText}
+                    />
+                </FloatingLabel>
             </fieldset>
 
             <fieldset className={styles.publisherField}>
-                <label htmlFor='publisher'>Publisher</label>
-                <Form.Control
-                    name="publisher"
-                    type="text"
-                    autoComplete='off'
-                    value={values.publisher}
-                    placeholder="Enter Publisher"
-                    onChange={onChange}
-                />
+                <FloatingLabel
+                    controlId="publisher"
+                    label="Enter Publisher"
+                >
+                    <Form.Control
+                        name="publisher"
+                        type="text"
+                        autoComplete='off'
+                        value={values.publisher}
+                        placeholder="Enter Publisher"
+                        onChange={onChange}
+                        className={styles.inputText}
+                    />
+                </FloatingLabel>
             </fieldset>
 
             <fieldset className={styles.isbnField}>
-                <label htmlFor='isbn'>Isbn</label>
-                <Form.Control
-                    name="isbn"
-                    type="text"
-                    autoComplete='off'
-                    value={values.isbn}
-                    placeholder="Enter Isbn"
-                    onChange={onChange}
-                />
+                <FloatingLabel
+                    controlId="isbn"
+                    label="Enter Isbn"
+                >
+                    <Form.Control
+                        name="isbn"
+                        type="text"
+                        autoComplete='off'
+                        value={values.isbn}
+                        placeholder="Enter Isbn"
+                        onChange={onChange}
+                        className={styles.inputText}
+                    />
+                </FloatingLabel>
             </fieldset>
 
             <fieldset className={styles.pagesField}>
-                <label htmlFor='pages'>Pages</label>
-                <Form.Control
-                    name="pages"
-                    type="number"
-                    autoComplete='off'
-                    value={values.pages ?? undefined}
-                    placeholder="Enter pages"
-                    onChange={onChange}
-                />
+                <FloatingLabel
+                    controlId="pages"
+                    label="Enter pages"
+                >
+                    <Form.Control
+                        name="pages"
+                        type="number"
+                        autoComplete='off'
+                        value={values.pages ?? undefined}
+                        placeholder="Enter pages"
+                        onChange={onChange}
+                        className={styles.inputText}
+                    />
+                </FloatingLabel>
             </fieldset>
 
             <fieldset className={styles.genreField}>
-                <label htmlFor='genre'>Genre</label>
                 <TagField values={values} setValues={setValues} />
             </fieldset>
 
-            <Button variant="primary" className={styles.submitButton} type="submit">
-                Submit
-            </Button>
+            <div className={styles.buttonGroup}>
+                <Button variant="primary" className={styles.submitButton} type="submit">
+                    Submit
+                </Button>
+                <Button variant="info" className={styles.submitButton} onClick={() => navigate(`/books`)}>
+                    Cancel
+                </Button>
+            </div>
         </form>
     );
 }

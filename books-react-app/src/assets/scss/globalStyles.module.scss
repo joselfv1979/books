@@ -1,6 +1,11 @@
-.app {
-  display: flex;
-  flex-direction: column;
+@font-face {
+  font-family: "MuseoSans300";
+  src: url(../fonts/museo-sans-300.ttf);
+}
+
+body {
+  background-color: #fafbfd !important;
+  font-family: "MuseoSans300", Arial, sans-serif !important;
 }
 
 .spinner {
@@ -12,30 +17,21 @@
   margin: auto;
 }
 
-.modalButtons {
-  display: flex;
-  justify-content: space-around;
-
-  button {
-    width: 5rem;
-  }
-}
-
-.modalText {
-  text-align: center;
-  font-weight: bold;
-}
-
 main {
   display: flex;
   flex-direction: column;
-  height: 90vh;
-}
-
-a {
-  text-decoration: none;
+  height: 92vh;
 }
 
 li {
   list-style: none;
+}
+
+.aboutFont {
+  font-family: "Franklin Gothic", "Arial Bold", sans-serif;
+  font-weight: bolder;
+  text-shadow: 1px 0px 1px #ccc, 0px 1px 1px #eee, 2px 1px 1px #ccc,
+    1px 2px 1px #eee, 3px 2px 1px #ccc, 2px 3px 1px #eee, 4px 3px 1px #ccc,
+    3px 4px 1px #eee, 5px 4px 1px #ccc, 4px 5px 1px #eee, 6px 5px 1px #ccc,
+    5px 6px 1px #eee, 7px 6px 1px #ccc;
 }

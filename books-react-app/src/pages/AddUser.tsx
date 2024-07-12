@@ -2,9 +2,10 @@ import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks';
 import UserForm from '../components/UserForm';
 import globalStyles from '../assets/scss/globalStyles.module.scss';
 import { Spinner } from 'react-bootstrap';
+import { User } from 'types/User';
 import Message from 'components/Message';
 import { getMessage } from 'utils/handleMessage';
-import { User } from 'types/User';
+
 
 const AddUser = () => {
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.user);

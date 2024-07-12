@@ -36,8 +36,6 @@ export const castBookToFormData = (book: Book) => {
     formData.append('publisher', publisher);
     formData.append('isbn', isbn);
 
-    console.log('genre', genre);
-
     for (const item of genre) {
         formData.append('genre', item.toString());
     }

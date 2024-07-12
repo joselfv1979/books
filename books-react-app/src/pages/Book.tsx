@@ -1,17 +1,16 @@
+import Message from 'components/Message';
 import { useEffect } from 'react';
-import { useParams, useNavigate } from 'react-router-dom';
-import { Container, Breadcrumb, Spinner } from 'react-bootstrap';
+import { Breadcrumb, Spinner } from 'react-bootstrap';
 import { ArrowLeftSquareFill } from 'react-bootstrap-icons';
-import BookCard from '../components/BookCard';
+import { useParams } from 'react-router-dom';
+import { getMessage } from 'utils/handleMessage';
 import bookStyles from '../assets/scss/book.module.scss';
 import globalStyles from '../assets/scss/globalStyles.module.scss';
+import BookCard from '../components/BookCard';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { getMessage } from 'utils/handleMessage';
-import Message from 'components/Message';
 
 const Book = () => {
     const { id } = useParams();
-    const navigate = useNavigate();
 
     const { fetchBook } = useAppDispatch();
     const { book, loading, errorMessage, successMessage } = useAppSelector((state) => state.book);
@@ -23,13 +22,20 @@ const Book = () => {
 
     return (
         loading ? <Spinner animation="border" className={globalStyles.spinner} />
-            : <Container>
+            : <>
                 {message && <Message message={message} />}
-                <Breadcrumb.Item href="#" className='mt-3'>
-                    <ArrowLeftSquareFill size={26} onClick={() => navigate('/books')} />
-                </Breadcrumb.Item>
-                {book && <BookCard book={book} styles={bookStyles} />}
-            </Container>
+                <div className='d-flex flex-column p-5'>
+                    <Breadcrumb.Item href='/books'>
+                        <ArrowLeftSquareFill size={30} />
+                        <span className='mx-2 fw-bold'>ALL BOOKS</span>
+                    </Breadcrumb.Item>
+
+                    {book && <div className={bookStyles.bookDraft}>
+                        <h2 className='text-center'>{book.title}</h2>
+                        <BookCard book={book} styles={bookStyles} />
+                    </div>}
+                </div>
+            </>
     );
 };
 

@@ -1,11 +1,9 @@
-import React from 'react';
+import { useAppDispatch } from 'hooks/redux-hooks';
 import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
-import styles from '../assets/scss/globalStyles.module.scss';
 import { Book } from 'types/Book';
-import { useAppDispatch } from 'hooks/redux-hooks';
 import { User } from 'types/User';
+import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
 
 export type Props = {
     book?: Book;
@@ -14,29 +12,28 @@ export type Props = {
 
 const DeleteModal = ({ book, user }: Props) => {
     const { showDeleteModal, setShowDeleteModal } = useDeleteModalContext();
-    const { deleteUser, removeUserMessage, deleteBook, removeBookMessage } = useAppDispatch();
+    const { deleteUser, deleteBook } = useAppDispatch();
 
     const handleClose = () => setShowDeleteModal(false);
 
     const deleteItem = () => {
-        if (user) {
-            deleteUser(user.id);
-            removeUserMessage();
-        }
-        if (book) {
-            deleteBook(book.id);
-            removeBookMessage();
-        }
+
+        user && deleteUser(user.id);
+        book && deleteBook(book.id);
+
         setShowDeleteModal(false);
     };
 
     return (
         <Modal size="sm" show={showDeleteModal} onHide={handleClose}>
             <Modal.Header closeButton>
-                <Modal.Title>Delete Book</Modal.Title>
+                <Modal.Title>{book ? 'Delete book' : 'Delete user'}
+                </Modal.Title>
             </Modal.Header>
-            <Modal.Body className={styles.modalText}>Are you sure?</Modal.Body>
-            <Modal.Footer className={styles.modalButtons}>
+            <Modal.Body className="text-center fw-bold">
+                Are you sure?
+            </Modal.Body>
+            <Modal.Footer className="d-flex justify-content-around">
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
