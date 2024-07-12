@@ -1,6 +1,7 @@
+import { useAppDispatch } from 'hooks/redux-hooks';
+import { useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
 import { IMessage } from '../types/Message';
-import { useAppDispatch } from 'hooks/redux-hooks';
 
 type Props = {
     message: IMessage;
@@ -14,10 +15,17 @@ const Message = ({ message }: Props) => {
         removeUserMessage();
         removeBookMessage();
     };
+
+    useEffect(() => {
+        setTimeout(() => {
+            message.type === 'SUCCESS' && removeMessage();
+        }, 3000)
+    }, []);
+
     const variant = message.type === 'ERROR' ? 'danger' : 'success';
 
     return (
-        <Alert variant={variant} className="w-100 text-center m-0" onClose={removeMessage} dismissible>
+        <Alert variant={variant} className="w-100 text-center mb-1" onClose={removeMessage} dismissible>
             {message.text}
         </Alert>
     );
