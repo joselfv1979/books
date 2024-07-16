@@ -1,10 +1,10 @@
-import React, { ReactNode } from 'react';
 import '@testing-library/jest-dom/extend-expect';
-import { renderHook } from '@testing-library/react-hooks';
-import { useLocation, BrowserRouter } from 'react-router-dom';
 import { fireEvent, render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
+import { renderHook } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
+import { ReactNode } from 'react';
+import { Provider } from 'react-redux';
+import { BrowserRouter, useLocation } from 'react-router-dom';
 import BookForm from '../../components/BookForm';
 import { store } from '../../store';
 
@@ -39,14 +39,14 @@ describe('BookForm tests', () => {
         expect(bookForm).toBeInTheDocument();
     });
 
-    it('title should display register', () => {
+    it('title should display new book heading', () => {
         const header = screen.getByRole('heading');
 
         expect(header).toBeInTheDocument();
         expect(header).toHaveTextContent('New Book');
     });
 
-    it('should display a blank user form', () => {
+    it('should display a blank book form', () => {
         const bookForm = screen.getByTestId('book-form');
 
         const { result } = renderHook(() => useLocation());
@@ -56,13 +56,15 @@ describe('BookForm tests', () => {
         expect(bookForm).toHaveFormValues({
             title: '',
             author: '',
-            price: null,
-            pages: null,
+            publisher: '',
+            isbn: '',
+            pages: 0,
+            genre: ''
         });
     });
 
     it('should allow entering a title', async () => {
-        const inputTitle = screen.getByLabelText('Title') as HTMLInputElement;
+        const inputTitle: HTMLInputElement = screen.getByLabelText('Title');
         expect(inputTitle).toBeInTheDocument();
 
         inputTitle.onchange = onChange;
@@ -78,10 +80,10 @@ describe('BookForm tests', () => {
     });
 
     it('calls login function with typed values', () => {
-        const inputTitle = screen.getByLabelText('Title') as HTMLInputElement;
-        const inputAuthor = screen.getByLabelText('Author') as HTMLInputElement;
-        const inputPrice = screen.getByLabelText('Price') as HTMLInputElement;
-        const inputPages = screen.getByLabelText('Pages') as HTMLInputElement;
+        const inputTitle: HTMLInputElement = screen.getByLabelText('Title');
+        const inputAuthor: HTMLInputElement = screen.getByLabelText('Author');
+        const inputPrice: HTMLInputElement = screen.getByLabelText('Price');
+        const inputPages: HTMLInputElement = screen.getByLabelText('Pages');
         userEvent.type(inputTitle, 'Caperucita Roja');
         userEvent.type(inputAuthor, 'jose');
         userEvent.type(inputPrice, '12');

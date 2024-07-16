@@ -1,8 +1,7 @@
-import React from 'react';
 import '@testing-library/jest-dom/extend-expect';
 import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
 import userEvent from '@testing-library/user-event';
+import { BrowserRouter } from 'react-router-dom';
 import LoginForm from '../../components/LoginForm';
 
 describe('login-form', () => {
@@ -33,8 +32,8 @@ describe('login-form', () => {
     });
 
     it('renders empty inputs', () => {
-        const inputUsername = screen.getByLabelText('Username') as HTMLInputElement;
-        const inputPassword = screen.getByLabelText('Password') as HTMLInputElement;
+        const inputUsername: HTMLInputElement = screen.getByLabelText('Username');
+        const inputPassword: HTMLInputElement = screen.getByLabelText('Password');
 
         expect(inputUsername).toBeInTheDocument();
         expect(inputPassword).toBeInTheDocument();
@@ -44,8 +43,8 @@ describe('login-form', () => {
     });
 
     it('should allow entering username and password', () => {
-        const inputUsername = screen.getByLabelText('Username') as HTMLInputElement;
-        const inputPassword = screen.getByLabelText('Password') as HTMLInputElement;
+        const inputUsername: HTMLInputElement = screen.getByLabelText('Username');
+        const inputPassword: HTMLInputElement = screen.getByLabelText('Password');
 
         userEvent.type(inputUsername, 'jose');
         userEvent.type(inputPassword, '1234');
@@ -55,8 +54,8 @@ describe('login-form', () => {
     });
 
     it('calls login function with typed values', () => {
-        const inputUsername = screen.getByLabelText('Username') as HTMLInputElement;
-        const inputPassword = screen.getByLabelText('Password') as HTMLInputElement;
+        const inputUsername: HTMLInputElement = screen.getByLabelText('Username');
+        const inputPassword: HTMLInputElement = screen.getByLabelText('Password');
 
         userEvent.type(inputUsername, 'jose');
         userEvent.type(inputPassword, '1234');

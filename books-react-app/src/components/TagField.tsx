@@ -1,7 +1,7 @@
-import useTagInput from "hooks/useTag";
-import { useState, ChangeEvent } from "react";
+import { ChangeEvent, useState } from "react";
 import { Form } from "react-bootstrap";
 import { Book } from "types/Book";
+import useTagInput from "../hooks/useTag";
 
 interface Props {
     values: Book;
@@ -17,7 +17,7 @@ export const TagField = ({ values, setValues }: Props) => {
     const { tags, handleAddTag, handleRemoveTag } = useTagInput(MAX_TAGS, values.genre); // pass the maximum tags
 
     // track the use input
-    const [userInput, setUserInput] = useState<string>(" ");
+    const [userInput, setUserInput] = useState<string>("");
 
     // Handle input onChange
     const handleInputChange = (e: ChangeEvent<HTMLInputElement>) => {

@@ -1,8 +1,8 @@
-import { loginUser, getAllUsers, getUser, updateUser, removeUser, createUser } from 'services/users';
-import { userSlice } from './userSlice';
-import { AuthRequest, User } from '../types/User';
 import { AppThunk } from '.';
+import { createUser, getAllUsers, getUser, loginUser, removeUser, updateUser } from '../services/users';
+import { AuthRequest, User } from '../types/User';
 import { validateUser } from '../utils/validateUser';
+import { userSlice } from './userSlice';
 
 const { actions } = userSlice;
 
