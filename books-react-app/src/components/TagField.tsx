@@ -1,7 +1,9 @@
-import { ChangeEvent, useState } from "react";
-import { Form } from "react-bootstrap";
+import useTagInput from "hooks/useTag";
+import { ChangeEvent, Fragment, useState } from "react";
+import { FloatingLabel, Form } from "react-bootstrap";
 import { Book } from "types/Book";
-import useTagInput from "../hooks/useTag";
+import styles from '../assets/scss/tagList.module.scss';
+import Tag from "./Tag";
 
 interface Props {
     values: Book;
@@ -43,37 +45,30 @@ export const TagField = ({ values, setValues }: Props) => {
 
     return (
         <div className="flex flex-col">
-            <Form.Control
-                name="genre"
-                type="text"
-                placeholder={
-                    tags.length < MAX_TAGS
-                        ? "Add a tag"
-                        : `You can only enter max. of ${MAX_TAGS} tags`
-                }
-                onKeyDown={handleKeyPress}
-                onChange={handleInputChange}
-                value={userInput}
-                disabled={tags.length === MAX_TAGS}
-            />
-
-            {/* ===== Render the tags here ===== */}
-
-            <div className="flex flex-row flex-wrap gap-3 mt-4">
+            <FloatingLabel
+                controlId="genre"
+                label="Genre"
+            >
+                <Form.Control
+                    name="genre"
+                    type="text"
+                    placeholder={
+                        tags.length < MAX_TAGS
+                            ? "Add a tag"
+                            : `You can only enter max. of ${MAX_TAGS} tags`
+                    }
+                    onKeyDown={handleKeyPress}
+                    onChange={handleInputChange}
+                    value={userInput}
+                    disabled={tags.length === MAX_TAGS}
+                    className={styles.inputText}
+                />
+            </FloatingLabel>
+            <div className={styles.tagList}>
                 {tags.map((tag: string, index: number) => (
-                    <span
-                        key={`${index}-${tag}`}
-                        className="inline-flex items-start justify-start px-3 py-2 rounded-[32px] text-sm shadow-sm font-medium bg-blue-100 text-blue-800 mr-2"
-                    >
-                        {tag}
-                        <button
-                            className="ml-2 hover:text-blue-500"
-                            onClick={() => handleRemoveTag(tag)}
-                            title={`Remove ${tag}`}
-                        >
-                            &times;
-                        </button>
-                    </span>
+                    <Fragment key={`${index}-${tag}`}>
+                        <Tag tag={tag} handleRemoveTag={handleRemoveTag} />
+                    </Fragment>
                 ))}
             </div>
         </div>

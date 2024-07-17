@@ -2,13 +2,13 @@ import { NextFunction, Request, Response } from "express";
 import Book, { IBook } from "../models/Book";
 import { CustomError } from "../models/CustomError";
 import { PaginationRequest, PaginationResponse, PaginationResults } from "../models/Pagination";
-import {
-  getBookService,
-  createBookService,
-  updateBookService,
-  deleteBookService,
-} from "../services/bookService";
 import { ResBody } from "../models/Response";
+import {
+  createBookService,
+  deleteBookService,
+  getBookService,
+  updateBookService,
+} from "../services/bookService";
 
 export const getBooksController = async (
   _req: PaginationRequest,

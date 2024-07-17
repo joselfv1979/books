@@ -1,11 +1,12 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
+import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Button, Form, Row } from 'react-bootstrap';
-import { User } from '../types/User';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { initialUser } from '../data/ConstantUtils';
-import LoadFile from './LoadFile';
 import styles from '../assets/scss/userForm.module.scss';
+import { initialUser } from '../data/ConstantUtils';
+import { useAppSelector } from '../hooks/redux-hooks';
+import { User } from '../types/User';
+import { FullNameIcon, MailIcon, PasswordIcon, UserIcon } from './Icons';
+import LoadFile from './LoadFile';
 
 type Props = {
     saveUser: (data: User) => Promise<void>;
@@ -51,72 +52,105 @@ const UserForm = ({ saveUser, editing = false }: Props) => {
             {editing ? <h2>Edit Profile</h2> : <h2>Register</h2>}
 
             <fieldset className={styles.photoField}>
-                <LoadFile fileInput={fileInput} image={values.image} imagePath={values.imagePath} handleFile={handleFile} />
+                <LoadFile fileInput={fileInput} image={values.imagePath} handleFile={handleFile} />
                 <Button variant="primary" className={styles.uploadButton} onClick={handleClick}>
                     Upload
                 </Button>
             </fieldset>
             <fieldset className={styles.fullnameField}>
-                <label htmlFor='fullname'>Full name</label>
-                <Form.Control
-                    name="fullname"
-                    type="text"
-                    autoComplete='off'
-                    value={values.fullname}
-                    placeholder="Enter full name"
-                    onChange={onChange}
-                />
+                <FullNameIcon />
+                <FloatingLabel
+                    label="Fullname"
+                    controlId='fullname'
+                    className="w-100"
+                >
+                    <Form.Control
+                        name="fullname"
+                        type="text"
+                        autoComplete='off'
+                        value={values.fullname}
+                        placeholder="Enter full name"
+                        onChange={onChange}
+                        className={styles.inputText}
+                    />
+                </FloatingLabel>
             </fieldset>
             <fieldset className={styles.usernameField}>
-                <label htmlFor='username'>Username</label>
-                <Form.Control
-                    name="username"
-                    type="text"
-                    autoComplete='off'
-                    value={values.username}
-                    placeholder="Enter username"
-                    onChange={onChange}
-                />
+                <UserIcon />
+                <FloatingLabel
+                    label="Username"
+                    controlId='username'
+                    className="w-100"
+                >
+                    <Form.Control
+                        name="username"
+                        type="text"
+                        autoComplete='off'
+                        value={values.username}
+                        placeholder="Enter username"
+                        onChange={onChange}
+                        className={styles.inputText}
+                    />
+                </FloatingLabel>
             </fieldset>
             <fieldset className={styles.emailField}>
-                <label htmlFor='email'>Email</label>
-                <Form.Control
-                    name="email"
-                    type="email"
-                    autoComplete='off'
-                    value={values.email}
-                    placeholder="Enter email"
-                    onChange={onChange}
-                />
-            </fieldset>
-            {!editing && (
-                <fieldset className={styles.passwordField}>
-                    <label htmlFor='password'>Password</label>
+                <MailIcon />
+                <FloatingLabel
+                    label="Email"
+                    controlId='email'
+                    className="w-100"
+                >
                     <Form.Control
-                        name="password"
-                        type="password"
-                        value={values.password}
-                        placeholder="Password"
-                        autoComplete="off"
+                        name="email"
+                        type="email"
+                        autoComplete='off'
+                        value={values.email}
+                        placeholder="Enter email"
                         onChange={onChange}
+                        className={styles.inputText}
                     />
-                </fieldset>
-            )}
-            {!editing && (
-                <fieldset className={styles.linkField}>
-                    <Row className="col mx-auto">
-                        <span className="text-center">Do you have an account?</span>
-                        <button type="button" className="btn btn-link text-decoration-none m-auto" onClick={() => navigate("/login")}>
-                            Login here
-                        </button>
-                    </Row>
-                </fieldset>
-            )}
-            <Button variant="primary" className={styles.submitButton} type="submit">
-                Submit
-            </Button>
-        </form>
+                </FloatingLabel>
+            </fieldset>
 
+            {!editing &&
+                <fieldset className={styles.passwordField}>
+                    <PasswordIcon />
+                    <FloatingLabel
+                        label="Password"
+                        controlId="password"
+                        className="w-100"
+                    >
+                        <Form.Control
+                            name="password"
+                            type="password"
+                            value={values.password}
+                            placeholder="Password"
+                            autoComplete="off"
+                            onChange={onChange}
+                            className={styles.inputText}
+                        />
+                    </FloatingLabel>
+                </fieldset>}
+
+            {!editing &&
+                <fieldset className={styles.linkField}>
+                    <p className="text-center">Do you have an account?</p>
+                    <button type="button" className="btn btn-link text-decoration-none align-self-center" onClick={() => navigate("/login")}>
+                        Login here
+                    </button>
+                </fieldset>}
+
+            <div className={styles.buttonGroup}>
+                <Button variant="primary" className={styles.submitButton} type="submit">
+                    Submit
+                </Button>
+                {editing &&
+                    <Button variant="info" className={styles.submitButton} onClick={() => navigate(`/books`)}>
+                        Cancel
+                    </Button>}
+            </div>
+
+        </form>
     );
 };
 

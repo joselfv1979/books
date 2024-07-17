@@ -22,4 +22,5 @@ const PORT = NODE_ENV === "development" ? DEV_PORT : PROD_PORT;
 const DB_CONN_STRING =
   NODE_ENV === "development" ? DEV_DB_CONN_STRING : PROD_DB_CONN_STRING;
 
-export { NODE_ENV, HOST, PORT, DB_CONN_STRING };
+export { DB_CONN_STRING, HOST, NODE_ENV, PORT };
+
