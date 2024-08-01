@@ -20,7 +20,7 @@ const EditUser = () => {
     }, []);
 
     return (
-        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+        loading ? <Spinner data-testid="loader" animation="border" className={globalStyles.spinner} />
             : <>
                 {message && <Message message={message} />}
                 <UserForm saveUser={editUser} editing={true} />
