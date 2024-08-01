@@ -1,15 +1,15 @@
-import { initialBook } from 'data/ConstantUtils';
+import styles from '@/assets/scss/bookForm.module.scss';
+import { initialBook } from '@/data/ConstantUtils';
+import { useAppSelector } from '@/hooks/redux-hooks';
+import { Book } from '@/types/Book';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import styles from '../assets/scss/bookForm.module.scss';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { Book } from '../types/Book';
 import LoadFile from './LoadFile';
 import { TagField } from './TagField';
 
 export type Props = {
-    saveBook: (data: Book) => Promise<void>;
+    saveBook: (data: Book) => void;
     editing?: boolean; // book editing flag
 };
 // Form for creating or editing a book, used in AddBook and EditBook views
@@ -35,15 +35,15 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
 
     // Input values handler
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setValues((prevState) => ({
-            ...prevState, [event.target.name]: event.target.value,
-        }));
+        setValues({
+            ...values, [event.target.name]: event.target.value,
+        });
     };
 
     // Submit form values to views
-    const submit = async (event: FormEvent<HTMLFormElement>) => {
+    const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await saveBook(values);
+        saveBook(values);
     };
 
     const navigate = useNavigate();
@@ -96,14 +96,14 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
             <fieldset className={styles.publisherField}>
                 <FloatingLabel
                     controlId="publisher"
-                    label="Enter Publisher"
+                    label="Enter publisher"
                 >
                     <Form.Control
                         name="publisher"
                         type="text"
                         autoComplete='off'
                         value={values.publisher}
-                        placeholder="Enter Publisher"
+                        placeholder="Enter publisher"
                         onChange={onChange}
                         className={styles.inputText}
                     />
@@ -113,14 +113,14 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
             <fieldset className={styles.isbnField}>
                 <FloatingLabel
                     controlId="isbn"
-                    label="Enter Isbn"
+                    label="Enter isbn"
                 >
                     <Form.Control
                         name="isbn"
                         type="text"
                         autoComplete='off'
                         value={values.isbn}
-                        placeholder="Enter Isbn"
+                        placeholder="Enter isbn"
                         onChange={onChange}
                         className={styles.inputText}
                     />
@@ -152,7 +152,7 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
                 <Button variant="primary" className={styles.submitButton} type="submit">
                     Submit
                 </Button>
-                <Button variant="info" className={styles.submitButton} onClick={() => navigate(`/books`)}>
+                <Button variant="info" className={styles.submitButton} onClick={() => navigate("/books")}>
                     Cancel
                 </Button>
             </div>

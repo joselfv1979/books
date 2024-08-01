@@ -1,7 +1,7 @@
-import { useAppDispatch } from 'hooks/redux-hooks';
+import { useAppDispatch } from '@/hooks/redux-hooks';
+import { IMessage } from '@/types/Message';
 import { useEffect } from 'react';
 import { Alert } from 'react-bootstrap';
-import { IMessage } from '../types/Message';
 
 type Props = {
     message: IMessage;

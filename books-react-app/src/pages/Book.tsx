@@ -1,13 +1,13 @@
-import Message from 'components/Message';
+import bookStyles from '@/assets/scss/book.module.scss';
+import globalStyles from '@/assets/scss/globalStyles.module.scss';
+import BookCard from '@/components/BookCard';
+import Message from '@/components/Message';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { getMessage } from '@/utils/handleMessage';
 import { useEffect } from 'react';
 import { Breadcrumb, Spinner } from 'react-bootstrap';
 import { ArrowLeftSquareFill } from 'react-bootstrap-icons';
 import { useParams } from 'react-router-dom';
-import { getMessage } from 'utils/handleMessage';
-import bookStyles from '../assets/scss/book.module.scss';
-import globalStyles from '../assets/scss/globalStyles.module.scss';
-import BookCard from '../components/BookCard';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 
 const Book = () => {
     const { id } = useParams();

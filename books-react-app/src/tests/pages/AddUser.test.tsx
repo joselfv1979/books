@@ -1,29 +1,50 @@
-import React, { ReactNode } from 'react';
+import AddUser from '@/pages/AddUser';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen } from '@testing-library/react';
-import { BrowserRouter } from 'react-router-dom';
-import AddUser from '../../pages/AddUser';
-import { Provider } from 'react-redux';
-import { store } from '../../store';
+import { screen } from '@testing-library/react';
+import { userState } from '../utils/data';
+import { customRender } from '../utils/test-utils';
 
+describe('AddUser userForm', () => {
 
-describe('user-form', () => {
-    type Props = {
-        children?: ReactNode;
-    };
+    beforeEach(() =>
+        customRender(<AddUser />,
+            { preloadedState: { user: userState } }));
 
-    const wrapper = ({ children }: Props) => (
-        <Provider store={store}>
-            <BrowserRouter>{children}</BrowserRouter>
-        </Provider>
-    );
-
-    beforeEach(() => {
-        render(<AddUser />, { wrapper });
-    });
     it('renders user form', () => {
         const userForm = screen.getByTestId('user-form');
 
         expect(userForm).toBeInTheDocument();
     });
 });
+
+describe('AddUser loading state', () => {
+
+    beforeEach(() => {
+        const loadingState = { ...userState, loading: true };
+        customRender(<AddUser />, { preloadedState: { user: loadingState } })
+    });
+
+    it('renders the loader if the loading state is true', () => {
+        const loader = screen.getByTestId('loader');
+
+        expect(loader).toBeInTheDocument();
+    });
+});
+
+describe('AddUser message', () => {
+
+    beforeEach(() => {
+        const messageState = { ...userState, loading: false, successMessage: 'User added successfully' };
+        customRender(<AddUser />, { preloadedState: { user: messageState } })
+    });
+
+    it("should display a message when it's received from the state", () => {
+        const message = screen.getByText(/user added successfully/i);
+
+        expect(message).toBeInTheDocument();
+    });
+});
+
+
+
+

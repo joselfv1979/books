@@ -1,4 +1,4 @@
-import { useAppSelector } from 'hooks/redux-hooks';
+import { useAppSelector } from '@/hooks/redux-hooks';
 import { Col, Row } from 'react-bootstrap';
 import UserCard from './UserCard';
 

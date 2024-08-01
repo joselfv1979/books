@@ -1,4 +1,4 @@
-import styles from '../assets/scss/globalStyles.module.scss';
+import styles from '@/assets/scss/globalStyles.module.scss';
 
 const About = () => {
     return (

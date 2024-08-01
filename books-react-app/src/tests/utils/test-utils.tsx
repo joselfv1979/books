@@ -1,9 +1,9 @@
 import { render, RenderOptions } from "@testing-library/react";
-import { PropsWithChildren } from "react";
+import { PropsWithChildren, ReactNode } from "react";
 import { Provider } from "react-redux";
 import { BrowserRouter } from "react-router-dom";
 import { PreloadedState } from "redux";
-import { AppStore, RootState, setupStore } from "store";
+import { AppStore, RootState, setupStore, store } from "../../store";
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.
@@ -12,7 +12,7 @@ interface ExtendedRenderOptions extends Omit<RenderOptions, "queries"> {
     store?: AppStore;
 }
 
-const customRender = (
+export const customRender = (
     ui: React.ReactElement,
     extendedRenderOptions: ExtendedRenderOptions = {}
 ) => {
@@ -27,9 +27,7 @@ const customRender = (
         return (
             <BrowserRouter>
                 <Provider store={store}>
-
                     {children}
-
                 </Provider>
             </BrowserRouter>
         );
@@ -42,6 +40,16 @@ const customRender = (
     };
 };
 
+type Props = {
+    children?: ReactNode;
+};
+
+export const wrapper = ({ children }: Props) => (
+    <Provider store={store}>
+        <BrowserRouter>{children}</BrowserRouter>
+    </Provider>
+);
+
 export * from '@testing-library/react';
-export { customRender as render };
+export { store as customStore, customRender as render };
 

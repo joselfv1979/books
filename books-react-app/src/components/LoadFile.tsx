@@ -1,6 +1,6 @@
+import styles from '@/assets/scss/loadFile.module.scss';
 import { ChangeEvent, RefObject, useState } from 'react';
 import { Form } from 'react-bootstrap';
-import styles from '../assets/scss/loadFile.module.scss';
 
 type Props = {
     image: string;

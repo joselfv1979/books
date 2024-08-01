@@ -1,10 +1,10 @@
+import styles from '@/assets/scss/bookList.module.scss';
+import { useDeleteModalContext } from '@/context/deleteModal/DeleteModalContext';
+import { useAppSelector } from '@/hooks/redux-hooks';
+import { isAdmin } from '@/store/userSlice';
+import { Book } from '@/types/Book';
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import { Book } from '../types/Book';
-import styles from '../assets/scss/bookList.module.scss';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
-import { isAdmin } from '../store/userSlice';
 
 type Props = {
     book: Book;

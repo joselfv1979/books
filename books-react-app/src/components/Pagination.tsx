@@ -1,4 +1,4 @@
-import { useAppSelector } from "hooks/redux-hooks";
+import { useAppSelector } from "@/hooks/redux-hooks";
 import { Dispatch, SetStateAction } from "react";
 import Pagination from "react-bootstrap/Pagination";
 

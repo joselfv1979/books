@@ -1,9 +1,9 @@
-import { useAppDispatch } from 'hooks/redux-hooks';
+import { useDeleteModalContext } from '@/context/deleteModal/DeleteModalContext';
+import { useAppDispatch } from '@/hooks/redux-hooks';
+import { Book } from '@/types/Book';
+import { User } from '@/types/User';
 import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
-import { Book } from 'types/Book';
-import { User } from 'types/User';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
 
 export type Props = {
     book?: Book;

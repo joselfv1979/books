@@ -1,8 +1,9 @@
 {
+  "extends": "./tsconfig.paths.json",
   "compilerOptions": {
     "allowJs": true,
     "allowSyntheticDefaultImports": true,
-    "baseUrl": "src",
+    // "baseUrl": "./src",
     "declaration": true, // Generate corresponding .d.ts file
     "esModuleInterop": true,
     "forceConsistentCasingInFileNames": true,
@@ -20,17 +21,50 @@
     "noFallthroughCasesInSwitch": true,
     "noUnusedLocals": false, // Report errors on unused locals
     "noUnusedParameters": true, // Report errors on unused parameters
-    "paths": {
-      "@/*": [
-        "./src/*"
-      ]
-    },
+    // "paths": {
+    //   "@/assets/*": [
+    //     "./assets/*"
+    //   ],
+    //   "@/components/*": [
+    //     "./components/*"
+    //   ],
+    //   "@/context/*": [
+    //     "./context/*"
+    //   ],
+    //   "@/data/*": [
+    //     "./data/*"
+    //   ],
+    //   "@/hooks/*": [
+    //     "./hooks/*"
+    //   ],
+    //   "@/pages/*": [
+    //     "./pages/*"
+    //   ],
+    //   "@/services/*": [
+    //     "./services/*"
+    //   ],
+    //   "@/store/*": [
+    //     "./store/*"
+    //   ],
+    //   "@/types/*": [
+    //     "./types/*"
+    //   ],
+    //   "@/tests/*": [
+    //     "./tests/*"
+    //   ],
+    //   "@/utils/*": [
+    //     "./utils/*"
+    //   ],
+    // },
     "resolveJsonModule": true,
     "skipLibCheck": true,
     "sourceMap": true, // Generate corrresponding .map file
     "strict": true,
     "strictNullChecks": true,
     "target": "es6",
+    "types": [
+      "@types/jest"
+    ],
   },
   "exclude": [
     "node_modules",

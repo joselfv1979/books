@@ -1,8 +1,8 @@
+import styles from '@/assets/scss/bookList.module.scss';
+import { useAppSelector } from '@/hooks/redux-hooks';
+import { Book } from '@/types/Book';
 import { Dispatch, SetStateAction } from 'react';
 import { Col, Row } from 'react-bootstrap';
-import styles from '../assets/scss/bookList.module.scss';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { Book } from '../types/Book';
 import BookCard from './BookCard';
 import BookSearchBar from './BookSearchBar';
 import PaginationComponent from './Pagination';
@@ -20,7 +20,7 @@ const BookList = ({ query, setQuery }: Props) => {
             <h1 className={styles.bookListTitle}>Library</h1>
             <BookSearchBar query={query} setQuery={setQuery} />
             {books.length > 0 ?
-                <div className='p-3'>
+                <div className='p-3' data-testid="book-list">
                     <Row>
                         {books.map((book: Book) => {
                             return (

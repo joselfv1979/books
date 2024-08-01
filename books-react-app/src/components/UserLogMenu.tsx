@@ -1,7 +1,7 @@
-import { Link, useNavigate } from 'react-router-dom';
+import styles from '@/assets/scss/menu.module.scss';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import { BoxArrowRight } from 'react-bootstrap-icons';
-import styles from '../assets/scss/menu.module.scss';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { Link, useNavigate } from 'react-router-dom';
 
 const UserLogMenu = () => {
     const { authUser } = useAppSelector((state) => state.user);

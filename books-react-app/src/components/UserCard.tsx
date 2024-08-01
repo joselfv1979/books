@@ -1,8 +1,8 @@
+import userImage from '@/assets/images/user.svg';
+import styles from '@/assets/scss/userCard.module.scss';
+import { useDeleteModalContext } from '@/context/deleteModal/DeleteModalContext';
+import { User } from '@/types/User';
 import { Button, Card } from 'react-bootstrap';
-import styles from '../assets/scss/userCard.module.scss';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
-import { User } from '../types/User';
-import userImage from './../assets/images/user.svg';
 
 type Props = {
     user: User;

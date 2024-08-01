@@ -1,53 +1,50 @@
-import React, { Dispatch, ReactNode, useState } from 'react';
+import BookList from '@/components/BookList';
+import { bookState } from '@/tests/utils/data';
+import { customRender } from '@/tests/utils/test-utils';
 import '@testing-library/jest-dom/extend-expect';
-import { renderHook } from '@testing-library/react-hooks';
-import { useLocation, BrowserRouter } from 'react-router-dom';
-import { fireEvent, render, screen } from '@testing-library/react';
-import { Provider } from 'react-redux';
-import userEvent from '@testing-library/user-event';
-import BookList from '../../components/BookList';
-import { Book } from '../../types/Book';
-import { store } from '../../store';
-import { Query } from 'types/Query';
+import { screen } from '@testing-library/react';
+import { Book } from 'types/Book';
 
+const query = { search: '', page: 1 };
+const setQuery = jest.fn();
 
-const books: Book[] = [
-    {
-        id: '1',
-        title: 'La Colmena',
-        author: 'Cela',
-        publisher: "Penguin",
-        isbn: "0-6666-2222",
-        genre: ["Horror"],
-        pages: 350,
-        imagePath: '/',
-    },
-];
+describe('BookList', () => {
 
-// describe('BookList tests', () => {
-//     type Props = {
-//         children?: ReactNode;
-//     };
+    beforeEach(() => customRender(<BookList query={query} setQuery={setQuery} />,
+        { preloadedState: { book: bookState } }));
 
-//     const wrapper = ({ children }: Props) => (
-//         <Provider store={store}>
-//             <BrowserRouter>{children}</BrowserRouter>
-//         </Provider>
-//     );
+    it('renders a list of books', () => {
+        const header = screen.getByRole('heading');
 
-//     const [query, setQuery] = useState<Query>({ search: 'La casa del Libro', page: '1', limit: '8' });
+        expect(header).toBeInTheDocument();
+        expect(header).toHaveTextContent(/library/i);
 
-//     beforeEach(() => {
-//         render(<BookList query={query} setQuery={setQuery} />, { wrapper });
-//     });
+        const bookList = screen.getByTestId('book-list');
+        expect(bookList).toBeInTheDocument();
+    });
 
-//     it('renders book list', () => {
-//         const bookList = screen.getByTestId('book-list');
-//         expect(bookList).toBeInTheDocument();
-//     });
+    it('BookList should have one book', () => {
+        const bookCard = screen.getAllByTestId('book-card');
+        expect(bookCard).toHaveLength(1);
 
-//     it('renders one book', () => {
-//         const bookCard = screen.getAllByTestId('book-card');
-//         expect(bookCard).toHaveLength(1);
-//     });
-// });
+        const bookTitle = screen.getByText(/la colmena/i);
+        expect(bookTitle).toBeInTheDocument();
+    });
+})
+
+describe('Empty BookList', () => {
+
+    beforeEach(() => {
+        const emptyBookList: Book[] = [];
+        const emptyState = { ...bookState, books: emptyBookList }
+
+        customRender(<BookList query={query} setQuery={setQuery} />,
+            { preloadedState: { book: emptyState } }
+        )
+    })
+
+    it('should render no books found text when the list of books is empty', () => {
+        const noBooksText = screen.getByText(/no books found/i);
+        expect(noBooksText).toBeInTheDocument();
+    });
+})

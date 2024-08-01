@@ -1,7 +1,7 @@
-import { useLocation } from 'react-router-dom';
-import { Book } from '../types/Book';
+import library from '@/assets/images/library.jpg';
+import { Book } from '@/types/Book';
 import { Card } from 'react-bootstrap';
-import library from './../assets/images/library.jpg';
+import { useLocation } from 'react-router-dom';
 import BookCardButtons from './BookCardButtons';
 
 type Props = {

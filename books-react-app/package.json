@@ -2,6 +2,7 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
+  "cracoConfig": "craco.config.js",
   "dependencies": {
     "@reduxjs/toolkit": "^1.9.1",
     "axios": "^0.24.0",
@@ -20,11 +21,11 @@
     "web-vitals": "^2.1.3"
   },
   "scripts": {
-    "dev": "react-scripts start",
-    "build": "react-scripts build",
-    "test": "react-scripts test --verbose",
-    "test:watch": "jest --watch",
-    "eject": "react-scripts eject"
+    "build": "craco build",
+    "dev": "craco start",
+    "eject": "craco eject",
+    "start": "serve build -s -n -L -p $PORT",
+    "test": "craco test --watchAll --detectOpenHandles --verbose --coverage"
   },
   "browserslist": {
     "production": [
@@ -39,6 +40,7 @@
     ]
   },
   "devDependencies": {
+    "@craco/craco": "^7.1.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^8.0.1",

@@ -1,12 +1,12 @@
+import globalStyles from '@/assets/scss/globalStyles.module.scss';
+import DeleteModal from '@/components/DeleteModal';
+import Message from '@/components/Message';
+import UserList from '@/components/UserList';
+import { useDeleteModalContext } from '@/context/deleteModal/DeleteModalContext';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { getMessage } from '@/utils/handleMessage';
 import { useEffect } from 'react';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { Spinner } from 'react-bootstrap';
-import UserList from '../components/UserList';
-import globalStyles from '../assets/scss/globalStyles.module.scss';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
-import DeleteModal from '../components/DeleteModal';
-import { getMessage } from 'utils/handleMessage';
-import Message from 'components/Message';
 
 
 const Users = () => {

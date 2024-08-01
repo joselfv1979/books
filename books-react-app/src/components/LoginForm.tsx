@@ -1,15 +1,15 @@
-
+import '@/assets/scss/globalStyles.module.scss';
+import { Auth } from '@/types/Auth';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import '../assets/scss/globalStyles.module.scss';
-import { Auth } from '../types/Auth';
 import { PasswordIcon, UserIcon } from './Icons';
 
 export type Props = {
-    loginUser: (user: Auth) => void;
+    login: (user: Auth) => void;
 };
 
-const LoginForm = ({ loginUser }: Props) => {
+const LoginForm = ({ login }: Props) => {
+
     const initialState = {
         username: '',
         password: '',
@@ -28,7 +28,7 @@ const LoginForm = ({ loginUser }: Props) => {
 
     const handleLogin = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        loginUser(values);
+        login(values);
     };
 
     return (

@@ -1,8 +1,8 @@
-import useTagInput from "hooks/useTag";
+import styles from '@/assets/scss/tagList.module.scss';
+import useTagInput from "@/hooks/useTag";
+import { Book } from "@/types/Book";
 import { ChangeEvent, Fragment, useState } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
-import { Book } from "types/Book";
-import styles from '../assets/scss/tagList.module.scss';
 import Tag from "./Tag";
 
 interface Props {

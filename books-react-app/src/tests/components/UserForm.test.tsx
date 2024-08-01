@@ -1,13 +1,9 @@
-import React, { Dispatch, ReactNode, SetStateAction } from 'react';
+import UserForm from '@/components/UserForm';
 import '@testing-library/jest-dom/extend-expect';
+import { fireEvent } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
-import { useLocation, BrowserRouter } from 'react-router-dom';
-import { act, fireEvent, getByLabelText, render, screen, waitFor } from '@testing-library/react';
-import UserForm from '../../components/UserForm';
-import { Provider } from 'react-redux';
-import userEvent from '@testing-library/user-event';
-import { store } from '../../store';
-import { initialUser } from 'data/ConstantUtils';
+import { useLocation } from 'react-router-dom';
+import { render, screen } from '../utils/test-utils';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -18,23 +14,15 @@ jest.mock('react-router-dom', () => ({
 
 const onChange = jest.fn();
 
-describe('UserForm tests', () => {
-    type Props = {
-        children?: ReactNode;
-    };
+describe('UserForm', () => {
 
-    const wrapper = ({ children }: Props) => (
-        <Provider store={store}>
-            <BrowserRouter>{children}</BrowserRouter>
-        </Provider>
-    );
     beforeEach(() => {
         const saveUser = jest.fn();
 
-        render(<UserForm saveUser={saveUser} />, { wrapper });
+        render(<UserForm saveUser={saveUser} />);
     });
 
-    it('renders user form', () => {
+    it('renders a user form', () => {
         const userForm = screen.getByTestId('user-form');
 
         expect(userForm).toBeInTheDocument();
@@ -44,7 +32,7 @@ describe('UserForm tests', () => {
         const header = screen.getByRole('heading');
 
         expect(header).toBeInTheDocument();
-        expect(header).toHaveTextContent('Register');
+        expect(header).toHaveTextContent(/register/i);
     });
 
     it('should display a blank user form', () => {
@@ -64,21 +52,14 @@ describe('UserForm tests', () => {
     });
 
     it('should allow entering a fullname', async () => {
-        const inputFullname = screen.getByLabelText('Full name') as HTMLInputElement;
+        const inputFullname: HTMLInputElement = screen.getByPlaceholderText(/enter full name/i);
         expect(inputFullname).toBeInTheDocument();
 
         inputFullname.onchange = onChange;
 
-        // userEvent.type(inputFullname, 'Muhammad Lahin');
-
         fireEvent.change(inputFullname, { target: { value: 'Muhammad Lahin' } });
 
-        //expect(onChange).toHaveBeenCalledWith('Muhammad Lahin');
-        // expect(inputFullname.value).toBe('Muhammad Lahin');
+        expect(inputFullname.value).toBe('Muhammad Lahin');
         expect(onChange).toHaveBeenCalled();
-        expect(Object.is('Muhammad Lahin', 'Muhammad Lahin')).toBe(true);
-        // expect(userForm).toHaveFormValues({
-        //     fullname: 'Muhammad Lahin',
-        // });
     });
 });

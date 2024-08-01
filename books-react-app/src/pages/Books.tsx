@@ -1,12 +1,12 @@
+import globalStyles from '@/assets/scss/globalStyles.module.scss';
+import BookList from '@/components/BookList';
+import DeleteModal from '@/components/DeleteModal';
+import Message from '@/components/Message';
+import { useDeleteModalContext } from '@/context/deleteModal/DeleteModalContext';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { getMessage } from '@/utils/handleMessage';
 import { useEffect, useState } from 'react';
-import BookList from '../components/BookList';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { Spinner } from 'react-bootstrap';
-import globalStyles from '../assets/scss/globalStyles.module.scss';
-import DeleteModal from '../components/DeleteModal';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
-import { getMessage } from 'utils/handleMessage';
-import Message from 'components/Message';
 
 const Books = () => {
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.book);

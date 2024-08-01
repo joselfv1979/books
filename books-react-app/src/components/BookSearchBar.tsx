@@ -1,4 +1,4 @@
-import { useAppDispatch } from 'hooks/redux-hooks';
+import { useAppDispatch } from '@/hooks/redux-hooks';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
 
 type Props = {

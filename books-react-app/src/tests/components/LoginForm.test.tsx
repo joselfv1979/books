@@ -1,22 +1,21 @@
+import LoginForm from '@/components/LoginForm';
 import '@testing-library/jest-dom/extend-expect';
-import { render, screen } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
-import { BrowserRouter } from 'react-router-dom';
-import LoginForm from '../../components/LoginForm';
+import { render, screen } from '../utils/test-utils';
 
-describe('login-form', () => {
-    const login = jest.fn();
+const login = jest.fn();
+const mockNavigate = jest.fn();
 
-    const renderLogin = () => {
-        render(
-            <BrowserRouter>
-                <LoginForm loginUser={login} />
-            </BrowserRouter>,
-        );
-    };
+jest.mock("react-router-dom", () => ({
+    ...jest.requireActual("react-router-dom"),
+    useNavigate: () => mockNavigate
+}));
 
-    beforeEach(() => renderLogin());
-    it('renders login form', () => {
+describe('LoginForm', () => {
+
+    beforeEach(() => render(<LoginForm login={login} />));
+
+    it('renders a login form', () => {
         const loginForm = screen.getByTestId('login-form');
 
         expect(loginForm).toBeInTheDocument();
@@ -32,8 +31,8 @@ describe('login-form', () => {
     });
 
     it('renders empty inputs', () => {
-        const inputUsername: HTMLInputElement = screen.getByLabelText('Username');
-        const inputPassword: HTMLInputElement = screen.getByLabelText('Password');
+        const inputUsername: HTMLInputElement = screen.getByPlaceholderText(/enter username/i);
+        const inputPassword: HTMLInputElement = screen.getByPlaceholderText(/enter password/i);
 
         expect(inputUsername).toBeInTheDocument();
         expect(inputPassword).toBeInTheDocument();
@@ -43,8 +42,8 @@ describe('login-form', () => {
     });
 
     it('should allow entering username and password', () => {
-        const inputUsername: HTMLInputElement = screen.getByLabelText('Username');
-        const inputPassword: HTMLInputElement = screen.getByLabelText('Password');
+        const inputUsername: HTMLInputElement = screen.getByPlaceholderText(/enter username/i);
+        const inputPassword: HTMLInputElement = screen.getByPlaceholderText(/enter password/i);
 
         userEvent.type(inputUsername, 'jose');
         userEvent.type(inputPassword, '1234');
@@ -54,16 +53,26 @@ describe('login-form', () => {
     });
 
     it('calls login function with typed values', () => {
-        const inputUsername: HTMLInputElement = screen.getByLabelText('Username');
-        const inputPassword: HTMLInputElement = screen.getByLabelText('Password');
 
-        userEvent.type(inputUsername, 'jose');
+        const inputUsername: HTMLInputElement = screen.getByPlaceholderText(/enter username/i);
+        const inputPassword: HTMLInputElement = screen.getByPlaceholderText(/enter password/i);
+
+        userEvent.type(inputUsername, 'admin');
         userEvent.type(inputPassword, '1234');
 
-        const submitButton = screen.getByRole('button', { name: 'Submit' });
-        // const loginButton = screen.getByText('Submit');
+        const submitButton = screen.getByRole('button', { name: /submit/i });
         userEvent.click(submitButton);
 
-        expect(login).toHaveBeenCalledWith({ username: 'jose', password: '1234' });
+        expect(login).toHaveBeenCalledWith({
+            username: 'admin',
+            password: '1234'
+        })
+    });
+
+    it('should navigate to the registration page by clicking on the button to create an account', async () => {
+        const createAccountButton = screen.getByRole('button', { name: /create an account/i });
+        userEvent.click(createAccountButton);
+
+        expect(mockNavigate).toHaveBeenCalledWith("/register");
     });
 });

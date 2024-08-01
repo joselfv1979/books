@@ -1,10 +1,9 @@
-import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks';
-import UserForm from '../components/UserForm';
-import globalStyles from '../assets/scss/globalStyles.module.scss';
+import globalStyles from '@/assets/scss/globalStyles.module.scss';
+import Message from '@/components/Message';
+import UserForm from '@/components/UserForm';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { getMessage } from '@/utils/handleMessage';
 import { Spinner } from 'react-bootstrap';
-import { User } from 'types/User';
-import Message from 'components/Message';
-import { getMessage } from 'utils/handleMessage';
 
 
 const AddUser = () => {
@@ -14,15 +13,11 @@ const AddUser = () => {
     // Obtains a custom message object
     const message = getMessage(errorMessage, successMessage);
 
-    const saveUser = async (data: User) => {
-        addUser(data);
-    };
-
     return (
-        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+        loading ? <Spinner data-testid="loader" animation="border" className={globalStyles.spinner} />
             : <>
                 {message && <Message message={message} />}
-                <UserForm saveUser={saveUser} />
+                <UserForm saveUser={addUser} />
             </>
 
 

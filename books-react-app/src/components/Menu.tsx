@@ -1,7 +1,7 @@
+import styles from '@/assets/scss/menu.module.scss';
+import { useAppSelector } from '@/hooks/redux-hooks';
+import { authUser, isAdmin } from '@/store/userSlice';
 import { Link } from 'react-router-dom';
-import styles from '../assets/scss/menu.module.scss';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { authUser, isAdmin } from '../store/userSlice';
 import UserLogMenu from './UserLogMenu';
 
 const Menu = () => {

@@ -1,12 +1,11 @@
-import BookForm from 'components/BookForm';
-import Message from 'components/Message';
-import { useAppDispatch, useAppSelector } from 'hooks/redux-hooks';
+import globalStyles from '@/assets/scss/globalStyles.module.scss';
+import BookForm from '@/components/BookForm';
+import Message from '@/components/Message';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { getMessage } from '@/utils/handleMessage';
 import { useEffect } from 'react';
 import Spinner from 'react-bootstrap/esm/Spinner';
 import { useParams } from 'react-router-dom';
-import { Book } from 'types/Book';
-import { getMessage } from 'utils/handleMessage';
-import globalStyles from '../assets/scss/globalStyles.module.scss';
 
 const BookEdit = () => {
     const { id } = useParams();
@@ -20,15 +19,11 @@ const BookEdit = () => {
         if (id) fetchBook(id);
     }, []);
 
-    const saveBook = async (values: Book) => {
-        editBook(values);
-    };
-
     return (
         loading ? <Spinner animation="border" className={globalStyles.spinner} />
             : <>
                 {message && <Message message={message} />}
-                <BookForm saveBook={saveBook} editing={true} />
+                <BookForm saveBook={editBook} editing={true} />
             </>
     );
 };

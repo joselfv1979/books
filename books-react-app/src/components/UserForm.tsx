@@ -1,15 +1,15 @@
+import styles from '@/assets/scss/userForm.module.scss';
+import { initialUser } from '@/data/ConstantUtils';
+import { useAppSelector } from '@/hooks/redux-hooks';
+import { User } from '@/types/User';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import styles from '../assets/scss/userForm.module.scss';
-import { initialUser } from '../data/ConstantUtils';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { User } from '../types/User';
 import { FullNameIcon, MailIcon, PasswordIcon, UserIcon } from './Icons';
 import LoadFile from './LoadFile';
 
 type Props = {
-    saveUser: (data: User) => Promise<void>;
+    saveUser: (data: User) => void;
     editing?: boolean; // profile editing flag
 };
 
@@ -40,9 +40,9 @@ const UserForm = ({ saveUser, editing = false }: Props) => {
     };
 
     // Submit user
-    const submit = async (event: FormEvent<HTMLFormElement>) => {
+    const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        await saveUser(values);
+        saveUser(values);
     };
 
     const navigate = useNavigate();
