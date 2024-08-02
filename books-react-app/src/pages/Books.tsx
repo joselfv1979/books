@@ -1,12 +1,11 @@
-import globalStyles from '@/assets/scss/globalStyles.module.scss';
 import BookList from '@/components/BookList';
 import DeleteModal from '@/components/DeleteModal';
+import { Loader } from '@/components/Loader';
 import Message from '@/components/Message';
 import { useDeleteModalContext } from '@/context/deleteModal/DeleteModalContext';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import { getMessage } from '@/utils/handleMessage';
 import { useEffect, useState } from 'react';
-import { Spinner } from 'react-bootstrap';
 
 const Books = () => {
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.book);
@@ -24,7 +23,7 @@ const Books = () => {
     }, [query.page]);
 
     return (
-        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+        loading ? <Loader />
             : <>
                 {message && <Message message={message} />}
                 {showDeleteModal && <DeleteModal book={book} />}

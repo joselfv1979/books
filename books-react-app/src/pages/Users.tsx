@@ -1,13 +1,11 @@
-import globalStyles from '@/assets/scss/globalStyles.module.scss';
 import DeleteModal from '@/components/DeleteModal';
+import { Loader } from '@/components/Loader';
 import Message from '@/components/Message';
 import UserList from '@/components/UserList';
 import { useDeleteModalContext } from '@/context/deleteModal/DeleteModalContext';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import { getMessage } from '@/utils/handleMessage';
 import { useEffect } from 'react';
-import { Spinner } from 'react-bootstrap';
-
 
 const Users = () => {
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.user);
@@ -20,7 +18,7 @@ const Users = () => {
     }, []);
 
     return (
-        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+        loading ? <Loader />
             : <>
                 {showDeleteModal && <DeleteModal user={user} />}
                 {message && <Message message={message} />}

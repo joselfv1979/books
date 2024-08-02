@@ -1,9 +1,8 @@
-import globalStyles from '@/assets/scss/globalStyles.module.scss';
+import { Loader } from '@/components/Loader';
 import LoginForm from '@/components/LoginForm';
 import Message from '@/components/Message';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import { getMessage } from '@/utils/handleMessage';
-import { Spinner } from 'react-bootstrap';
 import { Navigate } from 'react-router-dom';
 
 const Login = () => {
@@ -15,7 +14,7 @@ const Login = () => {
     if (authUser) return <Navigate to="/" />;
 
     return (
-        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+        loading ? <Loader />
             : <>
                 {message && <Message message={message} />}
                 <LoginForm login={login} />
