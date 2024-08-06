@@ -3,7 +3,7 @@ import '@testing-library/jest-dom/extend-expect';
 import { fireEvent } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useLocation } from 'react-router-dom';
-import { render, screen } from '../utils/test-utils';
+import { customRender, screen } from '../utils/test-utils';
 
 jest.mock('react-router-dom', () => ({
     ...jest.requireActual('react-router-dom'),
@@ -19,7 +19,7 @@ describe('UserForm', () => {
     beforeEach(() => {
         const saveUser = jest.fn();
 
-        render(<UserForm saveUser={saveUser} />);
+        customRender(<UserForm saveUser={saveUser} />);
     });
 
     it('renders a user form', () => {

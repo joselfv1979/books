@@ -1,7 +1,7 @@
 import LoginForm from '@/components/LoginForm';
 import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
-import { render, screen } from '../utils/test-utils';
+import { customRender, screen } from '../utils/test-utils';
 
 const login = jest.fn();
 const mockNavigate = jest.fn();
@@ -13,7 +13,7 @@ jest.mock("react-router-dom", () => ({
 
 describe('LoginForm', () => {
 
-    beforeEach(() => render(<LoginForm login={login} />));
+    beforeEach(() => customRender(<LoginForm login={login} />));
 
     it('renders a login form', () => {
         const loginForm = screen.getByTestId('login-form');

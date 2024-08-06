@@ -1,7 +1,8 @@
 import EditUser from '@/pages/EditUser';
+import * as actions from '@/store/userActions';
 import '@testing-library/jest-dom/extend-expect';
-import { screen } from '@testing-library/react';
-import { userState } from '../utils/data';
+import { screen, waitFor } from '@testing-library/react';
+import { user1, userState } from '../utils/data';
 import { customRender } from '../utils/test-utils';
 
 describe('EditUser userForm', () => {
@@ -15,6 +16,7 @@ describe('EditUser userForm', () => {
 
         expect(userForm).toBeInTheDocument();
     });
+
 });
 
 describe('EditUser loading state', () => {
@@ -42,5 +44,35 @@ describe('EditUser message', () => {
         const message = screen.getByText(/user added successfully/i);
 
         expect(message).toBeInTheDocument();
+    });
+});
+
+describe('EditUser params', () => {
+
+    const userId = '1';
+
+    beforeEach(() => {
+        const user1State = { ...userState, loading: false, user: user1 };
+        customRender(<EditUser />,
+            {
+                preloadedState: { user: user1State },
+                routerHistory: [`/users/${userId}`]
+            })
+    });
+
+    it('should call function fetchUser when receives user id param', async () => {
+        const fetchUserSpy = jest.spyOn(actions, 'fetchUser');
+        waitFor(() => expect(fetchUserSpy).toHaveBeenCalled());
+    });
+
+    it('form should contain user values', () => {
+
+        const userForm = screen.getByTestId('user-form');
+
+        expect(userForm).toHaveFormValues({
+            fullname: 'Ana',
+            username: 'ana',
+            email: 'ana@gmail.com',
+        });
     });
 });
