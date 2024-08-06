@@ -4,7 +4,7 @@ import { fireEvent, waitFor } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import userEvent from '@testing-library/user-event';
 import { useLocation } from 'react-router-dom';
-import { render, screen } from '../utils/test-utils';
+import { customRender, screen } from '../utils/test-utils';
 
 const mockNavigate = jest.fn();
 
@@ -21,7 +21,7 @@ const onChange = jest.fn();
 
 describe('BookForm', () => {
 
-    beforeEach(() => render(<BookForm saveBook={addBook} />));
+    beforeEach(() => customRender(<BookForm saveBook={addBook} />));
 
     it('renders book form', () => {
         const bookForm = screen.getByTestId('book-form');

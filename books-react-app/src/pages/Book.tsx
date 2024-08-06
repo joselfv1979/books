@@ -1,11 +1,11 @@
 import bookStyles from '@/assets/scss/book.module.scss';
-import globalStyles from '@/assets/scss/globalStyles.module.scss';
 import BookCard from '@/components/BookCard';
+import { Loader } from '@/components/Loader';
 import Message from '@/components/Message';
 import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 import { getMessage } from '@/utils/handleMessage';
 import { useEffect } from 'react';
-import { Breadcrumb, Spinner } from 'react-bootstrap';
+import { Breadcrumb } from 'react-bootstrap';
 import { ArrowLeftSquareFill } from 'react-bootstrap-icons';
 import { useParams } from 'react-router-dom';
 
@@ -21,7 +21,7 @@ const Book = () => {
     }, []);
 
     return (
-        loading ? <Spinner animation="border" className={globalStyles.spinner} />
+        loading ? <Loader />
             : <>
                 {message && <Message message={message} />}
                 <div className='d-flex flex-column p-5'>
