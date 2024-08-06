@@ -24,7 +24,6 @@
     "build": "craco build",
     "dev": "craco start",
     "eject": "craco eject",
-    "start": "serve build -s -n -L -p $PORT",
     "test": "craco test --watchAll --detectOpenHandles --verbose --coverage"
   },
   "browserslist": {
