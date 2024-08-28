@@ -9,18 +9,28 @@ dotenv.config({
 const {
   PROD_PORT,
   PROD_HOST,
-  PROD_DB_CONN_STRING,
   DEV_HOST,
   DEV_PORT,
-  DEV_DB_CONN_STRING,
+  DEV_DATABASE,
+  PROD_DATABASE,
+  TEST_DATABASE,
+  NODE_ENV
 } = process.env;
-
-const NODE_ENV = process.env.NODE_ENV;
 
 const HOST = NODE_ENV === "development" ? DEV_HOST : PROD_HOST;
 const PORT = NODE_ENV === "development" ? DEV_PORT : PROD_PORT;
-const DB_CONN_STRING =
-  NODE_ENV === "development" ? DEV_DB_CONN_STRING : PROD_DB_CONN_STRING;
 
-export { DB_CONN_STRING, HOST, NODE_ENV, PORT };
+let db = '';
+
+if (NODE_ENV === "development") {
+  db = DEV_DATABASE as string;
+} else if (NODE_ENV === "test") {
+  db = TEST_DATABASE as string;
+} else {
+  db = PROD_DATABASE as string;
+}
+
+const DB_CONNECTION = db;
+
+export { DB_CONNECTION, HOST, NODE_ENV, PORT };
 

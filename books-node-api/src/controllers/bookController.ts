@@ -60,6 +60,7 @@ export async function createBookController(
 ) {
   try {
     const { title, author, publisher, isbn, genre, pages } = req.body;
+
     const photo = req.file ? req.file.path : "";
 
     if (!title || !author || !publisher || !isbn || !pages) {

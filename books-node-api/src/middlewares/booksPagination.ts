@@ -1,8 +1,8 @@
-import { NextFunction } from "express"
-import { PaginationRequest, PaginationResponse, PaginationResults } from "../models/Pagination";
-import { CustomError } from "../models/CustomError";
-import { getBooksService } from "../services/bookService";
+import { NextFunction } from "express";
 import Book from "../models/Book";
+import { CustomError } from "../models/CustomError";
+import { PaginationRequest, PaginationResponse, PaginationResults } from "../models/Pagination";
+import { getBooksService } from "../services/bookService";
 
 export const bookPagination = async (
     req: PaginationRequest,
@@ -95,7 +95,6 @@ export const bookPagination = async (
 
         next();
     } catch (error) {
-        console.log(error)
         next(new CustomError(500, "Couldn't fetch books, try it later"));
     }
 }

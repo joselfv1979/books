@@ -1,16 +1,16 @@
 import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../models/CustomError";
+import { ResBody } from "../models/Response";
+import { IRole } from "../models/Role";
+import { UserResponse } from "../models/User";
 import {
+  deleteUserService,
+  getRoleService,
   getUserService,
   getUsersService,
   updateUserService,
-  deleteUserService,
   userToUserResponse,
-  getRoleService,
 } from "../services/userService";
-import { ResBody } from "../models/Response";
-import { UserResponse } from "../models/User";
-import { IRole } from "../models/Role";
 
 export async function getUsersController(
   req: Request,
@@ -43,7 +43,7 @@ export async function getUserController(
 
     res.status(200).json({ success: true, data: userResponse });
   } catch (error) {
-    next(new CustomError(404, "User not found"));
+    next(new CustomError(500, "Couldn't fetch user, try it later"));
   }
 }
 
@@ -54,6 +54,7 @@ export async function updateUserController(
 ) {
   try {
     const { id } = req.params;
+
     const { fullname, username, email, image, roles } = req.body;
     const photo = req.file ? req.file.path : image;
 
@@ -71,7 +72,7 @@ export async function updateUserController(
 
     res.status(201).json({ success: true, data: userResponse });
   } catch (error) {
-    next(new CustomError(404, "User not found"));
+    next(new CustomError(500, "Couldn't update user, try it later"));
   }
 }
 
@@ -89,6 +90,6 @@ export async function deleteUserController(
 
     return res.status(204).json({ success: true });
   } catch (error) {
-    next(new CustomError(404, "User not found"));
+    next(new CustomError(500, "Couldn't delete user, try it later"));
   }
 }

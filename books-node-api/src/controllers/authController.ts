@@ -1,11 +1,11 @@
+import bcrypt from "bcrypt";
 import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../models/CustomError";
-import bcrypt from "bcrypt";
-import { generateToken } from "../utils/jwt.utils";
-import { createUserService, getEmailService, getRoleService, getUsernameService, userToUserResponse } from "../services/userService";
-import User, { IUser, LoggedUser, UserResponse } from "../models/User";
 import { ResBody } from "../models/Response";
 import { IRole } from "../models/Role";
+import User, { IUser, LoggedUser, UserResponse } from "../models/User";
+import { createUserService, getEmailService, getRoleService, getUsernameService, userToUserResponse } from "../services/userService";
+import { generateToken } from "../utils/jwt.utils";
 
 // endpoint to login users
 export async function loginController(
@@ -19,7 +19,7 @@ export async function loginController(
     // retrieve user from database
     const user = await getUsernameService(username);
 
-    if (!user) return next(new CustomError(401, "Invalid credentials"));
+    if (!user) return next(new CustomError(401, "Username doesn't exist"));
 
     // check password match
     const passwordCorrect = await bcrypt.compare(password, user.password);
