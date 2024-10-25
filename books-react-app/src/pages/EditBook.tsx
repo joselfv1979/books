@@ -1,14 +1,14 @@
-import BookForm from '@/components/BookForm';
-import { Loader } from '@/components/Loader';
-import Message from '@/components/Message';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
-import { getMessage } from '@/utils/handleMessage';
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
+import BookForm from '../components/BookForm';
+import { Loader } from '../components/Loader';
+import Message from '../components/Message';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { getMessage } from '../utils/handleMessage';
 
 const BookEdit = () => {
     const { id } = useParams();
-    const { loading, errorMessage, successMessage } = useAppSelector((state) => state.book);
+    const { loading, errorMessage, successMessage, book } = useAppSelector((state) => state.book);
     const { fetchBook, editBook } = useAppDispatch();
 
     // Obtains a custom message object
@@ -22,7 +22,7 @@ const BookEdit = () => {
         loading ? <Loader />
             : <>
                 {message && <Message message={message} />}
-                <BookForm saveBook={editBook} editing={true} />
+                <BookForm book={book} saveBook={editBook} editing={true} />
             </>
     );
 };

@@ -1,12 +1,15 @@
 .userForm {
   display: grid;
-  grid-template-columns: 1fr 1fr 2fr 2fr;
-  grid-gap: 1rem 2rem;
-  margin: 3rem auto;
+  grid-template-columns: 1fr 1fr 2rem 2fr 2fr;
+  grid-auto-rows: 4rem 1.5rem;
+  grid-gap: 0rem 1rem;
+  align-items: center;
+  margin: 4rem auto;
   width: 90%;
+  color: #414a4c;
 
   h2 {
-    grid-column-start: 3;
+    grid-column: 4 / 5;
     text-align: center;
   }
 
@@ -14,83 +17,82 @@
     color: rgb(158, 158, 158);
   }
 
-  .inputText {
-    background-color: transparent;
-    border: none;
-    border-bottom: 1px solid #414a4c;
-    box-shadow: 0 1px 0 0 #414a4c;
-    border-radius: 0;
-    width: 100%;
+  .fullnameError,
+  .usernameError,
+  .emailError,
+  .passwordError {
+    grid-column: 4 / 4;
+    text-align: center;
+    color: #db3545;
+  }
 
-    &:focus {
-      background-color: transparent;
-      border-bottom: 1px solid #5a85d7;
-      box-shadow: 0 1px 0 0 #5a85d7;
-    }
+  .fullnameField,
+  .usernameField,
+  .emailField,
+  .passwordField {
+    grid-column: 4 / 4;
+    display: flex;
+    gap: 0.5rem;
+    align-items: center;
+  }
+
+  .fullnameError {
+    grid-row: 2/3;
+  }
+
+  .fullnameField {
+    grid-row: 3/4;
+  }
+
+  .usernameError {
+    grid-row: 4/5;
+  }
+
+  .usernameField {
+    grid-row: 5/6;
+  }
+
+  .emailError {
+    grid-row: 6/7;
+  }
+
+  .emailField {
+    grid-row: 7/8;
+  }
+
+  .passwordError {
+    grid-row: 8/9;
+  }
+
+  .passwordField {
+    grid-row: 9/10;
+  }
+
+  .linkField,
+  .photoField {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .linkField {
+    grid-row: 11/12;
+    grid-column: 4 / 4;
+    margin-top: 1rem;
   }
 
   .photoField {
     grid-column-start: 2;
-    grid-row-start: 2;
-    grid-row-end: 7;
-    display: flex;
-    flex-direction: column;
+    grid-row: 2 / 9;
     align-items: center;
+    margin-right: 2rem;
   }
 
-  .uploadButton {
+  .registerButtonGroup,
+  .editProfileButtonGroup {
+    grid-column: 4 / 4;
+    display: flex;
+    justify-content: space-around;
     margin-top: 1rem;
-    height: 2.5rem;
-  }
-
-  .fullnameField {
-    grid-row-start: 2;
-    grid-column: 3 / 3;
-    display: flex;
-    align-items: center;
-  }
-
-  .usernameField {
-    grid-row-start: 3;
-    grid-column: 3 / 3;
-    display: flex;
-    align-items: center;
-  }
-
-  .emailField {
-    grid-row-start: 4;
-    grid-column: 3 / 3;
-    display: flex;
-    align-items: center;
-  }
-
-  .passwordField {
-    grid-row-start: 5;
-    grid-column: 3 / 3;
-    display: flex;
-    align-items: center;
-  }
-
-  .linkField {
-    grid-row-start: 6;
-    grid-column: 3 / 3;
-    margin-bottom: 0;
-    display: flex;
-    flex-direction: column;
-  }
-
-  .submitButton {
-    grid-column-start: 3;
-    width: 12rem;
-    height: 3rem;
-    margin: 1rem auto;
-  }
-
-  .buttonGroup {
-    grid-row-start: 7;
-    grid-column: 3 / 3;
-    display: flex;
-    justify-content: space-between;
 
     button {
       width: 10rem;
@@ -99,4 +101,47 @@
       color: #ffffff;
     }
   }
+
+  .registerButtonGroup {
+    grid-row: 13 / 14;
+  }
+
+  .editProfileButtonGroup {
+    grid-row: 9 / 10;
+  }
+
+  .uploadButton {
+    margin-top: 1rem;
+    height: 2.5rem;
+  }
+
+  .submitButton {
+    grid-column-start: 3;
+    width: 12rem;
+    height: 3rem;
+    margin: 1rem auto;
+  }
+}
+
+.passwordIcon,
+.mailIcon,
+.userIcon,
+.fullnameIcon {
+  grid-column: 3 / 3;
+}
+
+.fullnameIcon {
+  grid-row: 3/4;
+}
+
+.userIcon {
+  grid-row: 5/6;
+}
+
+.mailIcon {
+  grid-row: 7/8;
+}
+
+.passwordIcon {
+  grid-row: 9/10;
 }

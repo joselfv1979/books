@@ -56,7 +56,7 @@ export const userSlice = createSlice({
         },
         createUserSuccess: (state, action: PayloadAction<User>) => {
             state.users = [...state.users, action.payload];
-            state.successMessage = 'User created succesfully';
+            state.successMessage = 'User created successfully';
             state.user = initialUser;
             state.loading = false;
             state.errorMessage = undefined;
@@ -72,7 +72,7 @@ export const userSlice = createSlice({
         },
         eliminateUserSuccess: (state, action: PayloadAction<string>) => {
             state.users = state.users.filter((item: User) => item.id !== action.payload);
-            state.successMessage = 'User deleted succesfully';
+            state.successMessage = 'User deleted successfully';
             state.loading = false;
             state.errorMessage = undefined;
         },

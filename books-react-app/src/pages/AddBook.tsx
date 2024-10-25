@@ -1,9 +1,10 @@
 
-import BookForm from '@/components/BookForm';
-import { Loader } from '@/components/Loader';
-import Message from '@/components/Message';
-import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
-import { getMessage } from '@/utils/handleMessage';
+import BookForm from '../components/BookForm';
+import { Loader } from '../components/Loader';
+import Message from '../components/Message';
+import { initialBook } from '../data/ConstantUtils';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { getMessage } from '../utils/handleMessage';
 
 const AddBook = () => {
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.book);
@@ -16,7 +17,7 @@ const AddBook = () => {
         loading ? <Loader />
             : <>
                 {message && <Message message={message} />}
-                <BookForm saveBook={addBook} />
+                <BookForm book={initialBook} saveBook={addBook} editing={false} />
             </>
     );
 };

@@ -1,17 +1,20 @@
 import axios from 'axios';
-import { Query, QueryResponse } from 'types/Query';
 import { Book } from '../types/Book';
+import { Query, QueryResponse } from '../types/Query';
 import { Result } from '../types/Result';
 import { getHeaders } from '../utils/authHeader';
 import { castBookToFormData } from '../utils/castFormData';
 import { handleError } from '../utils/handleError';
 
-const baseUrl = `${process.env.REACT_APP_API_URL}/api/books`;
+const baseUrl = import.meta.env.VITE_API_URL;
+console.log(baseUrl);
+
+const url = `${baseUrl}/api/books`;
 
 // Request to get all books
 export const getAllBooks = async (params: Query): Promise<Result<QueryResponse, string>> => {
     try {
-        const { data } = await axios.get(baseUrl, { params });
+        const { data } = await axios.get(url, { params });
         return { success: true, value: data.data };
     } catch (error) {
         return { success: false, message: handleError(error) };
@@ -21,7 +24,7 @@ export const getAllBooks = async (params: Query): Promise<Result<QueryResponse, 
 // Request to get one book by id
 export const getBook = async (id: string): Promise<Result<Book, string>> => {
     try {
-        const { data } = await axios.get(`${baseUrl}/${id}`);
+        const { data } = await axios.get(`${url}/${id}`);
         return { success: true, value: data.data };
     } catch (error) {
         return { success: false, message: handleError(error) };
@@ -33,7 +36,7 @@ export const createBook = async (book: Book): Promise<Result<Book, string>> => {
     try {
         // Convert book to FormData object before sending
         const bookForm = castBookToFormData(book);
-        const { data } = await axios.post(baseUrl, bookForm, { headers: getHeaders() });
+        const { data } = await axios.post(url, bookForm, { headers: getHeaders() });
         return { success: true, value: data.data };
     } catch (error) {
         return { success: false, message: handleError(error) };
@@ -43,7 +46,7 @@ export const createBook = async (book: Book): Promise<Result<Book, string>> => {
 // Request to delete one book by id
 export const removeBook = async (id: string): Promise<Result<Book, string>> => {
     try {
-        const { data } = await axios.delete(`${baseUrl}/${id}`, { headers: getHeaders() });
+        const { data } = await axios.delete(`${url}/${id}`, { headers: getHeaders() });
         return { success: true, value: data.data };
     } catch (error) {
         return { success: false, message: handleError(error) };
@@ -55,7 +58,7 @@ export const updateBook = async (book: Book): Promise<Result<Book, string>> => {
     try {
         // Convert book to FormData object before sending
         const bookForm = castBookToFormData(book);
-        const { data } = await axios.put(`${baseUrl}/${book.id}`, bookForm, { headers: getHeaders() });
+        const { data } = await axios.put(`${url}/${book.id}`, bookForm, { headers: getHeaders() });
         return { success: true, value: data.data };
     } catch (error) {
         return { success: false, message: handleError(error) };

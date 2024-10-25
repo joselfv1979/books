@@ -1,28 +1,25 @@
-import styles from '@/assets/scss/bookForm.module.scss';
-import { initialBook } from '@/data/ConstantUtils';
-import { useAppSelector } from '@/hooks/redux-hooks';
-import { Book } from '@/types/Book';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import styles from '../assets/scss/bookForm.module.scss';
+import { initialBook } from '../data/ConstantUtils';
+import { Book } from '../types/Book';
+import { BookFormErrors, validateBook } from '../utils/validateBook';
 import LoadFile from './LoadFile';
 import { TagField } from './TagField';
 
 export type Props = {
+    book: Book | null;
     saveBook: (data: Book) => void;
-    editing?: boolean; // book editing flag
+    editing: boolean; // book editing flag
 };
 // Form for creating or editing a book, used in AddBook and EditBook views
-const BookForm = ({ saveBook, editing = false }: Props) => {
-
-    // BookEdit view gets the book from the store
-    const { book } = useAppSelector((state) => state.book);
-
-    // BookAdd view uses an empty Book object (initialBook)
-    const currentBook = editing && book ? book : initialBook;
+const BookForm = ({ book, saveBook, editing = false }: Props) => {
 
     // Book state management
-    const [values, setValues] = useState<Book>(currentBook);
+    const [values, setValues] = useState<Book>(book ?? initialBook);
+    // Form errors state
+    const [errors, setErrors] = useState<BookFormErrors>({});
 
     // Book pictures loader
     const fileInput = useRef<HTMLInputElement>(null);
@@ -33,8 +30,23 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
         if (e.target.files) setValues({ ...values, image: e.target.files[0] });
     }
 
+    // removes input error when typing
+    const removeInputError = (name: string) => {
+
+        for (const [key] of Object.entries(errors)) {
+            if (key === name) {
+                errors[key as keyof BookFormErrors] = undefined;
+                setErrors({ ...errors });
+                break;
+            }
+        }
+    }
+
     // Input values handler
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+
+        removeInputError(event.target.name);
+
         setValues({
             ...values, [event.target.name]: event.target.value,
         });
@@ -43,7 +55,12 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
     // Submit form values to views
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        saveBook(values);
+
+        const { isValid } = validateBook({ values, errors, setErrors });
+
+        if (isValid) {
+            saveBook(values);
+        }
     };
 
     const navigate = useNavigate();
@@ -58,7 +75,7 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
                     Upload
                 </Button>
             </fieldset>
-
+            {errors.title && <div className={styles.titleError}>{errors.title}</div>}
             <fieldset className={styles.titleField}>
                 <FloatingLabel
                     controlId="title"
@@ -71,11 +88,11 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
                         value={values.title}
                         placeholder="Enter title"
                         onChange={onChange}
-                        className={styles.inputText}
+                        className={errors.title && 'is-invalid'}
                     />
                 </FloatingLabel>
             </fieldset>
-
+            {errors.author && <div className={styles.authorError}>{errors.author}</div>}
             <fieldset className={styles.authorField}>
                 <FloatingLabel
                     controlId="author"
@@ -88,11 +105,11 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
                         value={values.author}
                         placeholder="Enter author"
                         onChange={onChange}
-                        className={styles.inputText}
+                        className={errors.author && 'is-invalid'}
                     />
                 </FloatingLabel>
             </fieldset>
-
+            {errors.publisher && <div className={styles.publisherError}>{errors.publisher}</div>}
             <fieldset className={styles.publisherField}>
                 <FloatingLabel
                     controlId="publisher"
@@ -105,11 +122,11 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
                         value={values.publisher}
                         placeholder="Enter publisher"
                         onChange={onChange}
-                        className={styles.inputText}
+                        className={errors.publisher && 'is-invalid'}
                     />
                 </FloatingLabel>
             </fieldset>
-
+            {errors.isbn && <div className={styles.isbnError}>{errors.isbn}</div>}
             <fieldset className={styles.isbnField}>
                 <FloatingLabel
                     controlId="isbn"
@@ -122,11 +139,11 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
                         value={values.isbn}
                         placeholder="Enter isbn"
                         onChange={onChange}
-                        className={styles.inputText}
+                        className={errors.isbn && 'is-invalid'}
                     />
                 </FloatingLabel>
             </fieldset>
-
+            {errors.pages && <div className={styles.pagesError}>{errors.pages}</div>}
             <fieldset className={styles.pagesField}>
                 <FloatingLabel
                     controlId="pages"
@@ -139,7 +156,7 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
                         value={values.pages ?? undefined}
                         placeholder="Enter pages"
                         onChange={onChange}
-                        className={styles.inputText}
+                        className={errors.pages && 'is-invalid'}
                     />
                 </FloatingLabel>
             </fieldset>
@@ -149,10 +166,10 @@ const BookForm = ({ saveBook, editing = false }: Props) => {
             </fieldset>
 
             <div className={styles.buttonGroup}>
-                <Button variant="primary" className={styles.submitButton} type="submit">
+                <Button variant="primary" type="submit">
                     Submit
                 </Button>
-                <Button variant="info" className={styles.submitButton} onClick={() => navigate("/books")}>
+                <Button variant="info" onClick={() => navigate("/books")}>
                     Cancel
                 </Button>
             </div>

@@ -1,7 +1,6 @@
 import { AppThunk } from '.';
 import { createUser, getAllUsers, getUser, loginUser, removeUser, updateUser } from '../services/users';
 import { AuthRequest, User } from '../types/User';
-import { validateUser } from '../utils/validateUser';
 import { userSlice } from './userSlice';
 
 const { actions } = userSlice;
@@ -37,60 +36,44 @@ export const fetchUsers = (): AppThunk => async (dispatch) => {
 };
 
 // Action to fetch one user by id
-export const fetchUser = (id: string): AppThunk =>
-    async (dispatch) => {
-        dispatch(actions.setUsersPending());
+export const fetchUser = (id: string): AppThunk => async (dispatch) => {
+    dispatch(actions.setUsersPending());
 
-        const response = await getUser(id);
-        response.success
-            ? dispatch(actions.setUserSuccess(response.value))
-            : dispatch(actions.setUserFail(response.message));
-    };
+    const response = await getUser(id);
+    response.success
+        ? dispatch(actions.setUserSuccess(response.value))
+        : dispatch(actions.setUserFail(response.message));
+};
 
 // Action to create a new user, previous validation
-export const addUser = (user: User): AppThunk =>
-    async (dispatch) => {
-        dispatch(actions.setUsersPending());
+export const addUser = (user: User): AppThunk => async (dispatch) => {
+    dispatch(actions.setUsersPending());
 
-        const validUser = validateUser(user);
-        if (!validUser.success) {
-            dispatch(actions.createUserFail(validUser.message));
-            return;
-        }
-
-        const response = await createUser(user);
-        response.success
-            ? dispatch(actions.createUserSuccess(response.value))
-            : dispatch(actions.createUserFail(response.message));
-    };
+    const response = await createUser(user);
+    response.success
+        ? dispatch(actions.createUserSuccess(response.value))
+        : dispatch(actions.createUserFail(response.message));
+};
 
 // Action to delete one user by id
-export const deleteUser = (id: string): AppThunk =>
-    async (dispatch) => {
-        dispatch(actions.setUsersPending());
+export const deleteUser = (id: string): AppThunk => async (dispatch) => {
+    dispatch(actions.setUsersPending());
 
-        const response = await removeUser(id);
-        response.success
-            ? dispatch(actions.eliminateUserSuccess(id))
-            : dispatch(actions.eliminateUserFail(response.message));
-    };
+    const response = await removeUser(id);
+    response.success
+        ? dispatch(actions.eliminateUserSuccess(id))
+        : dispatch(actions.eliminateUserFail(response.message));
+};
 
 // Action to update one user by id, previous validation
-export const editUser = (user: User): AppThunk =>
-    async (dispatch) => {
-        dispatch(actions.setUsersPending());
+export const editUser = (user: User): AppThunk => async (dispatch) => {
+    dispatch(actions.setUsersPending());
 
-        const validUser = validateUser(user);
-        if (!validUser.success) {
-            dispatch(actions.modifyUserFail(validUser.message));
-            return;
-        }
-
-        const response = await updateUser(user);
-        response.success
-            ? dispatch(actions.modifyUserSuccess(response.value))
-            : dispatch(actions.modifyUserFail(response.message));
-    };
+    const response = await updateUser(user);
+    response.success
+        ? dispatch(actions.modifyUserSuccess(response.value))
+        : dispatch(actions.modifyUserFail(response.message));
+};
 
 // Action to remove any message from UserState
 export const removeUserMessage = (): AppThunk => (dispatch) => {
