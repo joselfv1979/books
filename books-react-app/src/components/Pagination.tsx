@@ -1,6 +1,6 @@
-import { useAppSelector } from "@/hooks/redux-hooks";
 import { Dispatch, SetStateAction } from "react";
 import Pagination from "react-bootstrap/Pagination";
+import { useAppSelector } from "../hooks/redux-hooks";
 
 type Props = {
     setQuery: Dispatch<SetStateAction<{ search?: string; page: number }>>
@@ -65,7 +65,7 @@ const PaginationComponent = ({ setQuery }: Props) => {
     return (
         <>
             {isPaginationShown && (
-                <Pagination className='px-5 mx-5 mt-3 gap-1'>
+                <Pagination className='m-3 px-4 gap-1'>
                     <Pagination.First
                         onClick={() => handlePage()}
                         disabled={isCurrentPageFirst} />

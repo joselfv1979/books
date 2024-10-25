@@ -1,7 +1,7 @@
-import '@/assets/scss/globalStyles.module.scss';
-import { Auth } from '@/types/Auth';
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import '../assets/scss/globalStyles.module.scss';
+import { Auth } from '../types/Auth';
 import { PasswordIcon, UserIcon } from './Icons';
 
 export type Props = {

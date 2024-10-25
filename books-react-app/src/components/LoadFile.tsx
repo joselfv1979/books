@@ -1,6 +1,8 @@
-import styles from '@/assets/scss/loadFile.module.scss';
 import { ChangeEvent, RefObject, useState } from 'react';
 import { Form } from 'react-bootstrap';
+import styles from '../assets/scss/loadFile.module.scss';
+
+const baseUrl = import.meta.env.VITE_API_URL;
 
 type Props = {
     image: string;
@@ -11,26 +13,18 @@ type Props = {
 // Custom file loader component with loader and image preview
 const LoadFile = ({ image, fileInput, handleFile }: Props) => {
 
-    const imageUrl = `${process.env.REACT_APP_API_URL}/${image}`;
+    const imageUrl = `${baseUrl}/${image}`;
 
     // Preview state management
     const [preview, setPreview] = useState(image ? imageUrl : null);
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
+
         if (event.target.files) {
-            displayImage(event.target.files[0])
+            event.target.files[0] && setPreview(URL.createObjectURL(event.target.files[0]));
             handleFile(event);
         }
     };
-
-    const displayImage = (file: File) => {
-        // Object to create the preview
-        const reader = new FileReader();
-        reader.onloadend = () => {
-            setPreview(reader.result as string);
-        };
-        reader.readAsDataURL(file);
-    }
 
     return (
         <>

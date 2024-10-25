@@ -1,5 +1,5 @@
-import globalStyles from "@/assets/scss/globalStyles.module.scss";
 import { Spinner } from "react-bootstrap";
+import globalStyles from "../assets/scss/globalStyles.module.scss";
 
 export const Loader = () => {
     return (

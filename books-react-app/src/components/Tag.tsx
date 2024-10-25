@@ -1,4 +1,4 @@
-import styles from '@/assets/scss/tagList.module.scss';
+import styles from '../assets/scss/tagList.module.scss';
 
 interface Props {
     tag: string;

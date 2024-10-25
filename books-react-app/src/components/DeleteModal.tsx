@@ -1,9 +1,9 @@
-import { useDeleteModalContext } from '@/context/deleteModal/DeleteModalContext';
-import { useAppDispatch } from '@/hooks/redux-hooks';
-import { Book } from '@/types/Book';
-import { User } from '@/types/User';
 import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
+import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
+import { useAppDispatch } from '../hooks/redux-hooks';
+import { Book } from '../types/Book';
+import { User } from '../types/User';
 
 export type Props = {
     book?: Book;
@@ -25,7 +25,7 @@ const DeleteModal = ({ book, user }: Props) => {
     };
 
     return (
-        <Modal size="sm" show={showDeleteModal} onHide={handleClose}>
+        <Modal size="sm" show={showDeleteModal} onHide={handleClose} data-testid="delete-modal">
             <Modal.Header closeButton>
                 <Modal.Title>{book ? 'Delete book' : 'Delete user'}
                 </Modal.Title>
@@ -37,7 +37,7 @@ const DeleteModal = ({ book, user }: Props) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button variant="danger" onClick={deleteItem}>
+                <Button variant="danger" onClick={deleteItem} data-testid="delete-item-btn">
                     Delete
                 </Button>
             </Modal.Footer>

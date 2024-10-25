@@ -1,27 +1,25 @@
-import styles from '@/assets/scss/userForm.module.scss';
-import { initialUser } from '@/data/ConstantUtils';
-import { useAppSelector } from '@/hooks/redux-hooks';
-import { User } from '@/types/User';
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { Button, FloatingLabel, Form } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
+import styles from '../assets/scss/userForm.module.scss';
+import { initialUser } from '../data/ConstantUtils';
+import { User } from '../types/User';
+import { UserFormErrors, validateUser } from '../utils/validateUser';
 import { FullNameIcon, MailIcon, PasswordIcon, UserIcon } from './Icons';
 import LoadFile from './LoadFile';
 
 type Props = {
+    user: User | null;
     saveUser: (data: User) => void;
-    editing?: boolean; // profile editing flag
+    register: boolean; // user register flag
 };
 
-const UserForm = ({ saveUser, editing = false }: Props) => {
-
-    // UserEdit view gets the user from the store
-    const { user } = useAppSelector((state) => state.user);
-    // UserAdd view uses an empty User object (initialUser)
-    const currentUser = user ?? initialUser;
+const UserForm = ({ user, saveUser, register = true }: Props) => {
 
     // User state management
-    const [values, setValues] = useState<User>(currentUser);
+    const [values, setValues] = useState<User>(user ?? initialUser);
+    // Form errors state
+    const [errors, setErrors] = useState<UserFormErrors>({});
 
     // User pictures loader
     const fileInput = useRef<HTMLInputElement>(null);
@@ -32,8 +30,23 @@ const UserForm = ({ saveUser, editing = false }: Props) => {
         if (e.target.files) setValues({ ...values, image: e.target.files[0] });
     }
 
+    // removes input error when typing
+    const removeInputError = (name: string) => {
+
+        for (const [key] of Object.entries(errors)) {
+            if (key === name) {
+                errors[key as keyof UserFormErrors] = undefined;
+                setErrors({ ...errors });
+                break;
+            }
+        }
+    }
+
     // Input values handler
     const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+
+        removeInputError(event.target.name);
+
         setValues((prevState) => ({
             ...prevState, [event.target.name]: event.target.value,
         }));
@@ -42,14 +55,19 @@ const UserForm = ({ saveUser, editing = false }: Props) => {
     // Submit user
     const submit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-        saveUser(values);
+
+        const { isValid } = validateUser({ values, errors, setErrors, register });
+
+        if (isValid) {
+            saveUser(values);
+        }
     };
 
     const navigate = useNavigate();
 
     return (
         <form className={styles.userForm} onSubmit={submit} data-testid="user-form">
-            {editing ? <h2>Edit Profile</h2> : <h2>Register</h2>}
+            {register ? <h2>Register</h2> : <h2>Edit Profile</h2>}
 
             <fieldset className={styles.photoField}>
                 <LoadFile fileInput={fileInput} image={values.imagePath} handleFile={handleFile} />
@@ -57,8 +75,9 @@ const UserForm = ({ saveUser, editing = false }: Props) => {
                     Upload
                 </Button>
             </fieldset>
+            {errors.fullname && <div className={styles.fullnameError}>{errors.fullname}</div>}
+            <span className={styles.fullnameIcon}><FullNameIcon /></span>
             <fieldset className={styles.fullnameField}>
-                <FullNameIcon />
                 <FloatingLabel
                     label="Fullname"
                     controlId='fullname'
@@ -71,12 +90,13 @@ const UserForm = ({ saveUser, editing = false }: Props) => {
                         value={values.fullname}
                         placeholder="Enter full name"
                         onChange={onChange}
-                        className={styles.inputText}
+                        className={errors.fullname && 'is-invalid'}
                     />
                 </FloatingLabel>
             </fieldset>
+            {errors.username && <div className={styles.usernameError}>{errors.username}</div>}
+            <span className={styles.userIcon}><UserIcon /></span>
             <fieldset className={styles.usernameField}>
-                <UserIcon />
                 <FloatingLabel
                     label="Username"
                     controlId='username'
@@ -89,12 +109,13 @@ const UserForm = ({ saveUser, editing = false }: Props) => {
                         value={values.username}
                         placeholder="Enter username"
                         onChange={onChange}
-                        className={styles.inputText}
+                        className={errors.username && 'is-invalid'}
                     />
                 </FloatingLabel>
             </fieldset>
+            {errors.email && <div className={styles.emailError}>{errors.email}</div>}
+            <span className={styles.mailIcon}><MailIcon /></span>
             <fieldset className={styles.emailField}>
-                <MailIcon />
                 <FloatingLabel
                     label="Email"
                     controlId='email'
@@ -107,14 +128,14 @@ const UserForm = ({ saveUser, editing = false }: Props) => {
                         value={values.email}
                         placeholder="Enter email"
                         onChange={onChange}
-                        className={styles.inputText}
+                        className={errors.email && 'is-invalid'}
                     />
                 </FloatingLabel>
             </fieldset>
-
-            {!editing &&
+            {errors.password && <div className={styles.passwordError}>{errors.password}</div>}
+            {register && <>
+                <span className={styles.passwordIcon}><PasswordIcon /></span>
                 <fieldset className={styles.passwordField}>
-                    <PasswordIcon />
                     <FloatingLabel
                         label="Password"
                         controlId="password"
@@ -127,29 +148,27 @@ const UserForm = ({ saveUser, editing = false }: Props) => {
                             placeholder="Password"
                             autoComplete="off"
                             onChange={onChange}
-                            className={styles.inputText}
+                            className={errors.password && 'is-invalid'}
                         />
                     </FloatingLabel>
-                </fieldset>}
+                </fieldset>
 
-            {!editing &&
                 <fieldset className={styles.linkField}>
                     <p className="text-center">Do you have an account?</p>
                     <button type="button" className="btn btn-link text-decoration-none align-self-center" onClick={() => navigate("/login")}>
                         Login here
                     </button>
-                </fieldset>}
-
-            <div className={styles.buttonGroup}>
+                </fieldset>
+            </>}
+            <div className={`${register ? styles.registerButtonGroup : styles.editProfileButtonGroup}`}>
                 <Button variant="primary" className={styles.submitButton} type="submit">
                     Submit
                 </Button>
-                {editing &&
+                {!register &&
                     <Button variant="info" className={styles.submitButton} onClick={() => navigate(`/books`)}>
                         Cancel
                     </Button>}
             </div>
-
         </form>
     );
 };

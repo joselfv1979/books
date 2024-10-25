@@ -1,6 +1,6 @@
-import { useAppSelector } from '@/hooks/redux-hooks';
-import { isAdmin } from '@/store/userSlice';
 import { Navigate } from 'react-router-dom';
+import { useAppSelector } from '../hooks/redux-hooks';
+import { isAdmin } from '../store/userSlice';
 
 type Props = {
     children: JSX.Element;

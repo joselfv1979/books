@@ -1,5 +1,5 @@
-import { useAppDispatch } from '@/hooks/redux-hooks';
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import { useAppDispatch } from '../hooks/redux-hooks';
 
 type Props = {
     query: { search?: string; page: number; };

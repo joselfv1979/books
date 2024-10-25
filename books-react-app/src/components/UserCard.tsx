@@ -1,8 +1,10 @@
-import userImage from '@/assets/images/user.svg';
-import styles from '@/assets/scss/userCard.module.scss';
-import { useDeleteModalContext } from '@/context/deleteModal/DeleteModalContext';
-import { User } from '@/types/User';
 import { Button, Card } from 'react-bootstrap';
+import userImage from '../assets/images/user.svg';
+import styles from '../assets/scss/userCard.module.scss';
+import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
+import { User } from '../types/User';
+
+const baseUrl = import.meta.env.VITE_API_URL;
 
 type Props = {
     user: User;
@@ -16,10 +18,10 @@ const UserCard = ({ user }: Props) => {
         setUser(user);
     };
 
-    const image = user.imagePath ? `${process.env.REACT_APP_API_URL}/${user.imagePath}` : userImage;
+    const image = user.imagePath ? `${baseUrl}/api/books}/${user.imagePath}` : userImage;
 
     return (
-        <Card className={styles.userCard}>
+        <Card className={styles.userCard} data-testid={user.username}>
             <Card.Img variant="top" className={styles.photo} src={image} />
             <Card.Header className={styles.header}>
                 <strong>{user.username}</strong>
@@ -32,7 +34,7 @@ const UserCard = ({ user }: Props) => {
                     <strong>Email:</strong> {user.email}
                 </Card.Text>
                 <div className={styles.buttonGroup}>
-                    <Button variant="danger" onClick={deleteUser}>
+                    <Button variant="danger" data-testid="delete-user-btn" onClick={deleteUser}>
                         Delete
                     </Button>
                 </div>

@@ -1,8 +1,8 @@
-import styles from '@/assets/scss/globalStyles.module.scss';
+import styles from '../assets/scss/globalStyles.module.scss';
 
 const About = () => {
     return (
-        <div className='h-100 d-flex justify-content-center align-items-center pb-5'>
+        <div className={styles.aboutContainer}>
             <h1 className={styles.aboutFont}>About Page</h1>
         </div>
     );

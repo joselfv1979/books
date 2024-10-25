@@ -20,11 +20,18 @@ body {
 main {
   display: flex;
   flex-direction: column;
-  height: 92vh;
+  min-height: 92vh;
 }
 
 li {
   list-style: none;
+}
+
+.aboutContainer {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  min-height: 92vh;
 }
 
 .aboutFont {

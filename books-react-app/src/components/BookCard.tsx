@@ -1,8 +1,10 @@
-import library from '@/assets/images/library.jpg';
-import { Book } from '@/types/Book';
 import { Card } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
+import defaultImage from '../assets/images/library.jpg';
+import { Book } from '../types/Book';
 import BookCardButtons from './BookCardButtons';
+
+const baseUrl = import.meta.env.VITE_API_URL;
 
 type Props = {
     book: Book;
@@ -10,14 +12,13 @@ type Props = {
 };
 
 const BookCard = ({ book, styles }: Props) => {
-    const { pathname } = useLocation();
 
-    const setButtons = pathname === '/books';
+    const setButtons = useLocation().pathname === '/books';
 
-    const image = book.imagePath ? `${process.env.REACT_APP_API_URL}/${book.imagePath}` : library;
+    const image = book.imagePath ? `${baseUrl}/${book.imagePath}` : defaultImage;
 
     return (
-        <Card className={styles.bookCard}>
+        <Card className={styles.bookCard} data-testid={book.title}>
             <Card.Img src={image} variant='top' className={styles.bookImage} />
             <Card.Header>{book.author}</Card.Header>
             <Card.Body>

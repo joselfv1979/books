@@ -1,4 +1,4 @@
-import { Book } from "types/Book";
+import { Book } from "../types/Book";
 import { User } from "../types/User";
 
 // User empty object
