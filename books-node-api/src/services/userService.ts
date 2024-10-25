@@ -1,6 +1,6 @@
+import { ObjectId } from "mongodb";
 import Role, { IRole } from "../models/Role";
 import User, { IUser, UserResponse } from "../models/User";
-import { ObjectId } from "mongodb";
 
 export async function getUsersService() {
   return await User.find().populate("books", {

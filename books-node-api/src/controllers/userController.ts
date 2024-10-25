@@ -13,7 +13,7 @@ import {
 } from "../services/userService";
 
 export async function getUsersController(
-  req: Request,
+  _req: Request,
   res: Response<ResBody<UserResponse[]>>,
   next: NextFunction
 ) {
@@ -21,7 +21,7 @@ export async function getUsersController(
     const users = await getUsersService();
     const userList = users.map(user => userToUserResponse(user));
 
-    res.json({ success: true, data: userList });
+    res.status(200).json({ success: true, data: userList });
   } catch (error) {
     next(new CustomError(500, "Couldn't fetch users, try it later"));
   }

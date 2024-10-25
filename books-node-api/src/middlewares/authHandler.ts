@@ -1,5 +1,5 @@
-import jwt, { JwtPayload } from "jsonwebtoken";
 import { NextFunction, Request, Response } from "express";
+import jwt, { JwtPayload } from "jsonwebtoken";
 import { CustomError } from "../models/CustomError";
 
 export interface CustomJwt extends JwtPayload {
@@ -10,7 +10,7 @@ export interface CustomJwt extends JwtPayload {
 
 const authHandler = (
   request: Request,
-  response: Response,
+  _response: Response,
   next: NextFunction
 ) => {
   const authorization = request.get("authorization");

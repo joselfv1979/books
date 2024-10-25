@@ -1,17 +1,21 @@
-import { afterAll, beforeEach, describe, expect, it, jest } from "@jest/globals";
+import { afterAll, beforeAll, beforeEach, describe, expect, it, jest } from "@jest/globals";
 import supertest from "supertest";
 import { disconnect } from "../../src/config/connect";
 import User from "../../src/models/User";
 import { app, server } from '../../src/server';
 import { getUsernameService } from "../../src/services/userService";
+import { seed } from "../../src/utils/testSeed";
 import { getServerError, getToken } from "../helpers";
 
 const USERS_ROUTE = "/api/users";
-const SIGNUP_ROUTE = "/api/auth/register";
 
 const api = supertest(app);
 
 let token = '';
+
+beforeAll(async () => {
+    await seed();
+});
 
 beforeEach(async () => {
     token = await getToken();
@@ -44,7 +48,7 @@ describe('getUsersController', () => {
 
     it("should update one user's data if the id and attributes are correct", async () => {
 
-        const user = await User.findOne({ username: 'user1' }).lean();
+        const user = await User.findOne({ username: 'userToUpdate' }).lean();
 
         const userToUpdate = { ...user, fullname: 'New fullname' };
 
@@ -76,16 +80,11 @@ describe('getUsersController', () => {
     });
 
     it("should delete one user's data if the id is correct", async () => {
-        const res = await api
-            .post(SIGNUP_ROUTE)
-            .send({
-                fullname: 'New User', username: 'new',
-                email: 'new@gmail.com', password: '1234',
-                roles: ['USER']
-            });
+
+        const user = await User.findOne({ username: 'userToDelete' }).lean();
 
         const response = await api
-            .delete(`${USERS_ROUTE}/${res.body.data.id}`)
+            .delete(`${USERS_ROUTE}/${user?._id}`)
             .set("authorization", token);
 
         expect(response.status).toEqual(204);
@@ -115,7 +114,7 @@ describe('Error status code 500', () => {
         const findUserSpy = jest.spyOn(User, 'findById');
         findUserSpy.mockImplementationOnce(getServerError);
 
-        const user = await getUsernameService('user1');
+        const user = await getUsernameService('userToUpdate');
 
         const res = await api
             .get(`${USERS_ROUTE}/${user?.id}`)
@@ -131,7 +130,7 @@ describe('Error status code 500', () => {
         const updateUserSpy = jest.spyOn(User, 'findByIdAndUpdate');
         updateUserSpy.mockImplementationOnce(getServerError);
 
-        const user = await User.findOne({ username: 'user1' }).lean();
+        const user = await User.findOne({ username: 'userToUpdate' }).lean();
         const userToUpdate = { ...user, fullname: 'New fullname' };
 
         const res = await api
@@ -150,7 +149,7 @@ describe('Error status code 500', () => {
         const deleteUserSpy = jest.spyOn(User, 'findByIdAndDelete');
         deleteUserSpy.mockImplementationOnce(getServerError);
 
-        const user = await getUsernameService('user1');
+        const user = await getUsernameService('userToUpdate');
 
         const res = await api
             .delete(`${USERS_ROUTE}/${user?.id}`)

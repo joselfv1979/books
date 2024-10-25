@@ -1,14 +1,19 @@
-import { afterAll, describe, expect, it, jest } from "@jest/globals";
+import { afterAll, beforeAll, describe, expect, it, jest } from "@jest/globals";
 import supertest from "supertest";
 import { disconnect } from "../../src/config/connect";
 import User from "../../src/models/User";
 import { app, server } from '../../src/server';
+import { seed } from "../../src/utils/testSeed";
 import { getServerError } from "../helpers";
 
 const LOGIN_ROUTE = "/api/auth/login";
 const SIGNUP_ROUTE = "/api/auth/register";
 
 const api = supertest(app);
+
+beforeAll(async () => {
+    await seed();
+});
 
 describe('loginController', () => {
     it("should return a successful response and user's data when logging credentials are valid", async () => {
@@ -21,7 +26,7 @@ describe('loginController', () => {
         expect(res.body.success).toBe(true);
         expect(res.body.data).toHaveProperty("username", 'admin');
         expect(res.body.data).toHaveProperty('token');
-        expect(res.body.data).toHaveProperty('roles', ['USER', 'ADMIN']);
+        expect(res.body.data).toHaveProperty('roles', ['ADMIN', 'USER']);
     });
 
     it("should fail with status code 401 if username doesn't exist", async () => {
@@ -132,10 +137,6 @@ describe('registerController', () => {
         expect(res.body).toHaveProperty('success', false);
         expect(res.body).toHaveProperty('errors', ['Invalid credentials']);
     });
-
-    afterAll(async () => {
-        await User.deleteOne({ email: 'newUser@gmail.com' });
-    });
 });
 
 describe('Error status code 500', () => {
@@ -159,13 +160,13 @@ describe('Error status code 500', () => {
         const res = await api
             .post(SIGNUP_ROUTE)
             .send({
-                fullname: true, username: ['newUser', 0, false],
-                email: 'newUser@gmail.com', password: [1, null],
+                fullname: true, username: ['failedUser', 0, false],
+                email: 'failedUser@gmail.com', password: [1, null],
                 roles: ['USER']
             });
         expect(res.status).toEqual(500);
     });
-})
+});
 
 afterAll(async () => {
     await disconnect();

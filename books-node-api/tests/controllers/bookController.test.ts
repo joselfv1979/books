@@ -4,7 +4,8 @@ import { disconnect } from "../../src/config/connect";
 import Book from "../../src/models/Book";
 import { app, server } from '../../src/server';
 import * as bookService from '../../src/services/bookService';
-import { deleteBooks, getServerError, getToken } from "../helpers";
+import { seed } from "../../src/utils/testSeed";
+import { getServerError, getToken } from "../helpers";
 
 const BOOKS_ROUTE = "/api/books";
 
@@ -12,23 +13,15 @@ const api = supertest(app);
 
 let token = '';
 
+beforeAll(async () => {
+    await seed();
+});
+
 beforeEach(async () => {
     token = await getToken();
 });
 
 describe('getBooksController', () => {
-
-    beforeAll(async () => {
-        await Book.create({
-            title: "Delete book test",
-            author: "Juan Manuel",
-            publisher: "Random Editorial",
-            isbn: "0-1111-3333-2",
-            genre: ["Literary Fiction", "Drama"],
-            pages: 307,
-            imagePath: ""
-        })
-    })
 
     it("should return a successful response with an array of all books", async () => {
 
@@ -93,7 +86,7 @@ describe('getBooksController', () => {
 
     it("should update one book", async () => {
 
-        const book = await Book.findOne({ isbn: "0-1111-3333-2" }).lean();
+        const book = await Book.findOne({ title: "bookToUpdate" }).lean();
 
         const bookToUpdate = { ...book, author: "Juan Manuel" };
 
@@ -209,7 +202,6 @@ describe('Error status code 500', () => {
 })
 
 afterAll(async () => {
-    await deleteBooks();
     await disconnect();
     server.close();
 });
