@@ -1,5 +1,9 @@
 db = db.getSiblingDB("books_db_test");
 
+db.users.drop();
+db.books.drop();
+db.roles.drop();
+
 db.createCollection("users", { autoIndexId: true });
 db.createCollection("books", { autoIndexId: true });
 db.createCollection("roles", { autoIndexId: true });
@@ -16,8 +20,8 @@ const USER_ROLE = db.roles.findOne({
   name: "USER",
 });
 
-const adminId = ADMIN_ROLE._id;
-const userId = USER_ROLE._id;
+const adminRoleId = ADMIN_ROLE._id;
+const userRoleId = USER_ROLE._id;
 
 const users = [
   {
@@ -25,16 +29,25 @@ const users = [
     username: "admin",
     email: "admin@gmail.com",
     password: "$2b$10$eJ6BrxRZwn/aVh5IjsqGsedeOUj9b4sV2MI52q8x5v4QPtRedpQGO",
-    roles: [adminId, userId],
+    roles: [adminRoleId, userRoleId],
     imagePath: "",
     books: [],
   },
   {
-    fullname: "user1",
-    username: "user1",
-    email: "user1@gmail.com",
+    fullname: "User 1",
+    username: "userToDelete",
+    email: "userToDelete@gmail.com",
     password: "$2b$10$eJ6BrxRZwn/aVh5IjsqGsedeOUj9b4sV2MI52q8x5v4QPtRedpQGO",
-    roles: [userId],
+    roles: [userRoleId],
+    imagePath: "",
+    books: [],
+  },
+  {
+    fullname: "User 2",
+    username: "userToUpdate",
+    email: "userToUpdate@gmail.com",
+    password: "$2b$10$eJ6BrxRZwn/aVh5IjsqGsedeOUj9b4sV2MI52q8x5v4QPtRedpQGO",
+    roles: [userRoleId],
     imagePath: "",
     books: [],
   },
@@ -131,15 +144,6 @@ const books = [
     isbn: "0-3076-4137-6",
     genre: ["Literary fiction", "Classics"],
     pages: 312,
-    imagePath: "",
-  },
-  {
-    title: "El pueblo de la Costa Brava",
-    author: "Jordi Abreu",
-    publisher: "0-4508-2942-1",
-    isbn: "0-8453-2729-1",
-    genre: ["History", "Biography"],
-    pages: 247,
     imagePath: "",
   },
 ];
