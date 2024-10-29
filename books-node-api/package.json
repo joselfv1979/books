@@ -10,7 +10,8 @@
     "dev": "set NODE_ENV=development&&ts-node-dev --input-type=module --respawn --pretty --transpile-only src/server.ts",
     "start": "set NODE_ENV=production&&tsc&&node ./dist/server.js",
     "tsc": "tsc -w",
-    "test": "set NODE_ENV=test&&jest --verbose --no-cache --coverage --detectOpenHandles"
+    "test:jest": "set NODE_ENV=test&&jest --verbose --no-cache --coverage --detectOpenHandles",
+    "test:front": "set NODE_ENV=test&&ts-node-dev --input-type=module --respawn --pretty --transpile-only src/server.ts"
   },
   "keywords": [],
   "author": "",
