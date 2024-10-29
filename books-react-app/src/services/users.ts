@@ -6,7 +6,7 @@ import { castUserToFormData } from '../utils/castFormData';
 import { handleError } from '../utils/handleError';
 
 const baseUrl = import.meta.env.VITE_API_URL;
-const url = `${baseUrl}/api/books`;
+const url = `${baseUrl}/api`;
 
 // Request to get all users
 export const getAllUsers = async (): Promise<Result<User[], string>> => {

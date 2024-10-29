@@ -1,7 +1,7 @@
-import { Book } from "types/Book";
-import { Query } from "types/Query";
 import { AppThunk } from ".";
 import { createBook, getAllBooks, getBook, removeBook, updateBook } from "../services/books";
+import { Book } from "../types/Book";
+import { Query } from "../types/Query";
 import { bookSlice } from "./bookSlice";
 
 const { actions } = bookSlice;

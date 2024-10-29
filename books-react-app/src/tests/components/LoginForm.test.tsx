@@ -1,15 +1,18 @@
-import LoginForm from '@/components/LoginForm';
-import '@testing-library/jest-dom/extend-expect';
 import userEvent from '@testing-library/user-event';
+import { vi } from 'vitest';
+import LoginForm from '../../components/LoginForm';
 import { customRender, screen } from '../utils/test-utils';
 
-const login = jest.fn();
-const mockNavigate = jest.fn();
+const login = vi.fn();
+const mockNavigate = vi.fn();
 
-jest.mock("react-router-dom", () => ({
-    ...jest.requireActual("react-router-dom"),
-    useNavigate: () => mockNavigate
-}));
+vi.mock('react-router-dom', async () => {
+    const actual = await vi.importActual('react-router-dom');
+    return {
+        ...actual,
+        useNavigate: () => mockNavigate
+    };
+});
 
 describe('LoginForm', () => {
 

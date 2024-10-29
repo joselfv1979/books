@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from "react";
-import { Book } from "types/Book";
+import { Book } from "../types/Book";
 
 export type BookFormErrors = {
     title?: string,

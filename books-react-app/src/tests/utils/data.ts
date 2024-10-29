@@ -1,5 +1,5 @@
-import { User, UserState } from "@/types/User";
-import { Book, BookState } from "types/Book";
+import { Book, BookState } from "../../types/Book";
+import { User, UserState } from "../../types/User";
 
 export const books: Book[] = [
     {

@@ -1,12 +1,12 @@
-import BookList from '@/components/BookList';
-import { bookState } from '@/tests/utils/data';
-import { customRender } from '@/tests/utils/test-utils';
-import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/react';
-import { Book } from 'types/Book';
+import { vi } from 'vitest';
+import BookList from '../../components/BookList';
+import { bookState } from '../../tests/utils/data';
+import { Book } from '../../types/Book';
+import { customRender } from '../utils/test-utils';
 
 const query = { search: '', page: 1 };
-const setQuery = jest.fn();
+const setQuery = vi.fn();
 
 describe('BookList', () => {
 

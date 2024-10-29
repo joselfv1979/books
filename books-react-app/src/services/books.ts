@@ -7,8 +7,6 @@ import { castBookToFormData } from '../utils/castFormData';
 import { handleError } from '../utils/handleError';
 
 const baseUrl = import.meta.env.VITE_API_URL;
-console.log(baseUrl);
-
 const url = `${baseUrl}/api/books`;
 
 // Request to get all books

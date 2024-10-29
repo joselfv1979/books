@@ -1,15 +1,8 @@
-import React from 'react';
-// import { render } from '@testing-library/react';
-// import App from './App';
-// import { Provider } from 'react-redux';
-// import { store } from './redux/store';
+import App from './App';
+import { customRender } from './tests/utils/test-utils';
 
-test('renders button element', () => {
-    //     render(
-    //         <Provider store={store}>
-    //             <App />
-    //         </Provider>,
-    //     );
+test('App mounts properly', () => {
+    const wrapper = customRender(<App />);
 
-    expect(1 + 1).toBeTruthy();
+    expect(wrapper).toBeTruthy();
 });

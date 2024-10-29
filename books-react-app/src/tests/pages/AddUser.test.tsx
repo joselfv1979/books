@@ -1,6 +1,5 @@
-import AddUser from '@/pages/AddUser';
-import '@testing-library/jest-dom/extend-expect';
 import { screen } from '@testing-library/react';
+import AddUser from '../../pages/AddUser';
 import { userState } from '../utils/data';
 import { customRender } from '../utils/test-utils';
 

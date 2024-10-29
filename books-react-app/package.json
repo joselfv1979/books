@@ -2,30 +2,6 @@
   "name": "app",
   "version": "0.1.0",
   "private": true,
-  "cracoConfig": "craco.config.js",
-  "dependencies": {
-    "@reduxjs/toolkit": "^1.9.1",
-    "axios": "^0.24.0",
-    "bootstrap": "^5.1.3",
-    "node-sass": "^8.0.0",
-    "react": "^17.0.2",
-    "react-bootstrap": "^2.1.1",
-    "react-bootstrap-icons": "^1.7.2",
-    "react-dom": "^17.0.2",
-    "react-redux": "^8.0.5",
-    "react-router-dom": "^6.6.1",
-    "react-scripts": "^5.0.1",
-    "redux": "^4.2.0",
-    "redux-persist": "^6.0.0",
-    "redux-thunk": "^2.4.2",
-    "web-vitals": "^2.1.3"
-  },
-  "scripts": {
-    "build": "craco build",
-    "dev": "craco start",
-    "eject": "craco eject",
-    "test": "craco test --watchAll --detectOpenHandles --verbose --coverage"
-  },
   "browserslist": {
     "production": [
       ">0.2%",
@@ -38,8 +14,22 @@
       "last 1 safari version"
     ]
   },
+  "dependencies": {
+    "@reduxjs/toolkit": "^1.9.1",
+    "axios": "^0.24.0",
+    "bootstrap": "^5.1.3",
+    "react": "^17.0.2",
+    "react-bootstrap": "^2.1.1",
+    "react-bootstrap-icons": "^1.7.2",
+    "react-dom": "^17.0.2",
+    "react-redux": "^8.0.5",
+    "react-router-dom": "^6.6.1",
+    "redux": "^4.2.0",
+    "redux-persist": "^6.0.0",
+    "redux-thunk": "^2.4.2",
+    "web-vitals": "^2.1.3"
+  },
   "devDependencies": {
-    "@craco/craco": "^7.1.0",
     "@testing-library/jest-dom": "^5.16.1",
     "@testing-library/react": "^12.1.2",
     "@testing-library/react-hooks": "^8.0.1",
@@ -52,14 +42,30 @@
     "@types/react-redux": "^7.1.24",
     "@typescript-eslint/eslint-plugin": "^5.47.1",
     "@typescript-eslint/parser": "^5.47.1",
-    "cross-env": "^7.0.3",
-    "cypress": "^13.3.0",
+    "@vitejs/plugin-react": "^4.3.3",
+    "@vitest/coverage-v8": "^2.1.3",
+    "cypress": "^13.14.1",
     "eslint-plugin-cypress": "^2.15.1",
     "eslint-plugin-react": "^7.34.2",
     "globals": "^15.4.0",
     "jest-environment-jsdom": "^29.6.2",
+    "jsdom": "^25.0.1",
+    "sass-embedded": "^1.80.4",
     "ts-jest": "^29.1.1",
     "ts-node": "^10.9.1",
-    "typescript": "^4.9.4"
+    "typescript": "^4.9.4",
+    "vite": "^5.4.10",
+    "vite-tsconfig-paths": "^5.0.1",
+    "vitest": "^2.1.3"
+  },
+  "scripts": {
+    "cy:open": "cypress open",
+    "cy:run": "cypress run",
+    "vitest": "vitest",
+    "coverage": "vitest run --coverage",
+    "test:cy": "vite --mode test",
+    "dev": "vite",
+    "build": "tsc && vite build",
+    "serve": "vite preview"
   }
 }

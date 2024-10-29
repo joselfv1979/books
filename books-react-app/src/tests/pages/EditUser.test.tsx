@@ -1,7 +1,6 @@
-import EditUser from '@/pages/EditUser';
-import * as actions from '@/store/userActions';
-import '@testing-library/jest-dom/extend-expect';
 import { screen, waitFor } from '@testing-library/react';
+import EditUser from '../../pages/EditUser';
+import * as actions from '../../store/userActions';
 import { user1, userState } from '../utils/data';
 import { customRender } from '../utils/test-utils';
 
@@ -61,7 +60,7 @@ describe('EditUser params', () => {
     });
 
     it('should call function fetchUser when receives user id param', async () => {
-        const fetchUserSpy = jest.spyOn(actions, 'fetchUser');
+        const fetchUserSpy = vi.spyOn(actions, 'fetchUser');
         waitFor(() => expect(fetchUserSpy).toHaveBeenCalled());
     });
 

@@ -1,25 +1,29 @@
-import UserForm from '@/components/UserForm';
-import '@testing-library/jest-dom/extend-expect';
 import { fireEvent } from '@testing-library/react';
 import { renderHook } from '@testing-library/react-hooks';
 import { useLocation } from 'react-router-dom';
+import { vi } from 'vitest';
+import UserForm from '../../components/UserForm';
+import { initialUser } from '../../data/ConstantUtils';
 import { customRender, screen } from '../utils/test-utils';
 
-jest.mock('react-router-dom', () => ({
-    ...jest.requireActual('react-router-dom'),
-    useLocation: () => ({
-        pathname: '/register',
-    }),
-}));
+vi.mock('react-router-dom', async () => {
+    const actual = await vi.importActual('react-router-dom');
+    return {
+        ...actual,
+        useLocation: () => ({
+            pathname: '/register',
+        }),
+    };
+});
 
-const onChange = jest.fn();
+const onChange = vi.fn();
 
 describe('UserForm', () => {
 
     beforeEach(() => {
-        const saveUser = jest.fn();
+        const saveUser = vi.fn();
 
-        customRender(<UserForm saveUser={saveUser} />);
+        customRender(<UserForm user={initialUser} saveUser={saveUser} register={true} />);
     });
 
     it('renders a user form', () => {
