@@ -32,9 +32,7 @@ const BookList = ({ query, setQuery }: Props) => {
                     </Row>
                     <PaginationComponent setQuery={setQuery} />
                 </div>
-                : <div className='h-100 d-flex justify-content-center align-items-center pb-5'>
-                    <h2 className='mb-5 text-center text-dark'>No books found</h2>
-                </div>
+                : <h2 className=' mt-5 text-center text-dark'>No books found</h2>
             }
         </>
 

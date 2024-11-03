@@ -2,10 +2,11 @@ import styles from '../assets/scss/tagList.module.scss';
 
 interface Props {
     tag: string;
-    handleRemoveTag: (tag: string) => void;
+    handleRemoveTag: (tag: string) => void
 }
 
 const Tag = ({ tag, handleRemoveTag }: Props) => {
+
     return (
         <div className={styles.tag}>
             {tag}

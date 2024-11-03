@@ -1,7 +1,6 @@
 import { ChangeEvent, Fragment, useState } from "react";
 import { FloatingLabel, Form } from "react-bootstrap";
 import styles from '../assets/scss/tagList.module.scss';
-import useTagInput from "../hooks/useTag";
 import { Book } from "../types/Book";
 import Tag from "./Tag";
 
@@ -15,8 +14,17 @@ export const TagField = ({ values, setValues }: Props) => {
     //define the MaxTags
     const MAX_TAGS = 4;
 
-    //Retrieve all the returned items from the hook
-    const { tags, handleAddTag, handleRemoveTag } = useTagInput(MAX_TAGS, values.genre); // pass the maximum tags
+    const { genre: tags } = values
+
+    const handleAddTag = (newTag: string) => {
+        if (newTag && !tags.includes(newTag) && tags.length < MAX_TAGS) {
+            setValues({ ...values, genre: [...tags, userInput] });
+        }
+    };
+
+    const handleRemoveTag = (tag: string) => {
+        setValues({ ...values, genre: tags.filter((t) => t !== tag) });
+    }
 
     // track the use input
     const [userInput, setUserInput] = useState<string>("");
@@ -37,7 +45,6 @@ export const TagField = ({ values, setValues }: Props) => {
                 tags.length < MAX_TAGS
             ) {
                 handleAddTag(userInput);
-                setValues({ ...values, genre: [...tags, userInput] });
                 setUserInput(""); // Clear the input after adding a tag
             }
         }
