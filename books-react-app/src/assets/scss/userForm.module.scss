@@ -1,3 +1,5 @@
+@use "./globalStyles.module" as global;
+
 .userForm {
   display: grid;
   grid-template-columns: 1fr 1fr 2rem 2fr 2fr;
@@ -6,7 +8,7 @@
   align-items: center;
   margin: 4rem auto;
   width: 90%;
-  color: #414a4c;
+  color: global.$writing-color;
 
   h2 {
     grid-column: 4 / 5;
@@ -14,7 +16,7 @@
   }
 
   label {
-    color: rgb(158, 158, 158);
+    color: global.$label-color;
   }
 
   .fullnameError,
@@ -23,7 +25,7 @@
   .passwordError {
     grid-column: 4 / 4;
     text-align: center;
-    color: #db3545;
+    color: global.$error-color;
   }
 
   .fullnameField,
@@ -98,7 +100,7 @@
       width: 10rem;
       height: 3rem;
       font-size: large;
-      color: #ffffff;
+      color: global.$white-color;
     }
   }
 

@@ -1,14 +1,16 @@
+@use "./globalStyles.module" as global;
+
 .menu {
   display: flex;
   align-items: center;
   height: 8vh;
   padding: 0 2rem;
-  background-color: #003366;
-  color: #fff;
+  background-color: global.$blue-dark-color;
+  color: global.$white-color;
 
   a {
     text-decoration: none;
-    color: #fff;
+    color: global.$white-color;
   }
 }
 
@@ -22,7 +24,7 @@
   align-items: center;
 
   .logoutIcon {
-    color: red;
+    color: global.$red-color;
     cursor: pointer;
     height: 1.5rem;
     width: 1.5rem;

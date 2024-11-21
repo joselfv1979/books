@@ -1,3 +1,5 @@
+@use "./globalStyles.module" as global;
+
 .library {
   min-height: 92vh;
   background-image: url("../images/library.jpg");
@@ -8,13 +10,13 @@
 }
 
 .viewLink {
-  color: #fff;
+  color: global.$white-color;
   background-color: transparent;
   border: 1px solid transparent;
   font-size: 200%;
 
   &:hover {
-    color: yellow;
+    color: global.$yellow-color;
     font-size: 250%;
     transition: 0.1s;
   }

@@ -1,3 +1,5 @@
+@use "./globalStyles.module" as global;
+
 .bookForm {
   display: grid;
   grid-template-columns: 1fr 1fr 2fr 1fr 1fr;
@@ -5,7 +7,7 @@
   grid-gap: 0rem 2rem;
   width: 100%;
   padding: 2rem;
-  color: #414a4c;
+  color: global.$writing-color;
 
   h2 {
     grid-column: 3 / 3;
@@ -26,7 +28,7 @@
   .isbnError,
   .pagesError,
   .publisherError {
-    color: #db3545;
+    color: global.$error-color;
     grid-column: 3 / 3;
   }
 
@@ -40,43 +42,43 @@
   }
 
   .titleError {
-    grid-row: 2/3;
+    grid-row: 2 / 3;
   }
 
   .titleField {
-    grid-row: 3/4;
+    grid-row: 3 / 4;
   }
 
   .authorError {
-    grid-row: 4/5;
+    grid-row: 4 / 5;
   }
 
   .authorField {
-    grid-row: 5/6;
+    grid-row: 5 / 6;
   }
 
   .publisherError {
-    grid-row: 6/7;
+    grid-row: 6 / 7;
   }
 
   .publisherField {
-    grid-row: 7/8;
+    grid-row: 7 / 8;
   }
 
   .isbnError {
-    grid-row: 8/9;
+    grid-row: 8 / 9;
   }
 
   .isbnField {
-    grid-row: 9/10;
+    grid-row: 9 / 10;
   }
 
   .pagesError {
-    grid-row: 10/11;
+    grid-row: 10 / 11;
   }
 
   .pagesField {
-    grid-row: 11/12;
+    grid-row: 11 / 12;
   }
 
   .genreField {
@@ -93,7 +95,7 @@
     button {
       width: 10rem;
       height: 3rem;
-      color: #ffffff;
+      color: global.$white-color;
     }
   }
 
@@ -103,6 +105,6 @@
   }
 
   label {
-    color: rgb(158, 158, 158);
+    color: global.$label-color;
   }
 }

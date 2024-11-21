@@ -1,5 +1,7 @@
+@use "./globalStyles.module" as global;
+
 .photoLabel {
-  color: #414a4c !important;
+  color: global.$writing-color !important;
   font-size: 1.2rem;
   margin: 1rem;
 }
@@ -21,5 +23,5 @@
 
 .photoNoFileText {
   font-size: 1rem;
-  color: rgb(158, 158, 158);
+  color: global.$label-color;
 }

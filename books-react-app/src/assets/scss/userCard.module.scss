@@ -1,7 +1,9 @@
+@use "./globalStyles.module" as global;
+
 .userCard {
   width: 16rem;
   margin: 1rem auto;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: global.$box-shadow;
 }
 
 .header {

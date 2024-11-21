@@ -1,3 +1,5 @@
+@use "./globalStyles.module" as global;
+
 .tagList {
   display: flex;
   flex-wrap: wrap;
@@ -6,32 +8,32 @@
 }
 
 .tag {
-  color: #ffffff;
-  background-color: #0b5ed7;
+  color: global.$white-color;
+  background-color: global.$info-color;
   border-radius: 0.25rem;
   font-weight: normal;
   padding-left: 0.3rem;
   gap: 0.3rem;
   display: flex;
   align-items: center;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  box-shadow: global.$box-shadow;
 }
 
 .closeButton {
   text-decoration: none;
   padding: 0;
   cursor: pointer;
-  background-color: #0b5ed7;
+  background-color: global.$info-color;
   border: 0;
   border-radius: 0.25rem;
 }
 
 .removeTag {
   padding: 0.25rem 0.25rem;
-  color: #ffffff;
+  color: global.$white-color;
   font-size: 1.25rem;
   display: flex;
   &:hover {
-    color: orangered;
+    color: global.$red-color;
   }
 }
