@@ -3,7 +3,7 @@ import { useAppSelector } from '../hooks/redux-hooks';
 import { isAdmin } from '../store/userSlice';
 
 type Props = {
-    children: React.ReactNode;
+    children: React.JSX.Element;
 };
 
 const AdminRoute = ({ children }: Props) => {
