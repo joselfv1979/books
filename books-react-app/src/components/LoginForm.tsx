@@ -10,26 +10,26 @@ export type Props = {
 
 const LoginForm = ({ login }: Props) => {
 
-    const initialState = {
+    const [values, setValues] = useState({
         username: '',
         password: '',
-    };
-
-    const [values, setValues] = useState(initialState);
-
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setValues({
-            ...values,
-            [event.target.name]: event.target.value,
-        });
-    };
+    });
 
     const navigate = useNavigate();
+
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+        setValues(prevValues => ({
+            ...prevValues,
+            [event.target.name]: event.target.value,
+        }))
+    };
 
     const handleLogin = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
         login(values);
     };
+
+    const handleNavigateToRegister = () => navigate("/register");
 
     return (
         <form data-testid="login-form" className="mx-auto w-50 p-5" onSubmit={handleLogin}>
@@ -38,18 +38,32 @@ const LoginForm = ({ login }: Props) => {
                 <span className="input-group-text" id="basic-addon1">
                     <UserIcon />
                 </span>
-                <input type="text" name="username" autoComplete="on" className="form-control" placeholder="Enter username" onChange={onChange} />
+                <input type="text"
+                    name="username"
+                    autoComplete="on"
+                    className="form-control"
+                    placeholder="Enter username"
+                    aria-label="Username"
+                    value={values.username}
+                    onChange={handleChange} />
             </div>
             <div className="input-group mx-auto my-5 w-50">
                 <span className="input-group-text" id="basic-addon2">
                     <PasswordIcon />
                 </span>
-                <input type="password" name="password" autoComplete="off" className="form-control" placeholder="Enter password" onChange={onChange} />
+                <input type="password"
+                    name="password"
+                    autoComplete="off"
+                    className="form-control"
+                    placeholder="Enter password"
+                    aria-label="Password"
+                    value={values.password}
+                    onChange={handleChange} />
             </div>
 
             <div className="d-flex my-4">
                 <button type="button" className="btn btn-link text-decoration-none mx-auto"
-                    onClick={() => navigate("/register")}>
+                    onClick={handleNavigateToRegister}>
                     Create an account
                 </button>
             </div>

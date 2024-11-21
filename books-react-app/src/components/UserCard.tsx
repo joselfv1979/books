@@ -11,11 +11,11 @@ type Props = {
 };
 
 const UserCard = ({ user }: Props) => {
-    const { setUser, setShowDeleteModal } = useDeleteModalContext();
+    const { setItemId, setShowDeleteModal } = useDeleteModalContext();
 
     const deleteUser = () => {
         setShowDeleteModal(true);
-        setUser(user);
+        setItemId(user.id);
     };
 
     const image = user.imagePath ? `${baseUrl}/api/books}/${user.imagePath}` : userImage;

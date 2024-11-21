@@ -3,7 +3,7 @@ import Pagination from "react-bootstrap/Pagination";
 import { useAppSelector } from "../hooks/redux-hooks";
 
 type Props = {
-    setQuery: Dispatch<SetStateAction<{ search?: string; page: number }>>
+    setQuery: Dispatch<SetStateAction<{ search?: string; page: number }>>;
 }
 
 const PaginationComponent = ({ setQuery }: Props) => {
@@ -15,16 +15,7 @@ const PaginationComponent = ({ setQuery }: Props) => {
     const isCurrentPageLast = Number(currentPage) === Number(totalPages);
 
     const handlePage = (page = 1) => {
-        let nextPage: number;
-
-        if (page < 1) {
-            nextPage = 1;
-        } else if (page > Number(totalPages)) {
-            nextPage = Number(totalPages);
-        } else {
-            nextPage = page
-        }
-
+        const nextPage = Math.max(1, Math.min(page, Number(totalPages)));
         setQuery((prevState) => ({ ...prevState, page: nextPage }));
     }
 
@@ -37,11 +28,7 @@ const PaginationComponent = ({ setQuery }: Props) => {
         const isCurrentPageWithinTwoPageNumbers =
             Math.abs(pageNumber - Number(currentPage)) <= 2;
 
-        if (
-            isPageNumberFirst ||
-            isPageNumberLast ||
-            isCurrentPageWithinTwoPageNumbers
-        ) {
+        if (isPageNumberFirst || isPageNumberLast || isCurrentPageWithinTwoPageNumbers) {
             isPageNumberOutOfRange = false;
             return (
                 <Pagination.Item

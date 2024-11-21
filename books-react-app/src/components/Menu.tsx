@@ -8,26 +8,22 @@ const Menu = () => {
     const admin = useAppSelector(isAdmin);
     const loggedUser = useAppSelector(authUser);
 
+    const menuItems = [
+        { to: "/", label: "Welcome" },
+        { to: "/books", label: "Books" },
+        { to: "/contact", label: "Contact" },
+        loggedUser && { to: `users/${loggedUser.id}`, label: "Profile" },
+        admin && { to: "/newBook", label: "New Book" },
+        admin && { to: "/users", label: "Users" },
+    ].filter(Boolean); // Filter out null values
+
     return (
         <nav className={styles.menu}>
-            <li className={styles.subMenu}>
-                <Link to="/">Welcome</Link>
-            </li>
-            <li className={styles.subMenu}>
-                <Link to="/books">Books</Link>
-            </li>
-            <li className={styles.subMenu}>
-                <Link to="/contact">Contact</Link>
-            </li>
-            {loggedUser && <li className={styles.subMenu}>
-                {<Link to={`users/${loggedUser?.id}`}>Profile</Link>}
-            </li>}
-            {admin && <li className={styles.subMenu}>
-                <Link to="/newBook">New Book</Link>
-            </li>}
-            {admin && <li className={styles.subMenu}>
-                <Link to="/users">Users</Link>
-            </li>}
+            {menuItems.map((item) => (
+                item && <li key={item.label} className={styles.subMenu}>
+                    <Link to={item.to}>{item.label}</Link>
+                </li>
+            ))}
             <li className={styles.userSubmenu}>
                 <UserLogMenu />
             </li>

@@ -9,7 +9,7 @@ const UserLogMenu = () => {
 
     const navigate = useNavigate();
 
-    const logoutUser = () => {
+    const handleLogoutUser = () => {
         navigate('/login');
         logout();
     };
@@ -17,8 +17,8 @@ const UserLogMenu = () => {
     return (
         authUser ?
             <>
-                <span className={styles.username} data-testid={authUser.username}> {authUser.username}</span>{' '}
-                <BoxArrowRight className={styles.logoutIcon} data-testid="logout-btn" onClick={logoutUser} />{' '}
+                <span className={styles.username} data-testid={authUser.username}>{authUser.username}</span>
+                <BoxArrowRight className={styles.logoutIcon} data-testid="logout-btn" onClick={handleLogoutUser} />
             </>
             : <Link to="/login">Login</Link>
     );

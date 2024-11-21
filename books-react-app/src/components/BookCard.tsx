@@ -13,9 +13,12 @@ type Props = {
 
 const BookCard = ({ book, styles }: Props) => {
 
-    const setButtons = useLocation().pathname === '/books';
+    const { pathname } = useLocation();
+    const showButtons = pathname === '/books';
 
     const image = book.imagePath ? `${baseUrl}/${book.imagePath}` : defaultImage;
+
+    const staticText = 'Some quick example text to build on the card title and make up the bulk of the card content.';
 
     return (
         <Card className={styles.bookCard} data-testid={book.title}>
@@ -23,10 +26,8 @@ const BookCard = ({ book, styles }: Props) => {
             <Card.Header>{book.author}</Card.Header>
             <Card.Body>
                 <Card.Title>{book.title}</Card.Title>
-                <Card.Text>
-                    Some quick example text to build on the card title and make up the bulk of the card content.
-                </Card.Text>
-                {setButtons && <BookCardButtons book={book} />}
+                <Card.Text>{staticText}</Card.Text>
+                {showButtons && <BookCardButtons bookId={book.id} />}
             </Card.Body>
         </Card>
     );

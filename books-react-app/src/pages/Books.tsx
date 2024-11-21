@@ -7,16 +7,19 @@ import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { getMessage } from '../utils/handleMessage';
 
+interface Query {
+    search?: string;
+    page: number;
+}
+
 const Books = () => {
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.book);
-    const { getBooks } = useAppDispatch();
+    const { getBooks, deleteBook } = useAppDispatch();
     const message = getMessage(errorMessage, successMessage);
 
-    const { book, showDeleteModal } = useDeleteModalContext();
+    const { itemId, showDeleteModal } = useDeleteModalContext();
 
-    const [query, setQuery] = useState<{
-        search?: string, page: number
-    }>({ page: 1 });
+    const [query, setQuery] = useState<Query>({ page: 1 });
 
     useEffect(() => {
         getBooks(query)
@@ -26,7 +29,7 @@ const Books = () => {
         loading ? <Loader />
             : <>
                 {message && <Message message={message} />}
-                {showDeleteModal && <DeleteModal book={book} />}
+                {showDeleteModal && <DeleteModal id={itemId} item={'book'} deleteItem={deleteBook} />}
                 <BookList query={query} setQuery={setQuery} />
             </>
     );

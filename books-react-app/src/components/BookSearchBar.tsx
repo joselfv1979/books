@@ -7,9 +7,12 @@ type Props = {
 }
 
 const BookSearchBar = ({ query, setQuery }: Props) => {
+
     const { getBooks } = useAppDispatch();
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
+        console.log('set querey');
+
         setQuery((prevState) => ({ ...prevState, search: event.target.value, page: 1 }))
     };
 
@@ -19,7 +22,11 @@ const BookSearchBar = ({ query, setQuery }: Props) => {
 
     return (
         <div className='d-flex w-50 mx-auto mt-2'>
-            <input type="text" id='search' className="form-control mx-2" placeholder='Search for title, author, genre, ISBN, publisher' value={query?.search ?? ''} onChange={handleInputChange} />
+            <input type="text" id='search'
+                className="form-control mx-2"
+                placeholder='Search for title, author, genre, ISBN, publisher'
+                value={query?.search ?? ''}
+                onChange={handleInputChange} />
             <button type="submit" className="btn btn-primary" onClick={handleSearch}>Search</button>
         </div>
     );

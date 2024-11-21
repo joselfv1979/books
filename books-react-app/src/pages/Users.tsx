@@ -9,9 +9,9 @@ import { getMessage } from '../utils/handleMessage';
 
 const Users = () => {
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.user);
-    const { fetchUsers } = useAppDispatch();
+    const { fetchUsers, deleteUser } = useAppDispatch();
     const message = getMessage(errorMessage, successMessage);
-    const { user, showDeleteModal } = useDeleteModalContext();
+    const { itemId, showDeleteModal } = useDeleteModalContext();
 
     useEffect(() => {
         fetchUsers();
@@ -20,7 +20,7 @@ const Users = () => {
     return (
         loading ? <Loader />
             : <>
-                {showDeleteModal && <DeleteModal user={user} />}
+                {showDeleteModal && <DeleteModal id={itemId} item={'user'} deleteItem={deleteUser} />}
                 {message && <Message message={message} />}
                 <UserList />
             </>

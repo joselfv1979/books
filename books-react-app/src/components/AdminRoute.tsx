@@ -3,12 +3,11 @@ import { useAppSelector } from '../hooks/redux-hooks';
 import { isAdmin } from '../store/userSlice';
 
 type Props = {
-    children: JSX.Element;
+    children: React.ReactNode;
 };
 
 const AdminRoute = ({ children }: Props) => {
     const admin = useAppSelector(isAdmin);
-
     return admin ? children : <Navigate to="/login" />;
 };
 

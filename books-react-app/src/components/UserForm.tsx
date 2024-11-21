@@ -25,25 +25,23 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
     const fileInput = useRef<HTMLInputElement>(null);
     const handleClick = () => fileInput.current?.click();
 
+    const navigate = useNavigate();
+
     // Image files handler
     const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
-        if (e.target.files) setValues({ ...values, image: e.target.files[0] });
+        const { files } = e.target;
+        if (files) {
+            setValues((prev) => ({ ...prev, image: files[0] }));
+        }
     }
 
     // removes input error when typing
     const removeInputError = (name: string) => {
-
-        for (const [key] of Object.entries(errors)) {
-            if (key === name) {
-                errors[key as keyof UserFormErrors] = undefined;
-                setErrors({ ...errors });
-                break;
-            }
-        }
+        setErrors((prev) => ({ ...prev, [name]: undefined }));
     }
 
     // Input values handler
-    const onChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 
         removeInputError(event.target.name);
 
@@ -53,7 +51,7 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
     };
 
     // Submit user
-    const submit = (event: FormEvent<HTMLFormElement>) => {
+    const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
 
         const { isValid } = validateUser({ values, errors, setErrors, register });
@@ -63,10 +61,10 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
         }
     };
 
-    const navigate = useNavigate();
+    const handleNavigateToBooks = () => navigate("/books");
 
     return (
-        <form className={styles.userForm} onSubmit={submit} data-testid="user-form">
+        <form className={styles.userForm} onSubmit={handleSubmit} data-testid="user-form">
             {register ? <h2>Register</h2> : <h2>Edit Profile</h2>}
 
             <fieldset className={styles.photoField}>
@@ -89,7 +87,7 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
                         autoComplete='off'
                         value={values.fullname}
                         placeholder="Enter full name"
-                        onChange={onChange}
+                        onChange={handleChange}
                         className={errors.fullname && 'is-invalid'}
                     />
                 </FloatingLabel>
@@ -108,7 +106,7 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
                         autoComplete='off'
                         value={values.username}
                         placeholder="Enter username"
-                        onChange={onChange}
+                        onChange={handleChange}
                         className={errors.username && 'is-invalid'}
                     />
                 </FloatingLabel>
@@ -127,7 +125,7 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
                         autoComplete='off'
                         value={values.email}
                         placeholder="Enter email"
-                        onChange={onChange}
+                        onChange={handleChange}
                         className={errors.email && 'is-invalid'}
                     />
                 </FloatingLabel>
@@ -147,7 +145,7 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
                             value={values.password}
                             placeholder="Password"
                             autoComplete="off"
-                            onChange={onChange}
+                            onChange={handleChange}
                             className={errors.password && 'is-invalid'}
                         />
                     </FloatingLabel>
@@ -165,7 +163,7 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
                     Submit
                 </Button>
                 {!register &&
-                    <Button variant="info" className={styles.submitButton} onClick={() => navigate(`/books`)}>
+                    <Button variant="info" className={styles.submitButton} onClick={handleNavigateToBooks}>
                         Cancel
                     </Button>}
             </div>

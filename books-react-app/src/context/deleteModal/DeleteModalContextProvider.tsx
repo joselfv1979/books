@@ -1,28 +1,22 @@
 import React, { ReactNode, useState } from 'react';
-import { Book } from '../../types/Book';
-import { User } from '../../types/User';
 import { DeleteModalContext } from './DeleteModalContext';
-import { initialBook, initialUser } from '../../data/ConstantUtils';
 
 type Props = {
     children: ReactNode;
 };
 
 export const DeleteModalContextProvider = ({ children }: Props) => {
-    const [book, setBook] = useState<Book>(initialBook);
-    const [user, setUser] = useState<User>(initialUser);
+    const [itemId, setItemId] = useState<string>('');
     const [showDeleteModal, setShowDeleteModal] = useState<boolean>(false);
 
     const value = React.useMemo(
         () => ({
-            book,
-            setBook,
-            user,
-            setUser,
+            itemId,
+            setItemId,
             showDeleteModal,
             setShowDeleteModal,
         }),
-        [book, user, showDeleteModal],
+        [itemId, showDeleteModal],
     );
 
     return <DeleteModalContext.Provider value={value}>{children}</DeleteModalContext.Provider>;

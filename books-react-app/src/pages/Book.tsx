@@ -18,7 +18,7 @@ const Book = () => {
 
     useEffect(() => {
         if (id) fetchBook(id);
-    }, []);
+    }, [id]);
 
     return (
         loading ? <Loader />

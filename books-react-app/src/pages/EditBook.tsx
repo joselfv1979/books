@@ -16,7 +16,7 @@ const BookEdit = () => {
 
     useEffect(() => {
         if (id) fetchBook(id);
-    }, []);
+    }, [id]);
 
     return (
         loading ? <Loader />

@@ -20,21 +20,6 @@ const reducers = combineReducers({
 // Saves the Redux store in persistent storage
 const persistedReducer = persistReducer(persistConfig, reducers);
 
-// Creates the store with these options
-export const store = configureStore({
-    reducer: persistedReducer,
-    middleware: (getDefaultMiddleware) =>
-        getDefaultMiddleware({
-            serializableCheck: false,
-        }),
-});
-
-export default {
-    ...userActions,
-    ...bookActions
-}
-
-// Creates the store with preloaded state
 export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
     return configureStore({
         reducer: persistedReducer,
@@ -45,6 +30,13 @@ export const setupStore = (preloadedState?: PreloadedState<RootState>) => {
             }),
     });
 };
+
+export const store = setupStore();
+
+export default {
+    ...userActions,
+    ...bookActions
+}
 
 export const persistor = persistStore(store);
 

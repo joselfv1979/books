@@ -1,35 +1,23 @@
-import { createContext, useContext } from 'react';
-import { Book } from '../../types/Book';
-import { User } from '../../types/User';
-import { initialUser, initialBook } from '../../data/ConstantUtils';
+import { createContext, Dispatch, SetStateAction, useContext } from 'react';
 
 export type DeleteModalContent = {
-    book: Book;
-    setBook: (book: Book) => void;
-    user: User;
-    setUser: (user: User) => void;
+    itemId: string;
+    setItemId: Dispatch<SetStateAction<string>>;
     showDeleteModal: boolean;
-    setShowDeleteModal: (showDeleteModal: boolean) => void;
+    setShowDeleteModal: Dispatch<SetStateAction<boolean>>;
 };
 
-const DeleteModalContext = createContext<DeleteModalContent>({
-    book: initialBook,
-    setBook: () => null,
-    user: initialUser,
-    setUser: () => null,
-    showDeleteModal: false,
-    setShowDeleteModal: () => true,
-});
+// Create a context with a more appropriate default value
+const DeleteModalContext = createContext<DeleteModalContent | undefined>(undefined);
 
 const useDeleteModalContext = () => {
     const context = useContext(DeleteModalContext);
-
-    // if `undefined`, throw an error
+    // if `undefined`, throw an error with the correct message
     if (context === undefined) {
-        throw new Error('useUserContext was used outside of its Provider');
+        throw new Error('useDeleteModalContext must be used within a DeleteModalProvider');
     }
-
     return context;
 };
 
 export { DeleteModalContext, useDeleteModalContext };
+

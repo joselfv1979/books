@@ -13,7 +13,14 @@ type Props = {
 }
 
 const BookList = ({ query, setQuery }: Props) => {
+
     const { books } = useAppSelector((state) => state.book);
+
+    const renderBookCard = (book: Book) => (
+        <Col key={book.id} sm={3} data-testid="book-card">
+            <BookCard book={book} styles={styles} />
+        </Col>
+    );
 
     return (
         <>
@@ -22,13 +29,7 @@ const BookList = ({ query, setQuery }: Props) => {
             {books.length > 0 ?
                 <div className='h-75 p-3' data-testid="book-list">
                     <Row>
-                        {books.map((book: Book) => {
-                            return (
-                                <Col key={book.id} sm={3} data-testid="book-card">
-                                    <BookCard book={book} styles={styles} />
-                                </Col>
-                            );
-                        })}
+                        {books.map(renderBookCard)}
                     </Row>
                     <PaginationComponent setQuery={setQuery} />
                 </div>

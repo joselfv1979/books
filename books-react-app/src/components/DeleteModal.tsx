@@ -1,33 +1,28 @@
 import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
-import { useAppDispatch } from '../hooks/redux-hooks';
-import { Book } from '../types/Book';
-import { User } from '../types/User';
+import { AppThunk } from '../store';
 
-export type Props = {
-    book?: Book;
-    user?: User;
+type Props = {
+    id: string;
+    item: string;
+    deleteItem: (id: string) => AppThunk
 };
 
-const DeleteModal = ({ book, user }: Props) => {
+const DeleteModal = ({ id, item, deleteItem }: Props) => {
     const { showDeleteModal, setShowDeleteModal } = useDeleteModalContext();
-    const { deleteUser, deleteBook } = useAppDispatch();
 
     const handleClose = () => setShowDeleteModal(false);
 
-    const deleteItem = () => {
-
-        user && deleteUser(user.id);
-        book && deleteBook(book.id);
-
+    const removeItem = () => {
+        deleteItem(id);
         setShowDeleteModal(false);
     };
 
     return (
         <Modal size="sm" show={showDeleteModal} onHide={handleClose} data-testid="delete-modal">
             <Modal.Header closeButton>
-                <Modal.Title>{book ? 'Delete book' : 'Delete user'}
+                <Modal.Title>{`Delete ${item}`}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="text-center fw-bold">
@@ -37,7 +32,7 @@ const DeleteModal = ({ book, user }: Props) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button variant="danger" onClick={deleteItem} data-testid="delete-item-btn">
+                <Button variant="danger" onClick={removeItem} data-testid="delete-item-btn">
                     Delete
                 </Button>
             </Modal.Footer>

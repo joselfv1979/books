@@ -20,8 +20,10 @@ const LoadFile = ({ image, fileInput, handleFile }: Props) => {
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
 
-        if (event.target.files) {
-            event.target.files[0] && setPreview(URL.createObjectURL(event.target.files[0]));
+        const file = event.target.files?.[0];
+        if (file) {
+            const objectUrl = URL.createObjectURL(file);
+            setPreview(objectUrl);
             handleFile(event);
         }
     };
