@@ -1,5 +1,4 @@
-import { fireEvent, waitFor } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { fireEvent, renderHook } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useLocation } from 'react-router-dom';
 import { vi } from 'vitest';
@@ -21,7 +20,10 @@ vi.mock('react-router-dom', async () => {
 });
 
 const addBook = vi.fn();
-const onChange = vi.fn();
+const handleChange = vi.fn();
+global.URL.createObjectURL = vi.fn();
+
+const user = userEvent.setup();
 
 describe('BookForm', () => {
 
@@ -61,55 +63,66 @@ describe('BookForm', () => {
         const inputTitle: HTMLInputElement = screen.getByPlaceholderText(/enter title/i);
         expect(inputTitle).toBeInTheDocument();
 
-        inputTitle.onchange = onChange;
+        inputTitle.onchange = handleChange;
         fireEvent.change(inputTitle, { target: { value: 'Muhammad Lahin' } });
 
         expect(inputTitle.value).toBe('Muhammad Lahin');
 
-        expect(onChange).toHaveBeenCalled();
+        expect(handleChange).toHaveBeenCalled();
     });
 
-    it('calls addBook function when the form is submitted', () => {
+    test('shows error messages for invalid inputs', async () => {
 
-        userEvent.type(screen.getByPlaceholderText(/enter title/i), 'Caperucita Roja');
-        userEvent.type(screen.getByPlaceholderText(/enter author/i), 'Jose Coronado');
-        userEvent.type(screen.getByPlaceholderText(/enter publisher/i), 'Random Editorial');
-        userEvent.type(screen.getByPlaceholderText(/enter isbn/i), '123-3456-23');
-        userEvent.type(screen.getByPlaceholderText(/enter pages/i), '123');
+        await user.click(screen.getByText(/Submit/i));
 
-        const submitButton = screen.getByRole('button', { name: /submit/i });
-        userEvent.click(submitButton);
+        expect(screen.getByText(/Title is required/i)).toBeInTheDocument();
+        expect(screen.getByText(/Author is required/i)).toBeInTheDocument();
+        expect(screen.getByText(/Publisher is required/i)).toBeInTheDocument();
+        expect(screen.getByText(/Isbn is required/i)).toBeInTheDocument();
+        expect(screen.getByText(/Pages is required/i)).toBeInTheDocument();
+    });
+
+    it('calls addBook function when the form is submitted', async () => {
+
+        await user.type(screen.getByLabelText(/Enter title/i), 'Test Title');
+        await user.type(screen.getByLabelText(/Enter author/i), 'Test Author');
+        await user.type(screen.getByLabelText(/Enter publisher/i), 'Test Publisher');
+        await user.type(screen.getByLabelText(/Enter isbn/i), '123-456-789');
+        await user.type(screen.getByLabelText(/Enter pages/i), '300');
+
+        await user.click(screen.getByText(/Submit/i));
 
         expect(addBook).toHaveBeenCalledWith({
-            title: 'Caperucita Roja',
-            author: 'Jose Coronado',
-            publisher: 'Random Editorial',
-            isbn: '123-3456-23',
-            pages: '0123',
-            imagePath: '',
-            genre: [],
+            id: "",
+            title: 'Test Title',
+            author: 'Test Author',
+            publisher: 'Test Publisher',
+            isbn: '123-456-789',
+            pages: "300",
             image: undefined,
-            id: ''
+            imagePath: "",
+            genre: []
         });
     });
 
-    it.skip('should display inputFile and preview image', async () => {
+    it('should allow uploading a file', async () => {
 
-        const inputFile = screen.getByLabelText(/photo/i);
+        const inputFile: HTMLInputElement = screen.getByLabelText(/photo/i);
 
         expect(inputFile).toBeInTheDocument();
         const file = new File(['test file content'], 'test.jpg', {
             type: 'image/jpeg',
         });
 
-        fireEvent.change(inputFile, { target: { files: [file] } })
+        await user.upload(inputFile, file);
 
-        await waitFor(() => expect(screen.getByAltText(/preview/i)).toBeInTheDocument());
+        expect(inputFile.files).toContain(file);
     });
 
-    it('should navigate to book list page on cliking on cancel button', () => {
+    it('should navigate to book list page on cliking on cancel button', async () => {
         const cancelButton = screen.getByRole('button', { name: /cancel/i });
-        userEvent.click(cancelButton);
+
+        await user.click(cancelButton);
 
         expect(mockNavigate).toHaveBeenCalledWith("/books");
     })

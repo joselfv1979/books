@@ -14,6 +14,8 @@ vi.mock('react-router-dom', async () => {
     };
 });
 
+const user = userEvent.setup();
+
 describe('LoginForm', () => {
 
     beforeEach(() => customRender(<LoginForm login={login} />));
@@ -44,27 +46,27 @@ describe('LoginForm', () => {
         expect(inputPassword.value).toBe('');
     });
 
-    it('should allow entering username and password', () => {
+    it('should allow entering username and password', async () => {
         const inputUsername: HTMLInputElement = screen.getByPlaceholderText(/enter username/i);
         const inputPassword: HTMLInputElement = screen.getByPlaceholderText(/enter password/i);
 
-        userEvent.type(inputUsername, 'jose');
-        userEvent.type(inputPassword, '1234');
+        await user.type(inputUsername, 'jose');
+        await user.type(inputPassword, '1234');
 
         expect(inputUsername.value).toBe('jose');
         expect(inputPassword.value).toBe('1234');
     });
 
-    it('calls login function with typed values', () => {
+    it('calls login function with typed values', async () => {
 
         const inputUsername: HTMLInputElement = screen.getByPlaceholderText(/enter username/i);
         const inputPassword: HTMLInputElement = screen.getByPlaceholderText(/enter password/i);
 
-        userEvent.type(inputUsername, 'admin');
-        userEvent.type(inputPassword, '1234');
+        await user.type(inputUsername, 'admin');
+        await user.type(inputPassword, '1234');
 
         const submitButton = screen.getByRole('button', { name: /submit/i });
-        userEvent.click(submitButton);
+        await user.click(submitButton);
 
         expect(login).toHaveBeenCalledWith({
             username: 'admin',
@@ -74,7 +76,7 @@ describe('LoginForm', () => {
 
     it('should navigate to the registration page by clicking on the button to create an account', async () => {
         const createAccountButton = screen.getByRole('button', { name: /create an account/i });
-        userEvent.click(createAccountButton);
+        await user.click(createAccountButton);
 
         expect(mockNavigate).toHaveBeenCalledWith("/register");
     });

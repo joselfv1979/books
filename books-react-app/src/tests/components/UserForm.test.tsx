@@ -1,5 +1,4 @@
-import { fireEvent } from '@testing-library/react';
-import { renderHook } from '@testing-library/react-hooks';
+import { fireEvent, renderHook } from '@testing-library/react';
 import { useLocation } from 'react-router-dom';
 import { vi } from 'vitest';
 import UserForm from '../../components/UserForm';

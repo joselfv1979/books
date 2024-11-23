@@ -1,10 +1,9 @@
 /// <reference types="vite/client" />
-// /// <reference types="vite/types/importMeta.d.ts" />
 
-// interface ImportMetaEnv {
-//     readonly VITE_API_URL: string;
-// }
+import type { TestingLibraryMatchers } from "@testing-library/jest-dom/types/matchers";
+import "vitest";
 
-// interface ImportMeta {
-//     readonly env: ImportMetaEnv;
-// }
+declare module "vitest" {
+    // eslint-disable-next-line @typescript-eslint/no-explicit-any
+    interface Assertion<T = any> extends TestingLibraryMatchers<T, void> { }
+}
