@@ -1,0 +1,49 @@
+services:
+  mongodb:
+    image: books:v2
+    ports:
+      - "27017:27017"
+    healthcheck:
+      test: echo 'db.runCommand("ping").ok' | mongosh 127.0.0.1:27017/test --quiet
+      interval: 5s
+      timeout: 5s
+      retries: 10
+    environment:
+      MONGO_INITDB_ROOT_USERNAME: jose
+      MONGO_INITDB_ROOT_PASSWORD: jose
+    volumes:
+      - data-volume:/data/db
+    networks:
+      - backend
+
+  api:
+    image: api-books:v2
+    depends_on:
+      mongodb:
+        condition: service_healthy
+    restart: always
+    ports:
+      - 8000:8000
+    env_file:
+      - ./books-node-api/env/.env.production
+    environment:
+      NODE_ENV: "production"
+    networks:
+      - backend
+      - frontend
+
+  client:
+    image: client-books:v2
+    ports:
+      - 3050:80
+    env_file:
+      - ./books-react-app/env/.env.production
+    networks:
+      - frontend
+
+volumes:
+  data-volume:
+
+networks:
+  backend:
+  frontend:
