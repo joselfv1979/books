@@ -1,22 +1,9 @@
-import dotenv from "dotenv";
-import mongoose from "mongoose";
-import path from "path";
+import { connect } from "../config/connect";
 import Book from "../models/Book";
 import Role from "../models/Role";
 import User from "../models/User";
 import { createBookService } from "../services/bookService";
 import { createUserService, getRoleService } from "./../services/userService";
-
-dotenv.config({
-    path: path.resolve(__dirname, `./../../.env`),
-});
-
-const options = {
-    useNewUrlParser: true,
-    useUnifiedTopology: true,
-    useCreateIndex: true,
-    useFindAndModify: false,
-};
 
 const ADMIN_ROLE = 'ADMIN';
 const USER_ROLE = 'USER';
@@ -110,7 +97,7 @@ const createBooks = async () => {
 
 export const seed = async () => {
     try {
-        await mongoose.connect(process.env.TEST_DATABASE as string, options);
+        connect();
         await Book.collection.drop();
         await User.collection.drop();
         await Role.collection.drop();

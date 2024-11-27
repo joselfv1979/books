@@ -1,45 +1,25 @@
 import dotenv from "dotenv";
+import path from "path";
 
-const path = require("path");
+const { NODE_ENV } = process.env;
 
 dotenv.config({
-  path: path.resolve(__dirname, `./../../.env`),
+  path: path.resolve(__dirname, `./../../env/.env.${NODE_ENV}`),
 });
 
 const {
-  DEV_HOST,
-  DEV_PORT,
-  DEV_DATABASE,
-  PROD_PORT,
-  PROD_HOST,
-  PROD_DATABASE,
-  TEST_HOST,
-  TEST_PORT,
-  TEST_DATABASE,
-  NODE_ENV
+  HOST,
+  PORT,
+  DB_HEADER,
+  DB_USERNAME,
+  DB_PASSWORD,
+  DB_HOST,
+  DATABASE,
+  DB_OPTIONS,
 } = process.env;
 
-let db = '';
-let host = '';
-let port = '';
 
-if (NODE_ENV === "development") {
-  db = DEV_DATABASE as string;
-  host = DEV_HOST as string;
-  port = DEV_PORT as string
-} else if (NODE_ENV === "test") {
-  db = TEST_DATABASE as string;
-  host = TEST_HOST as string;
-  port = TEST_PORT as string;
-} else {
-  db = PROD_DATABASE as string;
-  host = PROD_HOST as string;
-  port = PROD_PORT as string;
-}
-
-const DB_CONNECTION = db;
-const HOST = host;
-const PORT = port;
+const DB_CONNECTION = `${DB_HEADER}//${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DATABASE}?${DB_OPTIONS}`
 
 export { DB_CONNECTION, HOST, NODE_ENV, PORT };
 
