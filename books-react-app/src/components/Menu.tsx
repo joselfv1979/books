@@ -1,4 +1,4 @@
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 import styles from '../assets/scss/menu.module.scss';
 import { useAppSelector } from '../hooks/redux-hooks';
 import { authUser, isAdmin } from '../store/userSlice';
@@ -9,24 +9,25 @@ const Menu = () => {
     const loggedUser = useAppSelector(authUser);
 
     const menuItems = [
-        { to: "/", label: "Welcome" },
         { to: "/books", label: "Books" },
         { to: "/contact", label: "Contact" },
-        loggedUser && { to: `users/${loggedUser.id}`, label: "Profile" },
+        loggedUser && { to: `user-edit/${loggedUser.id}`, label: "Profile" },
         admin && { to: "/newBook", label: "New Book" },
         admin && { to: "/users", label: "Users" },
     ].filter(Boolean); // Filter out null values
 
     return (
         <nav className={styles.menu}>
+            <NavLink className={styles.brand} to="/">Library</NavLink>
             {menuItems.map((item) => (
-                item && <li key={item.label} className={styles.subMenu}>
-                    <Link to={item.to}>{item.label}</Link>
-                </li>
+                item &&
+                <NavLink key={item.label} to={item.to}
+                    className={({ isActive }) => (isActive ? `${styles.active}` : '')}>
+                    {item.label}
+                </NavLink>
+
             ))}
-            <li className={styles.userSubmenu}>
-                <UserLogMenu />
-            </li>
+            <UserLogMenu />
         </nav>
     );
 };

@@ -1,5 +1,5 @@
 import { BoxArrowRight } from 'react-bootstrap-icons';
-import { Link, useNavigate } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styles from '../assets/scss/menu.module.scss';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 
@@ -20,7 +20,7 @@ const UserLogMenu = () => {
                 <span className={styles.username} data-testid={authUser.username}>{authUser.username}</span>
                 <BoxArrowRight className={styles.logoutIcon} data-testid="logout-btn" onClick={handleLogoutUser} />
             </>
-            : <Link to="/login">Login</Link>
+            : <NavLink className={({ isActive }) => (isActive ? `${styles.activeLogmenu}` : `${styles.logmenu}`)} to="/login">Login</NavLink>
     );
 };
 

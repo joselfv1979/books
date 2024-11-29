@@ -6,31 +6,52 @@
   height: 8vh;
   padding: 0 2rem;
   background-color: global.$blue-dark-color;
-  color: global.$white-color;
+  font-size: 1.2rem;
 
   a {
-    text-decoration: none;
     color: global.$white-color;
+    margin: 0 1rem;
+
+    &.brand {
+      font-size: 1.7rem;
+      font-weight: bolder;
+      color: global.$blue-light-color;
+    }
+
+    &:hover {
+      filter: brightness(55%);
+    }
+
+    &.active {
+      color: global.$blue-light-color;
+    }
+  }
+
+  .logmenu,
+  .activeLogmenu {
+    margin-left: auto;
+    display: flex;
+    align-items: center;
+  }
+
+  .activeLogmenu {
+    color: global.$blue-light-color;
   }
 }
 
-.subMenu {
-  margin: 0 1rem;
-}
+.logoutIcon {
+  color: global.$white-color;
+  cursor: pointer;
+  height: 1.5rem;
+  width: 1.5rem;
 
-.userSubmenu {
-  margin-left: auto;
-  display: flex;
-  align-items: center;
-
-  .logoutIcon {
+  &:hover {
     color: global.$red-color;
-    cursor: pointer;
-    height: 1.5rem;
-    width: 1.5rem;
   }
+}
 
-  .username {
-    margin-right: 1rem;
-  }
+.username {
+  margin-left: auto;
+  margin-right: 1rem;
+  color: global.$blue-light-color;
 }

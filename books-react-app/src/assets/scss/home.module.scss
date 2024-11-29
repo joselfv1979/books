@@ -7,16 +7,18 @@
   background-repeat: no-repeat;
   display: flex;
   justify-content: center;
+  align-items: center;
 }
 
 .viewLink {
   color: global.$white-color;
   background-color: transparent;
   border: 1px solid transparent;
+  height: 4rem;
   font-size: 200%;
 
   &:hover {
-    color: global.$yellow-color;
+    color: global.$blue-light-color;
     font-size: 250%;
     transition: 0.1s;
   }
