@@ -62,7 +62,7 @@ describe('open users page', () => {
             .should("eq", 200);
 
         cy.get('nav').find('a').contains('Profile').click();
-        cy.contains('Edit Profile').should('be.visible');
+        cy.contains('Edit profile').should('be.visible');
         cy.get('[placeholder="Enter username"]').should('have.value', 'userToUpdate');
 
         cy.get('[placeholder="Enter username"]').clear();

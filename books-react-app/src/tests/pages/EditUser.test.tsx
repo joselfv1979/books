@@ -69,7 +69,6 @@ describe('EditUser params', () => {
         const userForm = screen.getByTestId('user-form');
 
         expect(userForm).toHaveFormValues({
-            fullname: 'Ana',
             username: 'ana',
             email: 'ana@gmail.com',
         });

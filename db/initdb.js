@@ -25,7 +25,6 @@ const userRoleId = USER_ROLE._id;
 
 const users = [
   {
-    fullname: "admin",
     username: "admin",
     email: "admin@gmail.com",
     password: "$2b$10$eJ6BrxRZwn/aVh5IjsqGsedeOUj9b4sV2MI52q8x5v4QPtRedpQGO",
@@ -34,7 +33,6 @@ const users = [
     books: [],
   },
   {
-    fullname: "User 1",
     username: "userToDelete",
     email: "userToDelete@gmail.com",
     password: "$2b$10$eJ6BrxRZwn/aVh5IjsqGsedeOUj9b4sV2MI52q8x5v4QPtRedpQGO",
@@ -43,7 +41,6 @@ const users = [
     books: [],
   },
   {
-    fullname: "User 2",
     username: "userToUpdate",
     email: "userToUpdate@gmail.com",
     password: "$2b$10$eJ6BrxRZwn/aVh5IjsqGsedeOUj9b4sV2MI52q8x5v4QPtRedpQGO",

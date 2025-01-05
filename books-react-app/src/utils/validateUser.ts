@@ -18,14 +18,13 @@ type Props = {
 // Validate user function
 export const validateUser = ({ values, errors, setErrors, register }: Props) => {
 
-    const { fullname, username, email, password } = values;
+    const { username, email, password } = values;
 
     const regex = /^([a-zA-Z0-9_.-])+@(([a-zA-Z0-9-])+\.)+([a-zA-Z0-9]{2,4})+$/;
 
     let isValid = true;
 
-    errors.fullname = fullname ? undefined : 'Fullname is required';
-    errors.username = username ? undefined : 'Username must contains 4 characters at least';
+    errors.username = username.length > 3 ? undefined : 'Username must contains 4 characters at least';
 
     if (!email) {
         errors.email = 'Email is required';
@@ -33,7 +32,7 @@ export const validateUser = ({ values, errors, setErrors, register }: Props) => 
         errors.email = 'Enter valid email';
     }
 
-    if (register && (password.length < 4 || password.length > 9)) errors.password = 'Password must be between 4 and 8 characters long';
+    if (register && (password.length < 4 || password.length > 9)) errors.password = 'Password must contains 4 - 8 characters';
 
     setErrors({ ...errors });
 

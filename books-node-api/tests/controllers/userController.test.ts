@@ -50,7 +50,7 @@ describe('getUsersController', () => {
 
         const user = await User.findOne({ username: 'userToUpdate' }).lean();
 
-        const userToUpdate = { ...user, fullname: 'New fullname' };
+        const userToUpdate = { ...user, email: 'newEmail@gmail.com' };
 
         const res = await api
             .put(`${USERS_ROUTE}/${userToUpdate._id}`)
@@ -59,12 +59,11 @@ describe('getUsersController', () => {
 
         expect(res.status).toEqual(201);
         expect(res.body.success).toBe(true);
-        expect(res.body.data).toHaveProperty('fullname', 'New fullname');
+        expect(res.body.data).toHaveProperty('email', 'newEmail@gmail.com');
     });
 
     it("should fail with code 400 updating one user if the attributes needed are not sended", async () => {
         const noEmailUser = {
-            fullname: "User's Fullname",
             email: 'newUser@gmail.com',
             roles: ['USER']
         }
@@ -131,7 +130,7 @@ describe('Error status code 500', () => {
         updateUserSpy.mockImplementationOnce(getServerError);
 
         const user = await User.findOne({ username: 'userToUpdate' }).lean();
-        const userToUpdate = { ...user, fullname: 'New fullname' };
+        const userToUpdate = { ...user, imagePath: 'New imagePath' };
 
         const res = await api
             .put(`${USERS_ROUTE}/${user?._id}`)

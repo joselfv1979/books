@@ -52,12 +52,12 @@ export async function registerController(
   next: NextFunction
 ) {
   try {
-    const { fullname, username, email, password, roles } = req.body;
+    const { username, email, password, roles } = req.body;
 
     // use path if receiving file, empty string otherwise
     const photo = req.file ? req.file.path : "";
 
-    if (!fullname || !username || !email || !password || !roles) {
+    if (!username || !email || !password || !roles) {
       return next(new CustomError(400, "Bad request"));
     }
 
@@ -76,7 +76,6 @@ export async function registerController(
     let roleList: IRole[] = await getRoleService(roles);
 
     let newUser: IUser = new User({
-      fullname,
       username,
       email,
       password: passwordHash,
