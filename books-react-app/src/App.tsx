@@ -2,7 +2,7 @@ import { useEffect } from 'react';
 import { Route, Routes, useLocation } from 'react-router-dom';
 import './assets/scss/globalStyles.module.scss';
 import AdminRoute from './components/AdminRoute';
-import Menu from './components/Menu';
+import Layout from './components/Layout';
 import { useAppDispatch } from './hooks/redux-hooks';
 import About from './pages/About';
 import AddBook from './pages/AddBook';
@@ -20,31 +20,30 @@ const App = () => {
     const { pathname } = useLocation();
     const { removeBookMessage, removeUserMessage } = useAppDispatch();
 
-    // Removes messages when view is changed
+    // Clear messages when the view changes
     useEffect(() => {
         removeBookMessage();
         removeUserMessage();
     }, [pathname]);
 
     return (
-        <>
-            <Menu />
-            <main>
-                <Routes>
-                    <Route path="/" element={<Home />} />
-                    <Route path="/books" element={<Books />} />
-                    <Route path="/book/:id" element={<Book />} />
-                    <Route path="/register" element={<AddUser />} />
-                    <Route path="/login" element={<Login />} />
-                    <Route path="/user-edit/:id" element={<EditUser />} />
-                    <Route path="/newBook" element={<AdminRoute><AddBook /></AdminRoute>} />
-                    <Route path="/book-edit/:id" element={<AdminRoute><EditBook /></AdminRoute>} />
-                    <Route path="/users" element={<AdminRoute><Users /></AdminRoute>} />
-                    <Route path="/contact" element={<About />} />
-                    <Route path="*" element={<NotFound />} />
-                </Routes>
-            </main>
-        </>
+        <Routes>
+            <Route element={<Layout />}>
+                <Route path="/" element={<Home />} />
+                <Route path="/books" element={<Books />} />
+                <Route path="/book/:id" element={<Book />} />
+                <Route path="/register" element={<AddUser />} />
+                <Route path="/login" element={<Login />} />
+                <Route path="/user-edit/:id" element={<EditUser />} />
+                <Route path="/contact" element={<About />} />
+                <Route path="*" element={<NotFound />} />
+                <Route element={<AdminRoute />}>
+                    <Route path="/newBook" element={<AddBook />} />
+                    <Route path="/book-edit/:id" element={<EditBook />} />
+                    <Route path="/users" element={<Users />} />
+                </Route>
+            </Route>
+        </Routes>
     );
 };
 
