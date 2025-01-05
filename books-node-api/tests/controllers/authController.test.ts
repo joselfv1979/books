@@ -64,7 +64,7 @@ describe('registerController', () => {
         const res = await api
             .post(SIGNUP_ROUTE)
             .send({
-                fullname: 'New User', username: 'newUser',
+                username: 'newUser',
                 email: 'newUser@gmail.com', password: '1234',
                 roles: ['USER']
             });
@@ -79,7 +79,7 @@ describe('registerController', () => {
         const res = await api
             .post(SIGNUP_ROUTE)
             .send({
-                fullname: 'New User 2', username: 'newUser2',
+                username: 'newUser2',
                 email: 'newUser2@gmail.com',
                 roles: ['USER']
             });
@@ -93,7 +93,7 @@ describe('registerController', () => {
     it("should fail with status code 409 if username already exists", async () => {
 
         const usernameExists = {
-            fullname: 'New User', username: 'newUser',
+            username: 'newUser',
             email: 'user@gmail.com', password: '1234', roles: ['USER']
         };
 
@@ -110,7 +110,7 @@ describe('registerController', () => {
     it("should fail with status code 409 if email address already exists", async () => {
 
         const emailExists = {
-            fullname: 'New User', username: 'user',
+            username: 'user',
             email: 'newUser@gmail.com', password: '1234', roles: ['USER']
         };
 
@@ -160,7 +160,7 @@ describe('Error status code 500', () => {
         const res = await api
             .post(SIGNUP_ROUTE)
             .send({
-                fullname: true, username: ['failedUser', 0, false],
+                username: ['failedUser', 0, false],
                 email: 'failedUser@gmail.com', password: [1, null],
                 roles: ['USER']
             });

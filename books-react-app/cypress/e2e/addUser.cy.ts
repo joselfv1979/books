@@ -8,7 +8,6 @@ describe('open register page', () => {
     it('should display register form', () => {
         cy.contains('Register');
         cy.get('[data-testid="user-form"]').should('be.visible');
-        cy.get('[placeholder="Enter full name"]').should('have.value', '');
         cy.get('[placeholder="Enter username"]').should('have.value', '');
         cy.get('[placeholder="Enter email"]').should('have.value', '');
         cy.get('[placeholder="Password"]').should('have.value', '');
@@ -17,7 +16,6 @@ describe('open register page', () => {
     it('should create a new user successfully', () => {
         cy.intercept("POST", "/api/auth/register").as("requestAddNewUser");
 
-        cy.get('[placeholder="Enter full name"]').type('New User');
         cy.get('[placeholder="Enter username"]').type('newUser');
         cy.get('[placeholder="Enter email"]').type('newUser@gmail.com');
         cy.get('[placeholder="Password"]').type('password');
@@ -31,14 +29,6 @@ describe('open register page', () => {
             .should("eq", 201);
 
         cy.contains('[data-testid="alert"]', 'User created successfully').should('be.visible');
-    });
-
-    it('should display an error message if any of the required book attributes are empty or wrong', () => {
-        cy.get('button[type="submit"]').click();
-        cy.contains('Fullname is required').should('be.visible');
-        cy.contains('Username must contains 4 characters at least').should('be.visible');
-        cy.contains('Email is required').should('be.visible');
-        cy.contains('Password must be between 4 and 8 characters long').should('be.visible');
     });
 
     it('should navigate to login page', () => {

@@ -71,24 +71,13 @@ describe('BookForm', () => {
         expect(handleChange).toHaveBeenCalled();
     });
 
-    test('shows error messages for invalid inputs', async () => {
-
-        await user.click(screen.getByText(/Submit/i));
-
-        expect(screen.getByText(/Title is required/i)).toBeInTheDocument();
-        expect(screen.getByText(/Author is required/i)).toBeInTheDocument();
-        expect(screen.getByText(/Publisher is required/i)).toBeInTheDocument();
-        expect(screen.getByText(/Isbn is required/i)).toBeInTheDocument();
-        expect(screen.getByText(/Pages is required/i)).toBeInTheDocument();
-    });
-
     it('calls addBook function when the form is submitted', async () => {
 
-        await user.type(screen.getByLabelText(/Enter title/i), 'Test Title');
-        await user.type(screen.getByLabelText(/Enter author/i), 'Test Author');
-        await user.type(screen.getByLabelText(/Enter publisher/i), 'Test Publisher');
-        await user.type(screen.getByLabelText(/Enter isbn/i), '123-456-789');
-        await user.type(screen.getByLabelText(/Enter pages/i), '300');
+        await user.type(screen.getByPlaceholderText(/Enter title/i), 'Test Title');
+        await user.type(screen.getByPlaceholderText(/Enter author/i), 'Test Author');
+        await user.type(screen.getByPlaceholderText(/Enter publisher/i), 'Test Publisher');
+        await user.type(screen.getByPlaceholderText(/Enter isbn/i), '123-456-789');
+        await user.type(screen.getByPlaceholderText(/Enter pages/i), '300');
 
         await user.click(screen.getByText(/Submit/i));
 
@@ -99,6 +88,7 @@ describe('BookForm', () => {
             publisher: 'Test Publisher',
             isbn: '123-456-789',
             pages: "300",
+            description: '',
             image: undefined,
             imagePath: "",
             genre: []

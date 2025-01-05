@@ -9,6 +9,7 @@ export const books: Book[] = [
         publisher: "Penguin",
         isbn: "0-6666-2222",
         genre: ["Horror"],
+        description: "A novel about bees.",
         pages: 350,
         imagePath: '/',
     },
@@ -23,7 +24,6 @@ export const bookState: BookState = {
 
 export const user1: User = {
     id: '1',
-    fullname: 'Ana',
     username: 'ana',
     password: '1234',
     email: 'ana@gmail.com',

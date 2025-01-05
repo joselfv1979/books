@@ -5,7 +5,6 @@ import { User } from "../types/User";
 export const initialUser: User = {
     id: '',
     username: '',
-    fullname: '',
     password: '',
     roles: ['USER'],
     email: '',
@@ -22,6 +21,7 @@ export const initialBook: Book = {
     isbn: '',
     genre: [],
     pages: 0,
+    description: '',
     image: undefined,
     imagePath: '',
 };

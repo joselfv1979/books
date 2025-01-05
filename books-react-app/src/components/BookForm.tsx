@@ -1,5 +1,5 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
-import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styles from '../assets/scss/bookForm.module.scss';
 import { initialBook } from '../data/ConstantUtils';
@@ -23,7 +23,6 @@ const BookForm = ({ book, saveBook, editing = false }: Props) => {
 
     // Book pictures loader
     const fileInput = useRef<HTMLInputElement>(null);
-    const handleClick = () => fileInput.current?.click();
 
     const navigate = useNavigate();
 
@@ -41,12 +40,13 @@ const BookForm = ({ book, saveBook, editing = false }: Props) => {
     }
 
     // Input values handler
-    const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
+    const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 
         removeInputError(event.target.name);
-        setValues({
-            ...values, [event.target.name]: event.target.value,
-        });
+
+        setValues((prevState) => ({
+            ...prevState, [event.target.name]: event.target.value,
+        }));
     };
 
     // Submit form values to views
@@ -64,102 +64,97 @@ const BookForm = ({ book, saveBook, editing = false }: Props) => {
 
     return (
         <form className={styles.bookForm} onSubmit={handleSubmit} data-testid="book-form">
-            {editing ? <h2>Edit Book</h2> : <h2>New Book</h2>}
 
-            <fieldset className={styles.photoField}>
-                <LoadFile fileInput={fileInput} image={values.imagePath} handleFile={handleFile} />
-                <Button variant="primary" className={styles.uploadButton} onClick={handleClick}>
-                    Upload
-                </Button>
+            <h3 className={styles.title}>{`${editing ? 'Edit' : 'New'} Book`}</h3>
+            <span className={styles.warning}>Required fields.</span>
+
+            <fieldset className={`${styles.textField} ${errors.title && styles.isInvalid}`}>
+                <input
+                    name="title"
+                    type="text"
+                    autoComplete='off'
+                    value={values.title}
+                    placeholder="Enter title"
+                    onChange={handleChange}
+                    className={styles.bookFormInput}
+                />
+                <span className={styles.asterisk}>*</span>
             </fieldset>
-            {errors.title && <div className={styles.titleError}>{errors.title}</div>}
-            <fieldset className={styles.titleField}>
-                <FloatingLabel
-                    controlId="title"
-                    label="Enter title"
-                >
-                    <Form.Control
-                        name="title"
-                        type="text"
-                        autoComplete='off'
-                        value={values.title}
-                        placeholder="Enter title"
-                        onChange={handleChange}
-                        className={errors.title && 'is-invalid'}
-                    />
-                </FloatingLabel>
+
+            <fieldset className={`${styles.textField} ${errors.author && styles.isInvalid}`}>
+                <input
+                    name="author"
+                    type="text"
+                    autoComplete='off'
+                    value={values.author}
+                    placeholder="Enter author"
+                    onChange={handleChange}
+                    className={styles.bookFormInput}
+                />
+                <span className={styles.asterisk}>*</span>
             </fieldset>
-            {errors.author && <div className={styles.authorError}>{errors.author}</div>}
-            <fieldset className={styles.authorField}>
-                <FloatingLabel
-                    controlId="author"
-                    label="Enter author"
-                >
-                    <Form.Control
-                        name="author"
-                        type="text"
-                        autoComplete='off'
-                        value={values.author}
-                        placeholder="Enter author"
-                        onChange={handleChange}
-                        className={errors.author && 'is-invalid'}
-                    />
-                </FloatingLabel>
+
+            <fieldset className={`${styles.textField} ${errors.publisher && styles.isInvalid}`}>
+                <input
+                    name="publisher"
+                    type="text"
+                    autoComplete='off'
+                    value={values.publisher}
+                    placeholder="Enter publisher"
+                    onChange={handleChange}
+                    className={styles.bookFormInput}
+                />
+                <span className={styles.asterisk}>*</span>
             </fieldset>
-            {errors.publisher && <div className={styles.publisherError}>{errors.publisher}</div>}
-            <fieldset className={styles.publisherField}>
-                <FloatingLabel
-                    controlId="publisher"
-                    label="Enter publisher"
-                >
-                    <Form.Control
-                        name="publisher"
-                        type="text"
-                        autoComplete='off'
-                        value={values.publisher}
-                        placeholder="Enter publisher"
-                        onChange={handleChange}
-                        className={errors.publisher && 'is-invalid'}
-                    />
-                </FloatingLabel>
-            </fieldset>
-            {errors.isbn && <div className={styles.isbnError}>{errors.isbn}</div>}
-            <fieldset className={styles.isbnField}>
-                <FloatingLabel
-                    controlId="isbn"
-                    label="Enter isbn"
-                >
-                    <Form.Control
+
+            <fieldset className={styles.clusteredField}>
+
+                <fieldset className={`${styles.isbnField} ${errors.isbn && styles.isInvalid}`}>
+                    <input
                         name="isbn"
                         type="text"
                         autoComplete='off'
                         value={values.isbn}
                         placeholder="Enter isbn"
                         onChange={handleChange}
-                        className={errors.isbn && 'is-invalid'}
+                        className={styles.bookFormInput}
                     />
-                </FloatingLabel>
-            </fieldset>
-            {errors.pages && <div className={styles.pagesError}>{errors.pages}</div>}
-            <fieldset className={styles.pagesField}>
-                <FloatingLabel
-                    controlId="pages"
-                    label="Enter pages"
-                >
-                    <Form.Control
+                    <span className={styles.asterisk}>*</span>
+                </fieldset>
+
+                <fieldset className={`${styles.pagesField} ${errors.pages && styles.isInvalid}`}>
+                    <input
                         name="pages"
                         type="number"
                         autoComplete='off'
-                        value={values.pages ?? ''}
+                        value={values.pages}
                         placeholder="Enter pages"
                         onChange={handleChange}
-                        className={errors.pages && 'is-invalid'}
+                        className={styles.bookFormInput}
                     />
-                </FloatingLabel>
+                    <span className={styles.asterisk}>*</span>
+                </fieldset>
+
             </fieldset>
 
-            <fieldset className={styles.genreField}>
-                <TagField values={values} setValues={setValues} />
+            <TagField values={values} setValues={setValues} />
+
+            <fieldset className={styles.textField}>
+                <textarea
+                    name="description"
+                    autoComplete='off'
+                    value={values.description}
+                    placeholder="Leave a comment here"
+                    onChange={handleChange}
+                    className={styles.bookFormTextarea}
+                />
+            </fieldset>
+
+            <fieldset className={styles.photoField}>
+                <LoadFile
+                    fileInput={fileInput}
+                    image={values.imagePath}
+                    handleFile={handleFile} />
             </fieldset>
 
             <div className={styles.buttonGroup}>

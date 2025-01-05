@@ -1,5 +1,7 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
+import styles from '../assets/scss/bookList.module.scss';
 import { useAppDispatch } from '../hooks/redux-hooks';
+import { SearchIcon } from './Icons';
 
 type Props = {
     query: { search?: string; page: number; };
@@ -11,8 +13,6 @@ const BookSearchBar = ({ query, setQuery }: Props) => {
     const { getBooks } = useAppDispatch();
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        console.log('set querey');
-
         setQuery((prevState) => ({ ...prevState, search: event.target.value, page: 1 }))
     };
 
@@ -21,13 +21,13 @@ const BookSearchBar = ({ query, setQuery }: Props) => {
     };
 
     return (
-        <div className='d-flex w-50 mx-auto mt-2'>
+        <div className={styles.bookSearchBar}>
+            <button className={styles.bookSearchButton} onClick={handleSearch}><SearchIcon /></button>
             <input type="text" id='search'
-                className="form-control mx-2"
+                className={styles.bookSearchInput}
                 placeholder='Search for title, author, genre, ISBN, publisher'
                 value={query?.search ?? ''}
                 onChange={handleInputChange} />
-            <button type="submit" className="btn btn-primary" onClick={handleSearch}>Search</button>
         </div>
     );
 };

@@ -16,6 +16,7 @@ const books = [
         isbn: "0-1062-0565-X",
         genre: ["Literary Fiction", "Drama"],
         pages: 259,
+        description: "A novel about a doctor who falls in love with a patient.",
         imagePath: "",
     },
     {
@@ -25,6 +26,7 @@ const books = [
         isbn: "0-1168-5687-4",
         genre: ["Literary Fiction", "Drama"],
         pages: 347,
+        description: "A novel to delete.",
         imagePath: "",
     },
     {
@@ -34,6 +36,7 @@ const books = [
         isbn: "0-1915-0172-7",
         genre: ["Horror", "Short story"],
         pages: 284,
+        description: "A novel to update.",
         imagePath: "",
     },
     {
@@ -43,13 +46,13 @@ const books = [
         isbn: "0-1111-3333-2",
         genre: ["Literary Fiction", "Drama"],
         pages: 307,
+        description: "A novel to delete.",
         imagePath: ""
     }
 ];
 
 const users = [
     {
-        fullname: "admin",
         username: "admin",
         email: "admin@gmail.com",
         password: "$2b$10$eJ6BrxRZwn/aVh5IjsqGsedeOUj9b4sV2MI52q8x5v4QPtRedpQGO",
@@ -58,7 +61,6 @@ const users = [
         books: [],
     },
     {
-        fullname: "User 1",
         username: "userToDelete",
         email: "userToDelete@gmail.com",
         password: "$2b$10$eJ6BrxRZwn/aVh5IjsqGsedeOUj9b4sV2MI52q8x5v4QPtRedpQGO",
@@ -67,7 +69,6 @@ const users = [
         books: [],
     },
     {
-        fullname: "User 2",
         username: "userToUpdate",
         email: "userToUpdate@gmail.com",
         password: "$2b$10$eJ6BrxRZwn/aVh5IjsqGsedeOUj9b4sV2MI52q8x5v4QPtRedpQGO",

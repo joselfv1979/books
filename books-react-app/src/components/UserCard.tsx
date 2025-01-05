@@ -1,6 +1,6 @@
 import { Button, Card } from 'react-bootstrap';
 import userImage from '../assets/images/user.svg';
-import styles from '../assets/scss/userCard.module.scss';
+import styles from '../assets/scss/userList.module.scss';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
 import { User } from '../types/User';
 
@@ -18,7 +18,7 @@ const UserCard = ({ user }: Props) => {
         setItemId(user.id);
     };
 
-    const image = user.imagePath ? `${baseUrl}/api/books}/${user.imagePath}` : userImage;
+    const image = user.imagePath ? `${baseUrl}/${user.imagePath}` : userImage;
 
     return (
         <Card className={styles.userCard} data-testid={user.username}>
@@ -27,9 +27,6 @@ const UserCard = ({ user }: Props) => {
                 <strong>{user.username}</strong>
             </Card.Header>
             <Card.Body>
-                <Card.Text>
-                    <strong>Fullname:</strong> {user.fullname}
-                </Card.Text>
                 <Card.Text>
                     <strong>Email:</strong> {user.email}
                 </Card.Text>

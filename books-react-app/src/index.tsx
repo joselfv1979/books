@@ -15,7 +15,7 @@ const root = createRoot(container);
 
 root.render(
     <React.StrictMode>
-        <BrowserRouter>
+        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
                     <DeleteModalContextProvider>

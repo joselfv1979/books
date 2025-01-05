@@ -26,7 +26,7 @@ export const validateBook = ({ values, errors, setErrors }: Props) => {
     errors.author = author ? undefined : 'Author is required';
     errors.publisher = publisher ? undefined : 'Publisher is required';
     errors.isbn = isbn ? undefined : 'Isbn is required';
-    errors.pages = pages ? undefined : 'Pages is required';
+    errors.pages = Number(pages) !== 0 ? undefined : 'Pages is required';
 
     setErrors({ ...errors });
 

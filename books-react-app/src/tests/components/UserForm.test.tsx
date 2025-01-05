@@ -46,7 +46,6 @@ describe('UserForm', () => {
         expect(result.current.pathname).toBe('/register');
 
         expect(userForm).toHaveFormValues({
-            fullname: '',
             username: '',
             email: '',
             password: '',
@@ -54,15 +53,15 @@ describe('UserForm', () => {
         });
     });
 
-    it('should allow entering a fullname', async () => {
-        const inputFullname: HTMLInputElement = screen.getByPlaceholderText(/enter full name/i);
-        expect(inputFullname).toBeInTheDocument();
+    it('should allow entering a username', async () => {
+        const inputUsername: HTMLInputElement = screen.getByPlaceholderText(/enter username/i);
+        expect(inputUsername).toBeInTheDocument();
 
-        inputFullname.onchange = onChange;
+        inputUsername.onchange = onChange;
 
-        fireEvent.change(inputFullname, { target: { value: 'Muhammad Lahin' } });
+        fireEvent.change(inputUsername, { target: { value: 'moises' } });
 
-        expect(inputFullname.value).toBe('Muhammad Lahin');
+        expect(inputUsername.value).toBe('moises');
         expect(onChange).toHaveBeenCalled();
     });
 });

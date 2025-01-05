@@ -1,18 +1,21 @@
 @use "./globalStyles.module" as global;
 
 .photoLabel {
-  color: global.$writing-color !important;
+  color: global.$writing-color;
   font-size: 1.2rem;
-  margin: 1rem;
+  margin: 0.5rem;
+}
+
+.photoInput {
+  display: none;
 }
 
 .photoContainer {
-  width: 10rem;
+  width: 6rem;
   height: 8rem;
   display: flex;
   align-items: center;
   justify-content: center;
-  font-weight: normal;
 }
 
 .photo {
@@ -21,7 +24,7 @@
   border-radius: 2px;
 }
 
-.photoNoFileText {
-  font-size: 1rem;
-  color: global.$label-color;
+.uploadButton {
+  width: 6rem;
+  margin: 1rem;
 }

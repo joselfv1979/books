@@ -55,10 +55,10 @@ export async function updateUserController(
   try {
     const { id } = req.params;
 
-    const { fullname, username, email, image, roles } = req.body;
+    const { username, email, image, roles } = req.body;
     const photo = req.file ? req.file.path : image;
 
-    if (!id || !fullname || !username || !email) {
+    if (!id || !username || !email) {
       return next(new CustomError(400, "Bad request"));
     }
 

@@ -6,6 +6,7 @@ export type Book = {
     isbn: string;
     genre: string[];
     pages: number;
+    description: string;
     image?: File;
     imagePath: string;
 };

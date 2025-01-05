@@ -1,32 +1,50 @@
-import { Link } from 'react-router-dom';
+import { useState } from 'react';
+import { NavLink } from 'react-router-dom';
 import styles from '../assets/scss/menu.module.scss';
 import { useAppSelector } from '../hooks/redux-hooks';
 import { authUser, isAdmin } from '../store/userSlice';
+import { CloseIcon, HamburguerIcon, LibraryIcon } from './Icons';
 import UserLogMenu from './UserLogMenu';
 
 const Menu = () => {
     const admin = useAppSelector(isAdmin);
     const loggedUser = useAppSelector(authUser);
+    const [showNavbar, setShowNavbar] = useState(false);
+
+    const handleShowNavbar = () => {
+        setShowNavbar(!showNavbar);
+    };
 
     const menuItems = [
-        { to: "/", label: "Welcome" },
         { to: "/books", label: "Books" },
         { to: "/contact", label: "Contact" },
-        loggedUser && { to: `users/${loggedUser.id}`, label: "Profile" },
+        loggedUser && { to: `user-edit/${loggedUser.id}`, label: "Profile" },
         admin && { to: "/newBook", label: "New Book" },
         admin && { to: "/users", label: "Users" },
     ].filter(Boolean); // Filter out null values
 
     return (
         <nav className={styles.menu}>
-            {menuItems.map((item) => (
-                item && <li key={item.label} className={styles.subMenu}>
-                    <Link to={item.to}>{item.label}</Link>
-                </li>
-            ))}
-            <li className={styles.userSubmenu}>
-                <UserLogMenu />
-            </li>
+            <span className={styles.brand}><LibraryIcon /></span>
+
+            <button className={styles.hamburguer} onClick={handleShowNavbar}>
+                {showNavbar ? <CloseIcon /> : <HamburguerIcon />}
+            </button>
+
+            <div className={showNavbar ? styles.showNavbar : styles.hideNavbar}>
+                <div className={styles.navElements}>
+                    {menuItems.map((item) => (
+                        item &&
+                        <NavLink key={item.label} to={item.to}
+                            className={({ isActive }) => (isActive ? styles.active : '')}>
+                            {item.label}
+                        </NavLink>
+                    ))}
+                    <UserLogMenu />
+                </div>
+
+                {showNavbar && <button className={styles.transparentArea} onClick={() => setShowNavbar(false)}></button>}
+            </div>
         </nav>
     );
 };

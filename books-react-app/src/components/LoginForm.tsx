@@ -1,11 +1,12 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
 import '../assets/scss/globalStyles.module.scss';
-import { Auth } from '../types/Auth';
+import styles from '../assets/scss/loginForm.module.scss';
+import { AuthRequest } from '../types/User';
 import { PasswordIcon, UserIcon } from './Icons';
 
 export type Props = {
-    login: (user: Auth) => void;
+    login: (user: AuthRequest) => void;
 };
 
 const LoginForm = ({ login }: Props) => {
@@ -18,10 +19,7 @@ const LoginForm = ({ login }: Props) => {
     const navigate = useNavigate();
 
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setValues(prevValues => ({
-            ...prevValues,
-            [event.target.name]: event.target.value,
-        }))
+        setValues(prev => ({ ...prev, [event.target.name]: event.target.value }))
     };
 
     const handleLogin = (event: FormEvent<HTMLFormElement>) => {
@@ -32,43 +30,41 @@ const LoginForm = ({ login }: Props) => {
     const handleNavigateToRegister = () => navigate("/register");
 
     return (
-        <form data-testid="login-form" className="mx-auto w-50 p-5" onSubmit={handleLogin}>
-            <h2 className="m-5 text-center">Login</h2>
-            <div className="input-group mx-auto my-5 w-50">
-                <span className="input-group-text" id="basic-addon1">
+        <form data-testid="login-form" className={styles.loginForm} onSubmit={handleLogin}>
+            <h2 className="text-center">Login</h2>
+            <div className={styles.inputGroup}>
+                <span className={styles.inputIcon}>
                     <UserIcon />
                 </span>
                 <input type="text"
                     name="username"
                     autoComplete="on"
-                    className="form-control"
+                    className={styles.inputText}
                     placeholder="Enter username"
                     aria-label="Username"
                     value={values.username}
                     onChange={handleChange} />
             </div>
-            <div className="input-group mx-auto my-5 w-50">
-                <span className="input-group-text" id="basic-addon2">
+            <div className={styles.inputGroup}>
+                <span className={styles.inputIcon}>
                     <PasswordIcon />
                 </span>
                 <input type="password"
                     name="password"
                     autoComplete="off"
-                    className="form-control"
+                    className={styles.inputText}
                     placeholder="Enter password"
                     aria-label="Password"
                     value={values.password}
                     onChange={handleChange} />
             </div>
 
-            <div className="d-flex my-4">
-                <button type="button" className="btn btn-link text-decoration-none mx-auto"
+            <div className={styles.buttonGroup}>
+                <button type="button" className={styles.linkButton}
                     onClick={handleNavigateToRegister}>
                     Create an account
                 </button>
-            </div>
-            <div className="d-flex">
-                <button type="submit" className="btn btn-primary btn-lg w-25 mx-auto">Submit</button>
+                <button type="submit" className={styles.primaryButton}>Submit</button>
             </div>
         </form>
     );
