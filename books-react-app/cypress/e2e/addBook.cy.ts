@@ -25,7 +25,7 @@ describe('open a form to create a new book', () => {
         cy.get('[placeholder="Enter publisher"]').type('publisher1');
         cy.get('[placeholder="Enter isbn"]').type('isbn1');
         cy.get('[placeholder="Enter pages"]').type('100');
-        cy.get('[placeholder="Leave a comment here"]').should('have.value', 'new description');
+        cy.get('[placeholder="Leave a comment here"]').type('new description');
 
         cy.get('button[type="submit"]').click();
 
