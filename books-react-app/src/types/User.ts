@@ -11,28 +11,22 @@ export interface UserState {
 
 export type Role = 'ADMIN' | 'USER';
 
-/* The `AuthUser` interface is defining the shape of an authenticated user object in the application.
-  It has the following properties: */
-export interface AuthUser {
-  id?: string;
-  username: string;
-  roles: Role[];
-  token?: string;
-}
-
-export interface User extends AuthUser {
+export interface User {
   id: string;
-  fullname: string;
+  username: string;
   password: string;
   email: string;
+  roles: Role[];
+  token?: string;
   image?: File;
   imagePath: string;
 }
 
+/* The `AuthUser` interface is defining the shape of an authenticated user object in the application.
+  It has the following properties: */
+export type AuthUser = Pick<User, 'id' | 'username' | 'roles' | 'token'>;
+
 /* The `AuthRequest` interface is defining the shape of an authentication request object in the
   application. It has two properties: `username` and `password`, both of which are of type string.*/
-export interface AuthRequest {
-  username: string;
-  password: string;
-}
+export type AuthRequest = Pick<User, 'username' | 'password'>;
 
