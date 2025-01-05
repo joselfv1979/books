@@ -1,9 +1,61 @@
 @use "./globalStyles.module" as global;
 
-.bookCard {
-  max-width: 18rem;
+/* Default styles for mobile */
+
+.bookListTitle {
+  text-align: center;
+  margin-top: 2rem;
+}
+
+.noBookTitle {
+  margin-top: 3rem;
+  text-align: center;
+}
+
+.bookSearchBar {
+  display: flex;
+  align-items: center;
+  border: global.$input-border;
+  border-radius: 0.4rem;
+  padding: 5px;
+  width: 90%;
   margin: 1rem auto;
-  box-shadow: global.$box-shadow;
+}
+
+.bookSearchInput {
+  width: 80%;
+  height: 3rem;
+  border-radius: 0.4rem;
+  border: none;
+  outline: none;
+  flex: 1;
+  background: global.$background-color;
+
+  &:placeholder-shown {
+    text-overflow: ellipsis;
+  }
+}
+
+.bookSearchButton {
+  display: block;
+  background: global.$background-color;
+  border: none;
+  height: 3rem;
+
+  &:hover {
+    background: #e8f0ff;
+  }
+}
+
+.bookList {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  grid-gap: 3rem;
+  padding: 1rem;
+}
+
+.bookCard {
+  box-shadow: global.$dark-shadow;
 }
 
 .bookImage {
@@ -17,5 +69,29 @@
 
   button {
     width: 5rem;
+  }
+}
+
+.pagination {
+  max-width: 90%;
+  margin: 1rem auto;
+}
+
+/* Media query for tablets */
+@media screen and (min-width: 768px) {
+  .bookSearchBar {
+    width: 40rem;
+  }
+
+  .pagination {
+    margin: 1rem;
+    gap: 0.2rem;
+  }
+}
+
+/* Media query for desktops */
+@media screen and (min-width: 1024px) {
+  .bookList {
+    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
   }
 }

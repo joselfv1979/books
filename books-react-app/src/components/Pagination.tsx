@@ -1,5 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
 import Pagination from "react-bootstrap/Pagination";
+import styles from '../assets/scss/bookList.module.scss';
 import { useAppSelector } from "../hooks/redux-hooks";
 
 type Props = {
@@ -52,7 +53,7 @@ const PaginationComponent = ({ setQuery }: Props) => {
     return (
         <>
             {isPaginationShown && (
-                <Pagination className='m-3 px-4 gap-1'>
+                <Pagination className={styles.pagination}>
                     <Pagination.First
                         onClick={() => handlePage()}
                         disabled={isCurrentPageFirst} />

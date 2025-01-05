@@ -26,7 +26,7 @@ const BookCard = ({ book, styles }: Props) => {
             <Card.Header>{book.author}</Card.Header>
             <Card.Body>
                 <Card.Title>{book.title}</Card.Title>
-                <Card.Text>{staticText}</Card.Text>
+                <Card.Text>{book.description ?? staticText}</Card.Text>
                 {showButtons && <BookCardButtons bookId={book.id} />}
             </Card.Body>
         </Card>

@@ -1,4 +1,4 @@
-import styles from '../assets/scss/tagList.module.scss';
+import styles from '../assets/scss/bookForm.module.scss';
 
 interface Props {
     tag: string;
@@ -11,7 +11,7 @@ const Tag = ({ tag, handleRemoveTag }: Props) => {
         <div className={styles.tag}>
             {tag}
             <button type="button" className={styles.closeButton} aria-label="Close" onClick={() => handleRemoveTag(tag)}>
-                <span className={styles.removeTag}>&times;</span>
+                &times;
             </button>
         </div>
     )

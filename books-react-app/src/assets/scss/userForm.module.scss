@@ -1,149 +1,140 @@
 @use "./globalStyles.module" as global;
 
+/* Default styles for mobile */
 .userForm {
-  display: grid;
-  grid-template-columns: 1fr 1fr 2rem 2fr 2fr;
-  grid-auto-rows: 4rem 1.5rem;
-  grid-gap: 0rem 1rem;
+  display: flex;
+  flex-direction: column;
   align-items: center;
-  margin: 4rem auto;
+  justify-items: center;
+  margin: 1rem auto;
   width: 90%;
+  background-color: global.$background-color;
   color: global.$writing-color;
+}
 
-  h2 {
-    grid-column: 4 / 5;
-    text-align: center;
+.warning:after {
+  content: " *";
+  color: global.$red-color;
+}
+
+.asterisk {
+  margin: 0 0.5rem;
+  font-size: 2ch;
+  color: global.$red-color;
+  cursor: help;
+}
+
+.textField,
+.buttonGroup {
+  width: 100%;
+}
+
+.textField {
+  display: flex;
+  align-items: center;
+  background: global.$white-color;
+  border: global.$input-border;
+  border-radius: 0.4rem;
+  padding: 5px;
+  width: 100%;
+  margin-top: 2.5rem;
+
+  &.isInvalid {
+    border: global.$error-border;
+    box-shadow: global.$error-shadow;
   }
 
-  label {
-    color: global.$label-color;
+  &:focus-within {
+    border-color: global.$info-color;
+    box-shadow: global.$input-shadow;
+  }
+}
+
+.userFormInput {
+  width: 100%;
+  height: 3rem;
+  border-radius: 0.4rem;
+  border: none;
+  outline: none;
+  padding-left: 0.5rem;
+}
+
+.linkField {
+  display: flex;
+  flex-direction: column;
+}
+
+.photoField {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  width: 100%;
+  margin: 2.5rem 0;
+  background: global.$white-color;
+  border: global.$input-border;
+  border-radius: 5px;
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin-top: 1rem;
+
+  button {
+    width: 100%;
+    height: 3.5rem;
+    margin: 1rem auto;
+    font-size: large;
+  }
+}
+
+/* Media query for tablets */
+@media screen and (min-width: 768px) {
+  .userForm {
+    max-width: 46rem;
+    margin: 2rem auto;
+    border: 2px solid global.$input-border;
+    padding: 1rem;
+    border-radius: 5px;
+    box-shadow: global.$dark-shadow;
   }
 
-  .fullnameError,
-  .usernameError,
-  .emailError,
-  .passwordError {
-    grid-column: 4 / 4;
-    text-align: center;
-    color: global.$error-color;
+  .textField,
+  .photoField,
+  .buttonGroup {
+    max-width: 34rem;
   }
 
-  .fullnameField,
-  .usernameField,
-  .emailField,
-  .passwordField {
-    grid-column: 4 / 4;
-    display: flex;
-    gap: 0.5rem;
-    align-items: center;
+  .userFormInput {
+    width: 30rem;
   }
 
-  .fullnameError {
-    grid-row: 2/3;
-  }
-
-  .fullnameField {
-    grid-row: 3/4;
-  }
-
-  .usernameError {
-    grid-row: 4/5;
-  }
-
-  .usernameField {
-    grid-row: 5/6;
-  }
-
-  .emailError {
-    grid-row: 6/7;
-  }
-
-  .emailField {
-    grid-row: 7/8;
-  }
-
-  .passwordError {
-    grid-row: 8/9;
-  }
-
-  .passwordField {
-    grid-row: 9/10;
-  }
-
-  .linkField,
-  .photoField {
-    display: flex;
-    flex-direction: column;
-  }
-
-  .linkField {
-    grid-row: 11/12;
-    grid-column: 4 / 4;
-    margin-top: 1rem;
-  }
-
-  .photoField {
-    grid-column-start: 2;
-    grid-row: 2 / 9;
-    align-items: center;
-    margin-right: 2rem;
-  }
-
-  .registerButtonGroup,
-  .editProfileButtonGroup {
-    grid-column: 4 / 4;
-    display: flex;
+  .buttonGroup {
+    grid-column: span 2;
+    flex-direction: row;
     justify-content: space-around;
-    margin-top: 1rem;
+    width: 80%;
 
     button {
       width: 10rem;
-      height: 3rem;
-      font-size: large;
-      color: global.$white-color;
     }
   }
+}
 
-  .registerButtonGroup {
-    grid-row: 13 / 14;
+/* Media query for desktops */
+@media screen and (min-width: 1024px) {
+  .userForm {
+    max-width: 52rem;
   }
 
-  .editProfileButtonGroup {
-    grid-row: 9 / 10;
+  .textField,
+  .photoField,
+  .buttonGroup {
+    max-width: 40rem;
   }
 
-  .uploadButton {
-    margin-top: 1rem;
-    height: 2.5rem;
+  .userFormInput {
+    width: 36rem;
   }
-
-  .submitButton {
-    grid-column-start: 3;
-    width: 12rem;
-    height: 3rem;
-    margin: 1rem auto;
-  }
-}
-
-.passwordIcon,
-.mailIcon,
-.userIcon,
-.fullnameIcon {
-  grid-column: 3 / 3;
-}
-
-.fullnameIcon {
-  grid-row: 3/4;
-}
-
-.userIcon {
-  grid-row: 5/6;
-}
-
-.mailIcon {
-  grid-row: 7/8;
-}
-
-.passwordIcon {
-  grid-row: 9/10;
 }

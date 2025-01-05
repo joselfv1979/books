@@ -1,4 +1,4 @@
-import { Col, Row } from 'react-bootstrap';
+import styles from '../assets/scss/userList.module.scss';
 import { useAppSelector } from '../hooks/redux-hooks';
 import { User } from '../types/User';
 import UserCard from './UserCard';
@@ -8,20 +8,21 @@ const UserList = () => {
     const { users } = useAppSelector((state) => state.user);
 
     const renderUserCard = (user: User) => (
-        <Col key={user.id} sm={3} data-testid="user-card" >
+        <div key={user.id} data-testid="user-card" >
             <UserCard user={user} />
-        </Col>
+        </div>
     );
 
     return (
-        users.length > 0 ?
-            <div data-testid="user-list">
-                <h1 className='text-center mt-3'>Users</h1>
-                <Row>
+        <>
+            <h1 className={styles.userListTitle}>Users</h1>
+            {users.length > 0 ?
+                <div className={styles.userList} data-testid="user-list">
                     {users.map(renderUserCard)}
-                </Row>
-            </div>
-            : <h2 className='mb-5 text-center text-dark'>No Users found</h2>
+                </div>
+                : <h2 className={styles.noUserTitle}>No Users found</h2>
+            }
+        </>
     );
 };
 

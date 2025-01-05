@@ -1,11 +1,11 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
-import { Button, FloatingLabel, Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import styles from '../assets/scss/userForm.module.scss';
 import { initialUser } from '../data/ConstantUtils';
 import { User } from '../types/User';
 import { UserFormErrors, validateUser } from '../utils/validateUser';
-import { FullNameIcon, MailIcon, PasswordIcon, UserIcon } from './Icons';
+import { MailIcon, PasswordIcon, UserIcon } from './Icons';
 import LoadFile from './LoadFile';
 
 type Props = {
@@ -23,7 +23,6 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
 
     // User pictures loader
     const fileInput = useRef<HTMLInputElement>(null);
-    const handleClick = () => fileInput.current?.click();
 
     const navigate = useNavigate();
 
@@ -65,107 +64,72 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
 
     return (
         <form className={styles.userForm} onSubmit={handleSubmit} data-testid="user-form">
-            {register ? <h2>Register</h2> : <h2>Edit Profile</h2>}
 
-            <fieldset className={styles.photoField}>
-                <LoadFile fileInput={fileInput} image={values.imagePath} handleFile={handleFile} />
-                <Button variant="primary" className={styles.uploadButton} onClick={handleClick}>
-                    Upload
-                </Button>
+            <h3>{register ? 'Register' : 'Edit profile'}</h3>
+            <span className={styles.warning}>Required fields.</span>
+
+            <fieldset className={`${styles.textField} ${errors.username && styles.isInvalid}`}>
+                <span className={styles.userIcon}><UserIcon /></span>
+                <input
+                    name="username"
+                    type="text"
+                    autoComplete='off'
+                    value={values.username}
+                    placeholder="Enter username"
+                    onChange={handleChange}
+                    className={styles.userFormInput}
+                />
+                <span className={styles.asterisk}>*</span>
             </fieldset>
-            {errors.fullname && <div className={styles.fullnameError}>{errors.fullname}</div>}
-            <span className={styles.fullnameIcon}><FullNameIcon /></span>
-            <fieldset className={styles.fullnameField}>
-                <FloatingLabel
-                    label="Fullname"
-                    controlId='fullname'
-                    className="w-100"
-                >
-                    <Form.Control
-                        name="fullname"
-                        type="text"
-                        autoComplete='off'
-                        value={values.fullname}
-                        placeholder="Enter full name"
+
+            <fieldset className={`${styles.textField} ${errors.email && styles.isInvalid}`}>
+                <span className={styles.mailIcon}><MailIcon /></span>
+                <input
+                    name="email"
+                    type="text"
+                    autoComplete='off'
+                    value={values.email}
+                    placeholder="Enter email"
+                    onChange={handleChange}
+                    className={styles.userFormInput}
+                />
+                <span className={styles.asterisk}>*</span>
+            </fieldset>
+
+            {register &&
+                <fieldset className={`${styles.textField} ${errors.password && styles.isInvalid}`}>
+                    <span className={styles.passwordIcon}><PasswordIcon /></span>
+                    <input
+                        name="password"
+                        type="password"
+                        value={values.password}
+                        placeholder="Password"
+                        autoComplete="off"
                         onChange={handleChange}
-                        className={errors.fullname && 'is-invalid'}
+                        className={styles.userFormInput}
                     />
-                </FloatingLabel>
-            </fieldset>
-            {errors.username && <div className={styles.usernameError}>{errors.username}</div>}
-            <span className={styles.userIcon}><UserIcon /></span>
-            <fieldset className={styles.usernameField}>
-                <FloatingLabel
-                    label="Username"
-                    controlId='username'
-                    className="w-100"
-                >
-                    <Form.Control
-                        name="username"
-                        type="text"
-                        autoComplete='off'
-                        value={values.username}
-                        placeholder="Enter username"
-                        onChange={handleChange}
-                        className={errors.username && 'is-invalid'}
-                    />
-                </FloatingLabel>
-            </fieldset>
-            {errors.email && <div className={styles.emailError}>{errors.email}</div>}
-            <span className={styles.mailIcon}><MailIcon /></span>
-            <fieldset className={styles.emailField}>
-                <FloatingLabel
-                    label="Email"
-                    controlId='email'
-                    className="w-100"
-                >
-                    <Form.Control
-                        name="email"
-                        type="email"
-                        autoComplete='off'
-                        value={values.email}
-                        placeholder="Enter email"
-                        onChange={handleChange}
-                        className={errors.email && 'is-invalid'}
-                    />
-                </FloatingLabel>
-            </fieldset>
-            {errors.password && <div className={styles.passwordError}>{errors.password}</div>}
-            {register && <>
-                <span className={styles.passwordIcon}><PasswordIcon /></span>
-                <fieldset className={styles.passwordField}>
-                    <FloatingLabel
-                        label="Password"
-                        controlId="password"
-                        className="w-100"
-                    >
-                        <Form.Control
-                            name="password"
-                            type="password"
-                            value={values.password}
-                            placeholder="Password"
-                            autoComplete="off"
-                            onChange={handleChange}
-                            className={errors.password && 'is-invalid'}
-                        />
-                    </FloatingLabel>
+                    <span className={styles.asterisk}>*</span>
                 </fieldset>
+            }
+            <fieldset className={styles.photoField}>
+                <LoadFile
+                    fileInput={fileInput}
+                    image={values.imagePath}
+                    handleFile={handleFile} />
+            </fieldset>
 
+            {register &&
                 <fieldset className={styles.linkField}>
                     <p className="text-center">Do you have an account?</p>
                     <button type="button" className="btn btn-link text-decoration-none align-self-center" onClick={() => navigate("/login")}>
                         Login here
                     </button>
-                </fieldset>
-            </>}
-            <div className={`${register ? styles.registerButtonGroup : styles.editProfileButtonGroup}`}>
-                <Button variant="primary" className={styles.submitButton} type="submit">
-                    Submit
-                </Button>
+                </fieldset>}
+
+            <div className={styles.buttonGroup}>
+                <Button variant="primary" type="submit" title='Submit'>Submit</Button>
                 {!register &&
-                    <Button variant="info" className={styles.submitButton} onClick={handleNavigateToBooks}>
-                        Cancel
-                    </Button>}
+                    <Button variant="info" onClick={handleNavigateToBooks}>Cancel</Button>}
             </div>
         </form>
     );

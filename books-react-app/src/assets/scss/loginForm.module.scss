@@ -1,0 +1,100 @@
+@use "./globalStyles.module" as global;
+
+/* Default styles for mobile */
+.loginForm {
+  margin: auto;
+  width: 100%;
+  padding: 1rem;
+}
+
+.inputGroup {
+  display: flex;
+  justify-content: center;
+  margin-top: 3rem;
+}
+
+.inputIcon {
+  display: none;
+}
+
+.inputText {
+  width: 100%;
+  height: 4rem;
+  padding: 1rem;
+  border: global.$input-border;
+  border-radius: 0.4rem;
+
+  &:focus {
+    outline: none;
+  }
+}
+
+.buttonGroup {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 3rem;
+}
+
+.primaryButton {
+  background: global.$info-color;
+  color: global.$white-color;
+  border: none;
+  border-radius: 0.3rem;
+  height: 3.5rem;
+  width: 100%;
+  margin-top: 2rem;
+  font-size: large;
+
+  &:hover {
+    background: global.$hover-color;
+  }
+}
+
+.linkButton {
+  background: global.$background-color;
+  color: global.$info-color;
+  border: none;
+  margin: auto;
+
+  &:hover {
+    color: global.$hover-color;
+  }
+}
+
+/* Media query for tablets */
+@media (width >= 768px) {
+  .loginForm {
+    margin: auto;
+    width: 70%;
+  }
+
+  .inputIcon {
+    height: 4rem;
+    width: 4.5rem;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: global.$input-border;
+    border-right: none;
+    border-radius: 0.4rem 0 0 0.4rem;
+  }
+
+  .inputText {
+    width: 24rem;
+    border: global.$input-border;
+    border-radius: 0 0.4rem 0.4rem 0;
+  }
+
+  .primaryButton {
+    height: 4rem;
+    width: 16rem;
+  }
+}
+
+/* Media query for desktops */
+@media (width >= 1024px) {
+  .loginForm {
+    width: 50%;
+  }
+}

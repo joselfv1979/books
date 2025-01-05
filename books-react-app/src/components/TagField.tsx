@@ -1,6 +1,5 @@
 import { ChangeEvent, Dispatch, Fragment, SetStateAction, useState } from "react";
-import { FloatingLabel, Form } from "react-bootstrap";
-import styles from '../assets/scss/tagList.module.scss';
+import styles from '../assets/scss/bookForm.module.scss';
 import { Book } from "../types/Book";
 import Tag from "./Tag";
 
@@ -19,17 +18,15 @@ export const TagField = ({ values, setValues }: Props) => {
     const handleAddTag = (newTag: string) => {
 
         if (newTag && !tags.includes(newTag) && tags.length < MAX_TAGS) {
-            setValues((prevValues: Book) => ({
-                ...prevValues,
-                genre: [...prevValues.genre, newTag]
+            setValues((prev: Book) => ({
+                ...prev, genre: [...prev.genre, newTag]
             }));
         }
     }
 
     const handleRemoveTag = (tag: string) => {
-        setValues((prevValues: Book) => ({
-            ...prevValues,
-            genre: prevValues.genre.filter((t) => t !== tag)
+        setValues((prev: Book) => ({
+            ...prev, genre: prev.genre.filter((t) => t !== tag)
         }));
     }
 
@@ -49,26 +46,19 @@ export const TagField = ({ values, setValues }: Props) => {
     };
 
     return (
-        <div className="flex flex-col">
-            <FloatingLabel controlId="genre" label="Genre">
-                <Form.Control
-                    name="genre"
-                    type="text"
-                    placeholder={tags.length < MAX_TAGS ? "Add a tag" : `You can only enter max. of ${MAX_TAGS} tags`}
-                    onKeyDown={handleKeyPress}
-                    onChange={handleInputChange}
-                    value={userInput}
-                    disabled={tags.length === MAX_TAGS}
-                    className={styles.inputText}
-                />
-            </FloatingLabel>
-            <div className={styles.tagList}>
-                {tags.map((tag: string) => (
-                    <Fragment key={tag}> {/* Use tag itself as key if it's unique */}
-                        <Tag tag={tag} handleRemoveTag={handleRemoveTag} />
-                    </Fragment>
-                ))}
-            </div>
-        </div>
+        <fieldset className={styles.tagList}>
+            {tags.map((tag: string) => (
+                <Fragment key={tag}> {/* Use tag itself as key if it's unique */}
+                    <Tag tag={tag} handleRemoveTag={handleRemoveTag} />
+                </Fragment>
+            ))}
+            <input type={tags.length < MAX_TAGS ? 'text' : 'hidden'} className={styles.tagsInput}
+                name="genre"
+                placeholder={tags.length == 0 ? "Genre" : ''}
+                onKeyDown={handleKeyPress}
+                onChange={handleInputChange}
+                value={userInput}
+                disabled={tags.length === MAX_TAGS} />
+        </fieldset>
     );
 };

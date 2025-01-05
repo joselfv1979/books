@@ -1,5 +1,6 @@
 import { ChangeEvent, RefObject, useState } from 'react';
-import { Form } from 'react-bootstrap';
+import { Button } from 'react-bootstrap';
+import defaultImage from '../assets/images/default-image.svg';
 import styles from '../assets/scss/loadFile.module.scss';
 
 const baseUrl = import.meta.env.VITE_API_URL;
@@ -16,7 +17,7 @@ const LoadFile = ({ image, fileInput, handleFile }: Props) => {
     const imageUrl = `${baseUrl}/${image}`;
 
     // Preview state management
-    const [preview, setPreview] = useState(image ? imageUrl : null);
+    const [preview, setPreview] = useState(image ? imageUrl : defaultImage);
 
     const handleImage = (event: ChangeEvent<HTMLInputElement>) => {
 
@@ -28,26 +29,29 @@ const LoadFile = ({ image, fileInput, handleFile }: Props) => {
         }
     };
 
+    const handleClick = () => fileInput.current?.click();
+
     return (
         <>
             <label
                 htmlFor='photo'
                 className={styles.photoLabel}>Photo</label>
-            <Form.Control
+            <input
                 id='photo'
                 name="image"
                 type="file"
-                style={{ display: 'none' }}
+                className={styles.photoInput}
                 ref={fileInput}
                 onChange={handleImage}
             />
 
             <div className={styles.photoContainer}>
-                {preview ?
-                    <img src={preview} alt='preview' className={styles.photo} />
-                    : <span className={styles.photoNoFileText}>No file selected</span>
-                }
+                <img src={preview} alt='preview' className={styles.photo} />
             </div>
+
+            <Button variant="primary" className={styles.uploadButton} onClick={handleClick}>
+                Upload
+            </Button>
         </>
     )
 }

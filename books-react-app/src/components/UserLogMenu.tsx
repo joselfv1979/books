@@ -10,18 +10,17 @@ const UserLogMenu = () => {
     const navigate = useNavigate();
 
     const handleLogoutUser = () => {
-        navigate('/login');
         logout();
+        navigate('/login');
     };
 
-    return (
-        authUser ?
-            <>
-                <span className={styles.username} data-testid={authUser.username}>{authUser.username}</span>
-                <BoxArrowRight className={styles.logoutIcon} data-testid="logout-btn" onClick={handleLogoutUser} />
-            </>
-            : <NavLink className={({ isActive }) => (isActive ? `${styles.activeLogmenu}` : `${styles.logmenu}`)} to="/login">Login</NavLink>
-    );
+    return authUser ?
+        (<div className={styles.loggedUser}>
+            <span className={styles.username} data-testid={authUser.username}>{authUser.username}</span>
+            <BoxArrowRight className={styles.logoutIcon} data-testid="logout-btn" onClick={handleLogoutUser} />
+        </div>)
+        : (<NavLink to="/login" className={({ isActive }) => isActive ? styles.activeLogmenu : styles.logmenu}>Login</NavLink>)
+
 };
 
 export default UserLogMenu;

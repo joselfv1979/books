@@ -1,5 +1,6 @@
 @use "./globalStyles.module" as global;
 
+/* Default styles for mobile */
 .menu {
   display: flex;
   align-items: center;
@@ -7,36 +8,73 @@
   padding: 0 2rem;
   background-color: global.$blue-dark-color;
   font-size: 1.2rem;
+}
 
-  a {
-    color: global.$white-color;
-    margin: 0 1rem;
+.brand {
+  margin-right: 1rem;
+  color: global.$blue-light-color;
+}
 
-    &.brand {
-      font-size: 1.7rem;
-      font-weight: bolder;
-      color: global.$blue-light-color;
-    }
+.hamburguer {
+  margin-left: auto;
+  border: none;
+  background: #003366;
+}
 
-    &:hover {
-      filter: brightness(55%);
-    }
+.showNavbar {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 100%;
+  position: absolute;
+  top: 8vh;
+  left: 0;
+  height: 92vh;
+  z-index: 1000;
+  transform: translateX(0);
+  transition: 0.3s ease;
+}
 
-    &.active {
-      color: global.$blue-light-color;
-    }
+.hideNavbar {
+  display: none;
+}
+
+.navElements {
+  display: flex;
+  flex-direction: column;
+  background-color: #003366;
+  padding: 2rem;
+}
+
+.transparentArea {
+  border: none;
+  background: transparent;
+}
+
+a {
+  margin: 1rem;
+  color: global.$white-color;
+
+  &:hover {
+    filter: brightness(55%);
   }
 
-  .logmenu,
-  .activeLogmenu {
-    margin-left: auto;
-    display: flex;
-    align-items: center;
-  }
-
-  .activeLogmenu {
+  &.active {
     color: global.$blue-light-color;
   }
+}
+
+.activeLogmenu {
+  color: global.$blue-light-color;
+}
+
+.loggedUser {
+  display: flex;
+  align-items: center;
+}
+
+.username {
+  color: global.$blue-light-color;
+  margin: 1rem;
 }
 
 .logoutIcon {
@@ -50,8 +88,41 @@
   }
 }
 
-.username {
-  margin-left: auto;
-  margin-right: 1rem;
-  color: global.$blue-light-color;
+/* Media query for tablets */
+@media screen and (min-width: 768px) {
+  .hamburguer,
+  .transparentArea {
+    display: none;
+  }
+
+  .showNavbar,
+  .hideNavbar {
+    display: flex;
+    position: unset;
+    height: 8vh;
+    width: 100%;
+  }
+
+  .navElements {
+    flex-direction: row;
+    width: 100%;
+    align-items: center;
+    padding: 0;
+  }
+
+  .loggedUser {
+    margin-left: auto;
+  }
+
+  .logmenu,
+  .activeLogmenu {
+    display: flex;
+    align-items: center;
+    margin-left: auto;
+  }
+
+  .username {
+    margin-left: auto;
+    margin-right: 1rem;
+  }
 }

@@ -1,21 +1,39 @@
+@use "./globalStyles.module" as global;
+
+/* Default styles for mobile */
 .bookContainer {
-  display: flex;
   margin: 3rem;
 }
 
 .bookDraft {
   display: flex;
   flex-direction: column;
-  margin: auto;
+  margin: 2rem auto;
+}
+
+.backButton {
+  display: flex;
+  gap: 1rem;
+  align-items: center;
+  border: none;
+  background: none;
+  color: global.$blue-dark-color;
+  font-size: large;
 }
 
 .bookCard {
   margin: auto;
-  width: 26rem;
-  box-shadow: rgba(0, 0, 0, 0.35) 0px 5px 15px;
+  width: 100%;
+  box-shadow: global.$dark-shadow;
 }
 
 .bookImage {
   width: 100%;
   height: auto;
+}
+
+@media screen and (min-width: 768px) {
+  .bookCard {
+    width: 24rem;
+  }
 }

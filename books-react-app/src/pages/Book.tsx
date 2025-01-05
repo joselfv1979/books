@@ -1,9 +1,8 @@
 import { useEffect } from 'react';
-import { Breadcrumb } from 'react-bootstrap';
-import { ArrowLeftSquareFill } from 'react-bootstrap-icons';
 import { useParams } from 'react-router-dom';
-import bookStyles from '../assets/scss/book.module.scss';
+import styles from '../assets/scss/book.module.scss';
 import BookCard from '../components/BookCard';
+import { BackArrow } from '../components/Icons';
 import { Loader } from '../components/Loader';
 import Message from '../components/Message';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
@@ -24,15 +23,15 @@ const Book = () => {
         loading ? <Loader />
             : <>
                 {message && <Message message={message} />}
-                <div className={bookStyles.bookContainer}>
-                    <Breadcrumb.Item href='/books'>
-                        <ArrowLeftSquareFill size={30} />
-                        <span className='mx-2 fw-bold'>ALL BOOKS</span>
-                    </Breadcrumb.Item>
+                <div className={styles.bookContainer}>
+                    <button className={styles.backButton} onClick={() => window.history.back()}>
+                        <BackArrow />
+                        ALL BOOKS
+                    </button>
 
-                    {book && <div className={bookStyles.bookDraft}>
+                    {book && <div className={styles.bookDraft}>
                         <h2 className='text-center'>{book.title}</h2>
-                        <BookCard book={book} styles={bookStyles} />
+                        <BookCard book={book} styles={styles} />
                     </div>}
                 </div>
             </>
