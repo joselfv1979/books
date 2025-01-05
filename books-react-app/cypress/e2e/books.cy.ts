@@ -73,6 +73,11 @@ describe.only('open books page', () => {
 
         cy.get('nav').find('a').contains('Books').click();
 
+        cy.wait("@getBooksRequest")
+            .its("response")
+            .its("statusCode")
+            .should("eq", 200);
+
         cy.get("[data-testid='bookToUpdate']").should("exist");
         cy.get('[data-testid="bookToUpdate"] [data-testid="edit-book-btn"]').click();
 

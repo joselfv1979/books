@@ -1,4 +1,4 @@
-import { Schema, model, Document } from "mongoose";
+import { Document, Schema, model } from "mongoose";
 
 export interface IBook extends Document {
   title: string;
@@ -19,6 +19,7 @@ const BookSchema = new Schema({
     { type: String, required: true }
   ],
   pages: { type: Number, required: true },
+  description: { type: String },
   imagePath: { type: String },
 }, {
   timestamps: true,

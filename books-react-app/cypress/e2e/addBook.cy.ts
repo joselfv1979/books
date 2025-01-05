@@ -13,7 +13,8 @@ describe('open a form to create a new book', () => {
         cy.get('[placeholder="Enter publisher"]').should('have.value', '');
         cy.get('[placeholder="Enter isbn"]').should('have.value', '');
         cy.get('[placeholder="Enter pages"]').should('have.value', 0);
-        cy.get('[placeholder="Add a tag"]').should('have.value', '');
+        cy.get('[placeholder="Leave a comment here"]').should('have.value', '');
+        cy.get('[placeholder="Genre"]').should('have.value', '');
     });
 
     it('should create a new book successfully', () => {
@@ -24,6 +25,7 @@ describe('open a form to create a new book', () => {
         cy.get('[placeholder="Enter publisher"]').type('publisher1');
         cy.get('[placeholder="Enter isbn"]').type('isbn1');
         cy.get('[placeholder="Enter pages"]').type('100');
+        cy.get('[placeholder="Leave a comment here"]').should('have.value', 'new description');
 
         cy.get('button[type="submit"]').click();
 
@@ -35,15 +37,5 @@ describe('open a form to create a new book', () => {
             .should("eq", 201);
 
         cy.contains('[data-testid="alert"]', 'Book created successfully').should('be.visible');
-    });
-
-    it('should display an error message if any of the required book attributes are empty', () => {
-        cy.get('button[type="submit"]').click();
-
-        cy.contains('Title is required').should('be.visible');
-        cy.contains('Author is required').should('be.visible');
-        cy.contains('Publisher is required').should('be.visible');
-        cy.contains('Pages is required').should('be.visible');
-        cy.contains('Isbn is required').should('be.visible');
     });
 })

@@ -59,9 +59,7 @@ export async function createBookController(
   next: NextFunction
 ) {
   try {
-    const { title, author, publisher, isbn, genre, pages } = req.body;
-
-    const photo = req.file ? req.file.path : "";
+    const { body: { title, author, publisher, isbn, genre, pages, description }, file } = req;
 
     if (!title || !author || !publisher || !isbn || !pages) {
       return next(new CustomError(400, "Bad request"));
@@ -74,10 +72,12 @@ export async function createBookController(
       isbn,
       genre,
       pages,
-      imagePath: photo,
+      description,
+      imagePath: file?.path ?? "",
     });
 
     const book = await createBookService(newBook);
+
     res.status(201).json({ success: true, data: book });
   } catch (error) {
     next(new CustomError(500, "Couldn't create book, try it later"));
@@ -90,15 +90,14 @@ export async function updateBookController(
   next: NextFunction
 ) {
   try {
-    const { id } = req.params;
-    const { title, author, publisher, isbn, pages, image } = req.body;
-    const photo = req.file ? req.file.path : image;
+    const { body, params: { id }, file } = req;
+    const { title, author, publisher, isbn, pages, image } = body;
 
     if (!id || !title || !author || !publisher || !isbn || !pages) {
       return next(new CustomError(400, "Bad request"));
     }
 
-    const newBody = { ...req.body, imagePath: photo };
+    const newBody = { ...req.body, imagePath: file?.path ?? image };
 
     const book = await updateBookService(id, newBody);
     if (!book) return next(new CustomError(404, "Book not found"));
