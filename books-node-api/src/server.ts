@@ -8,7 +8,7 @@ import { errorHandler } from "./middlewares/errorHandler";
 import morganMiddleware from "./middlewares/morganHandler";
 import authRouter from "./routes/authRoutes";
 import booksRouter from "./routes/bookRoutes";
-import { testRouter } from "./routes/testRoutes";
+import testRouter from "./routes/testRoutes";
 import usersRouter from "./routes/userRoutes";
 import Logger from "./utils/logger";
 
@@ -54,9 +54,6 @@ const server = app.listen(PORT, () => {
   Logger.info(`NODE_ENV=${NODE_ENV}`);
   Logger.info(`Server is up and running @ http://localhost:${PORT}`);
 });
-
-// Uncomment to populate database
-//createBooks();
 
 export { app, server };
 
