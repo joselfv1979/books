@@ -18,13 +18,10 @@ export interface UserResponse {
   roles: Array<string>;
   imagePath: string;
   books: Array<IBook>;
+  token?: string;
 }
-export type LoggedUser = {
-  id: string;
-  username: string;
-  roles: Array<string>;
-  token: string;
-}
+
+export type AuthUser = Pick<UserResponse, "id" | "username" | "roles" | "token">;
 
 const UserSchema = new Schema({
   username: { type: String, required: true, unique: true },

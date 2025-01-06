@@ -3,14 +3,14 @@ import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../models/CustomError";
 import { ResBody } from "../models/Response";
 import { IRole } from "../models/Role";
-import User, { IUser, LoggedUser, UserResponse } from "../models/User";
+import User, { AuthUser, IUser, UserResponse } from "../models/User";
 import { createUserService, getEmailService, getRoleService, getUsernameService, userToUserResponse } from "../services/userService";
 import { generateToken } from "../utils/jwt.utils";
 
 // endpoint to login users
 export async function loginController(
   req: Request,
-  res: Response<ResBody<LoggedUser>>,
+  res: Response<ResBody<AuthUser>>,
   next: NextFunction
 ) {
   try {
@@ -33,7 +33,7 @@ export async function loginController(
     const roleList = user.roles.map(role => role.name);
 
     // returning object
-    const loggedUser: LoggedUser = {
+    const loggedUser: AuthUser = {
       id: user.id,
       username,
       roles: roleList,
