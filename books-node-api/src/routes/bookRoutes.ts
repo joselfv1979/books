@@ -1,8 +1,8 @@
 import { Router } from "express";
-import { getBooksController, getBookController, createBookController, updateBookController, deleteBookController } from "../controllers/bookController";
-import imageHandler from "../middlewares/imageHandler";
+import { createBookController, deleteBookController, getBookController, getBooksController, updateBookController } from "../controllers/bookController";
 import authHandler from "../middlewares/authHandler";
 import { bookPagination } from "../middlewares/booksPagination";
+import imageHandler from "../middlewares/imageHandler";
 
 const booksRouter = Router();
 

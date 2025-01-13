@@ -11,6 +11,7 @@ import {
   updateUserService,
   userToUserResponse,
 } from "../services/userService";
+import { deleteUserImage } from "../utils/removeImage";
 
 export async function getUsersController(
   _req: Request,
@@ -53,17 +54,21 @@ export async function updateUserController(
   next: NextFunction
 ) {
   try {
-    const { id } = req.params;
+    const { body, params: { id }, file } = req;
 
-    const { username, email, image, roles } = req.body;
-    const photo = req.file ? req.file.path : image;
+    const { username, email, roles, imagePath } = body;
 
     if (!id || !username || !email) {
       return next(new CustomError(400, "Bad request"));
     }
 
     let roleList: IRole[] = await getRoleService(roles);
-    const newBody = { ...req.body, roles: roleList, imagePath: photo };
+    const newBody = { ...req.body, roles: roleList, imagePath: file?.path ?? imagePath };
+
+    // If a new image is sent, the old image is removed from the system file
+    if (file) {
+      await deleteUserImage(id);
+    }
 
     const user = await updateUserService(id, newBody);
     if (!user) return next(new CustomError(404, "User not found"));
@@ -84,6 +89,9 @@ export async function deleteUserController(
   try {
     const { id } = req.params;
     if (!id) return next(new CustomError(400, "Bad request"));
+
+    // Removes user's image from the system file
+    await deleteUserImage(id);
 
     const user = await deleteUserService(id);
     if (!user) return next(new CustomError(404, "User not found"));

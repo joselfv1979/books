@@ -7,8 +7,9 @@ import {
   createBookService,
   deleteBookService,
   getBookService,
-  updateBookService,
+  updateBookService
 } from "../services/bookService";
+import { deleteBookImage } from "../utils/removeImage";
 
 export const getBooksController = async (
   _req: PaginationRequest,
@@ -91,13 +92,18 @@ export async function updateBookController(
 ) {
   try {
     const { body, params: { id }, file } = req;
-    const { title, author, publisher, isbn, pages, image } = body;
+    const { title, author, publisher, isbn, pages, imagePath } = body;
 
     if (!id || !title || !author || !publisher || !isbn || !pages) {
       return next(new CustomError(400, "Bad request"));
     }
 
-    const newBody = { ...req.body, imagePath: file?.path ?? image };
+    // If a new image is sent, the old image is removed from the system file
+    if (file) {
+      await deleteBookImage(id);
+    }
+
+    const newBody = { ...req.body, imagePath: file?.path ?? imagePath };
 
     const book = await updateBookService(id, newBody);
     if (!book) return next(new CustomError(404, "Book not found"));
@@ -116,6 +122,9 @@ export async function deleteBookController(
   try {
     const { id } = req.params;
     if (!id) return next(new CustomError(400, "Bad request"));
+
+    // Removes book image from the system file
+    await deleteBookImage(id);
 
     const book = await deleteBookService(id);
     if (!book) return next(new CustomError(404, "Book not found"));

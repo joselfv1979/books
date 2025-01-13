@@ -3,12 +3,12 @@ import { v4 as uuidv4 } from "uuid";
 
 const storage = multer.diskStorage({
   destination: "./public",
-  filename: (req, file, cb) => {
+  filename: (_req, file, cb) => {
     cb(null, uuidv4() + file.originalname);
   },
 });
 
-const fileFilter = (req: any, file: any, cb: any) => {
+const fileFilter = (_req: any, file: any, cb: any) => {
   const { mimetype } = file;
   if (
     mimetype === "image/jpg" ||

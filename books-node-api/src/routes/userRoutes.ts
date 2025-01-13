@@ -1,7 +1,7 @@
 import { Router } from "express";
-import { getUserController, getUsersController, updateUserController, deleteUserController } from "../controllers/userController";
-import imageHandler from "../middlewares/imageHandler";
+import { deleteUserController, getUserController, getUsersController, updateUserController } from "../controllers/userController";
 import authHandler from "../middlewares/authHandler";
+import imageHandler from "../middlewares/imageHandler";
 
 const usersRouter = Router();
 
