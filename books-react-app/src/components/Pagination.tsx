@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from "react";
-import Pagination from "react-bootstrap/Pagination";
 import styles from '../assets/scss/bookList.module.scss';
 import { useAppSelector } from "../hooks/redux-hooks";
 
@@ -28,23 +27,26 @@ const PaginationComponent = ({ setQuery }: Props) => {
         const isPageNumberLast = pageNumber === Number(totalPages);
         const isCurrentPageWithinTwoPageNumbers =
             Math.abs(pageNumber - Number(currentPage)) <= 2;
+        const active = pageNumber === Number(currentPage);
 
         if (isPageNumberFirst || isPageNumberLast || isCurrentPageWithinTwoPageNumbers) {
             isPageNumberOutOfRange = false;
+
             return (
-                <Pagination.Item
-                    key={pageNumber}
-                    onClick={() => handlePage(pageNumber)}
-                    active={pageNumber === Number(currentPage)}
-                >
-                    {pageNumber}
-                </Pagination.Item>
+                <li key={pageNumber}>
+                    <button className={`${styles.itemPage} ${active && styles.active}`} onClick={() => handlePage(pageNumber)}>
+                        {pageNumber}
+                    </button>
+                </li>
             );
         }
 
         if (!isPageNumberOutOfRange) {
             isPageNumberOutOfRange = true;
-            return <Pagination.Ellipsis key={pageNumber} className="muted" />;
+
+            return <li key={pageNumber}>
+                <button className={`${styles.itemPage} ${'muted'}`}>{'...'}</button>
+            </li>
         }
 
         return null;
@@ -53,23 +55,26 @@ const PaginationComponent = ({ setQuery }: Props) => {
     return (
         <>
             {isPaginationShown && (
-                <Pagination className={styles.pagination}>
-                    <Pagination.First
-                        onClick={() => handlePage()}
-                        disabled={isCurrentPageFirst} />
-                    <Pagination.Prev
-                        onClick={() => handlePage(Number(currentPage) - 1)}
-                        disabled={isCurrentPageFirst}
-                    />
+                <ul className={styles.pagination}>
+                    <li>
+                        <button className={styles.firstPage} onClick={() => handlePage()}
+                            disabled={isCurrentPageFirst}>{'<<'}</button>
+                    </li>
+
+                    <li>
+                        <button className={styles.prevPage} onClick={() => handlePage(Number(currentPage) - 1)}
+                            disabled={isCurrentPageFirst}>{'<'}</button>
+                    </li>
                     {pageNumbers}
-                    <Pagination.Next
-                        onClick={() => handlePage(Number(currentPage) + 1)}
-                        disabled={isCurrentPageLast}
-                    />
-                    <Pagination.Last
-                        onClick={() => handlePage(Number(totalPages))}
-                        disabled={isCurrentPageLast} />
-                </Pagination>
+                    <li>
+                        <button className={styles.prevPage} onClick={() => handlePage(Number(currentPage) + 1)}
+                            disabled={isCurrentPageLast}>{'>'}</button>
+                    </li>
+                    <li>
+                        <button className={styles.lastPage} onClick={() => handlePage(Number(totalPages))}
+                            disabled={isCurrentPageLast}>{'>>'}</button>
+                    </li>
+                </ul>
             )}
         </>
     );
