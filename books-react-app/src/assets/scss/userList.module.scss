@@ -13,14 +13,13 @@
 
 .userList {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-  grid-gap: 3rem;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  grid-gap: 2rem;
+  justify-items: center;
   padding: 1rem;
 }
 
 .userCard {
-  width: 16rem;
-  margin: 1rem auto;
   box-shadow: global.$dark-shadow;
 }
 
@@ -47,16 +46,14 @@
 /* Media query for tablets */
 @media screen and (min-width: 768px) {
   .userList {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
-    grid-gap: 3rem;
-    padding: 1rem;
+    grid-template-columns: repeat(auto-fill, minmax(18rem, 20rem));
+    justify-content: space-evenly;
   }
 }
 
 /* Media query for desktops */
 @media screen and (min-width: 1024px) {
   .bookList {
-    grid-template-columns: repeat(auto-fit, minmax(20rem, 1fr));
+    grid-template-columns: repeat(auto-fill, minmax(20rem, 22rem));
   }
 }

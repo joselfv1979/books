@@ -17,11 +17,11 @@ describe.only('open books page', () => {
 
         cy.location("pathname").should("eq", "/books");
         cy.contains('Library');
-        cy.get('[data-testid="book-card"]').should("have.length", 4);
+        cy.get('li').should("have.length", 4);
     });
 
     it('should display one book', () => {
-        cy.intercept('GET', '/api/books/*').as('getBookRequest');
+        cy.intercept('GET', '/api/books*').as('getBookRequest');
 
         cy.visit('/books');
         cy.get("[data-testid='El doctor enamorado']").should("exist");
@@ -48,7 +48,7 @@ describe.only('open books page', () => {
             .should("eq", 200);
 
         cy.contains('Books');
-        cy.get('[data-testid="book-card"]').should("have.length", 4);
+        cy.get('li').should("have.length", 4);
 
         cy.get("[data-testid='bookToDelete']").should("exist");
         cy.get('[data-testid="bookToDelete"] [data-testid="delete-book-btn"]').click();
@@ -62,7 +62,7 @@ describe.only('open books page', () => {
             .should("eq", 204);
 
         cy.get("[data-testid='bookToDelete']").should("not.exist");
-        cy.get('[data-testid="book-card"]').should("have.length", 3);
+        cy.get('li').should("have.length", 3);
         cy.contains('[data-testid="alert"]', 'Book deleted successfully').should('be.visible');
     });
 

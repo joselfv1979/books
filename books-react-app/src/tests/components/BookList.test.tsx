@@ -1,4 +1,4 @@
-import { screen } from '@testing-library/react';
+import { screen, within } from '@testing-library/react';
 import { vi } from 'vitest';
 import BookList from '../../components/BookList';
 import { bookState } from '../../tests/utils/data';
@@ -24,8 +24,9 @@ describe('BookList', () => {
     });
 
     it('BookList should have one book', () => {
-        const bookCard = screen.getAllByTestId('book-card');
-        expect(bookCard).toHaveLength(1);
+        const bookList = screen.getByTestId('book-list');
+        const list = within(bookList);
+        expect(list.getAllByRole('listitem')).toHaveLength(1);
 
         const bookTitle = screen.getByText(/la colmena/i);
         expect(bookTitle).toBeInTheDocument();

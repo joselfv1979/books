@@ -16,7 +16,7 @@ describe('open users page', () => {
             .should("eq", 200);
 
         cy.contains('Users');
-        cy.get('[data-testid="user-card"]').should("have.length", 3);
+        cy.get('li').should("have.length", 3);
     });
 
     it('should delete one user', () => {
@@ -32,7 +32,7 @@ describe('open users page', () => {
             .should("eq", 200);
 
         cy.contains('Users');
-        cy.get('[data-testid="user-card"]').should("have.length", 3);
+        cy.get('li').should("have.length", 3);
 
         cy.get("[data-testid='userToDelete']").should("exist");
         cy.get('[data-testid="userToDelete"] [data-testid="delete-user-btn"]').click();
@@ -46,7 +46,7 @@ describe('open users page', () => {
             .should("eq", 204);
 
         cy.get("[data-testid='userToDelete']").should("not.exist");
-        cy.get('[data-testid="user-card"]').should("have.length", 2);
+        cy.get('li').should("have.length", 2);
         cy.contains('[data-testid="alert"]', 'User deleted successfully').should('be.visible');
     });
 
