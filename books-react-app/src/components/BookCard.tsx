@@ -22,11 +22,13 @@ const BookCard = ({ book, styles }: Props) => {
 
     return (
         <Card className={styles.bookCard} data-testid={book.title}>
-            <Card.Img src={image} variant='top' className={styles.bookImage} />
+            <div className={styles.frame}>
+                <Card.Img src={image} variant='top' className={styles.bookImage} />
+            </div>
             <Card.Header>{book.author}</Card.Header>
-            <Card.Body>
+            <Card.Body className={styles.body}>
                 <Card.Title>{book.title}</Card.Title>
-                <Card.Text>{book.description ?? staticText}</Card.Text>
+                <Card.Text className={styles.textEllipsis}>{book.description ?? staticText}</Card.Text>
                 {showButtons && <BookCardButtons bookId={book.id} />}
             </Card.Body>
         </Card>

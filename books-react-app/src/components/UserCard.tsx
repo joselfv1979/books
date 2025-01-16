@@ -22,7 +22,9 @@ const UserCard = ({ user }: Props) => {
 
     return (
         <Card className={styles.userCard} data-testid={user.username}>
-            <Card.Img variant="top" className={styles.photo} src={image} />
+            <div className={styles.frame}>
+                <Card.Img src={image} variant='top' className={styles.userImage} />
+            </div>
             <Card.Header className={styles.header}>
                 <strong>{user.username}</strong>
             </Card.Header>

@@ -29,9 +29,15 @@
   align-items: center;
 }
 
-.image {
-  width: 100%;
+.frame {
+  height: 20rem;
+  width: 20rem;
+  overflow: hidden;
+}
+
+.userImage {
   height: auto;
+  width: 20rem;
 }
 
 .buttonGroup {
