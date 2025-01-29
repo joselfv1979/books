@@ -1,3 +1,4 @@
+
 describe.only('open books page', () => {
 
     beforeEach(() => {
@@ -68,12 +69,13 @@ describe.only('open books page', () => {
 
     it("should update one book", () => {
         cy.login('admin', '1234');
-        cy.intercept('GET', '/api/books?*').as('getBooksRequest');
+        cy.intercept('GET', '/api/books?*').as('getAllBooksRequest');
+        cy.intercept('GET', '/api/books/*').as('getBookRequest');
         cy.intercept('PUT', '/api/books/*').as('updateBookRequest');
 
         cy.get('nav').find('a').contains('Books').click();
 
-        cy.wait("@getBooksRequest")
+        cy.wait("@getAllBooksRequest")
             .its("response")
             .its("statusCode")
             .should("eq", 200);
@@ -81,8 +83,14 @@ describe.only('open books page', () => {
         cy.get("[data-testid='bookToUpdate']").should("exist");
         cy.get('[data-testid="bookToUpdate"] [data-testid="edit-book-btn"]').click();
 
+        cy.wait("@getBookRequest")
+            .its("response")
+            .its("statusCode")
+            .should("eq", 200);
+
         cy.contains('Edit Book');
         cy.get('[data-testid="book-form"]').should('be.visible');
+
         cy.get('[placeholder="Enter title"]').should('have.value', 'bookToUpdate');
 
         cy.get('[placeholder="Enter title"]').clear();
