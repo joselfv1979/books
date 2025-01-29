@@ -19,11 +19,11 @@ const EditUser = () => {
     }, []);
 
     return (
-        loading ? <Loader />
-            : <>
-                {message && <Message message={message} />}
-                <UserForm user={user} saveUser={editUser} register={false} />
-            </>
+        <>
+            {loading && <Loader />}
+            {message && <Message message={message} />}
+            {user && <UserForm user={user} saveUser={editUser} register={false} />}
+        </>
     );
 };
 

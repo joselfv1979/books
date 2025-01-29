@@ -16,14 +16,14 @@ const BookEdit = () => {
 
     useEffect(() => {
         if (id) fetchBook(id);
-    }, [id]);
+    }, []);
 
     return (
-        loading ? <Loader />
-            : <>
-                {message && <Message message={message} />}
-                <BookForm book={book} saveBook={editBook} editing={true} />
-            </>
+        <>
+            {loading && <Loader />}
+            {message && <Message message={message} />}
+            {book && <BookForm book={book} saveBook={editBook} editing={true} />}
+        </>
     );
 };
 
