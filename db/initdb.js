@@ -1,4 +1,15 @@
-db = db.getSiblingDB("booksdb");
+db = db.getSiblingDB("books");
+
+db.createUser({
+  user: "admin",
+  pwd: "books",
+  roles: [
+    {
+      role: "readWrite",
+      db: "books",
+    },
+  ],
+});
 
 db.users.drop();
 db.books.drop();
@@ -408,3 +419,5 @@ const books = [
 ];
 
 db.books.insertMany(books);
+
+quit();
