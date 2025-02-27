@@ -1,7 +1,10 @@
 .dockerignore
+coverage
+logs
 node_modules
 npm-debug.log
 Dockerfile
 .git
 .gitignore
 .npmrc
+.vscode

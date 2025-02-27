@@ -18,7 +18,6 @@ const {
   DB_OPTIONS,
 } = process.env;
 
-
 const DB_CONNECTION = `${DB_HEADER}//${DB_USERNAME}:${DB_PASSWORD}@${DB_HOST}/${DATABASE}?${DB_OPTIONS}`
 
 export { DB_CONNECTION, HOST, NODE_ENV, PORT };
