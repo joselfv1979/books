@@ -5,8 +5,8 @@ import { getHeaders } from '../utils/authHeader';
 import { castUserToFormData } from '../utils/castFormData';
 import { handleError } from '../utils/handleError';
 
-const authUrl = '/api/auth';
-const usersUrl = '/api/users';
+const authUrl = `${import.meta.env.VITE_API_URL}/api/auth`;
+const usersUrl = `${import.meta.env.VITE_API_URL}/api/users`;
 
 // Request to get all users
 export const getAllUsers = async (): Promise<Result<User[], string>> => {

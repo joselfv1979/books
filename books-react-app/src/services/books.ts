@@ -6,7 +6,7 @@ import { getHeaders } from '../utils/authHeader';
 import { castBookToFormData } from '../utils/castFormData';
 import { handleError } from '../utils/handleError';
 
-const url = '/api/books';
+const url = `${import.meta.env.VITE_API_URL}/api/books`;
 
 // Request to get all books
 export const getAllBooks = async (params: Query): Promise<Result<QueryResponse, string>> => {
