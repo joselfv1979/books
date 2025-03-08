@@ -13,7 +13,7 @@ export default defineConfig(({ mode }) => {
             strictPort: true,
         },
         define: {
-            'VITE_API_URL': process.env.VITE_API_URL
+            'VITE_API_URL': JSON.stringify(process.env.VITE_API_URL),
         },
         server: {
             port: Number(env.VITE_PORT),
