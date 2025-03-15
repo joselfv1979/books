@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import styles from '../assets/scss/bookList.module.scss';
+import styles from '../assets/scss/books.module.scss';
 import { useAppSelector } from '../hooks/redux-hooks';
 import BookCard from './BookCard';
 import BookSearchBar from './BookSearchBar';

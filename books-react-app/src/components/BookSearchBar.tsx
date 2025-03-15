@@ -1,5 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction } from 'react';
-import styles from '../assets/scss/bookList.module.scss';
+import styles from '../assets/scss/books.module.scss';
 import { useAppDispatch } from '../hooks/redux-hooks';
 import { SearchIcon } from './Icons';
 

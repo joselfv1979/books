@@ -1,6 +1,6 @@
 import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import styles from '../assets/scss/bookList.module.scss';
+import styles from '../assets/scss/books.module.scss';
 import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
 import { useAppSelector } from '../hooks/redux-hooks';
 import { isAdmin } from '../store/userSlice';
