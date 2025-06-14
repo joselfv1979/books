@@ -1,6 +1,7 @@
 services:
-  mongodb:
-    image: books:v2
+  db:
+    image: joselfv/books-db:v1
+    container_name: db
     ports:
       - "27017:27017"
     healthcheck:
@@ -8,22 +9,24 @@ services:
       interval: 5s
       timeout: 5s
       retries: 10
-    environment:
-      MONGO_INITDB_ROOT_USERNAME: jose
-      MONGO_INITDB_ROOT_PASSWORD: jose
     volumes:
-      - data-volume:/data/db
+      - /data-volume:/data/db/
+      - ./db:/docker-entrypoint-initdb.d
+    env_file:
+      - ./db/.env
     networks:
       - backend
+    restart: always
 
   api:
-    image: api-books:v2
+    image: joselfv/books-api:v1
+    container_name: api
     depends_on:
-      mongodb:
+      db:
         condition: service_healthy
     restart: always
     ports:
-      - 8000:8000
+      - "3000:3000"
     env_file:
       - ./books-node-api/env/.env.production
     environment:
@@ -33,17 +36,20 @@ services:
       - frontend
 
   client:
-    image: client-books:v2
-    ports:
-      - 3050:80
+    image: joselfv/books-client:v1
+    container_name: client
+    depends_on:
+      - api
     env_file:
       - ./books-react-app/env/.env.production
     networks:
       - frontend
+    ports:
+      - "8000:80"
 
 volumes:
   data-volume:
-
 networks:
   backend:
   frontend:
+    driver: bridge
