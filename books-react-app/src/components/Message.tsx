@@ -35,6 +35,7 @@ const Message = ({ message }: Props) => {
             data-testid="alert"
             className="w-100 text-center mb-1"
             onClose={handleRemoveMessage}
+            role="alert"
             dismissible>
             {message.text}
         </Alert>

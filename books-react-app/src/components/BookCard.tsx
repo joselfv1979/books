@@ -1,4 +1,3 @@
-import { Card } from 'react-bootstrap';
 import { useLocation } from 'react-router-dom';
 import defaultImage from '../assets/images/library.jpg';
 import { Book } from '../types/Book';
@@ -21,17 +20,20 @@ const BookCard = ({ book, styles }: Props) => {
     const staticText = 'Some quick example text to build on the card title and make up the bulk of the card content.';
 
     return (
-        <Card className={styles.bookCard} data-testid={book.title}>
-            <div className={styles.frame}>
-                <Card.Img src={image} variant='top' className={styles.bookImage} />
+        <div className="card h-100">
+            <img src={image}
+                className="card-img-top"
+                alt={`Portada de ${book.title}`}
+            />
+            <div className="card-body d-flex flex-column">
+                <h5 className="card-title">{book.title}</h5>
+                <h5 className="card-subtitle my-2 text-muted">{book.author}</h5>
+                <p className={styles.textEllipsis}>{book.description ?? staticText}</p>
+                <div className={styles.buttonGroup}>
+                    {showButtons && <BookCardButtons bookId={book.id} />}
+                </div>
             </div>
-            <Card.Header>{book.author}</Card.Header>
-            <Card.Body className={styles.body}>
-                <Card.Title>{book.title}</Card.Title>
-                <Card.Text className={styles.textEllipsis}>{book.description ?? staticText}</Card.Text>
-                {showButtons && <BookCardButtons bookId={book.id} />}
-            </Card.Body>
-        </Card>
+        </div>
     );
 };
 

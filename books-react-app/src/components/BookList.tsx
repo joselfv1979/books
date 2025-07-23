@@ -16,17 +16,17 @@ const BookList = ({ query, setQuery }: Props) => {
 
     return (
         <>
-            <h1 className={styles.bookListTitle}>Library</h1>
+            <h2 className="text-center mb-4">Listado de Libros</h2>
             <BookSearchBar query={query} setQuery={setQuery} />
             {books.length > 0 ?
                 <>
-                    <ul className={styles.bookList} data-testid="book-list">
+                    <div className={styles.bookList}>
                         {books.map((book) => (
-                            <li key={book.id}>
+                            <div key={book.id}>
                                 <BookCard book={book} styles={styles} />
-                            </li>
+                            </div>
                         ))}
-                    </ul>
+                    </div>
                     <PaginationComponent setQuery={setQuery} />
                 </>
                 : <h2 className={styles.noBookTitle}>No books found</h2>

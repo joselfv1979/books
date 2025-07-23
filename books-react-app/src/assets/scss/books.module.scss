@@ -19,6 +19,11 @@
   padding: 5px;
   width: 90%;
   margin: 1rem auto;
+
+  &:focus-within {
+    border-color: global.$info-color;
+    box-shadow: global.$input-shadow;
+  }
 }
 
 .bookSearchInput {
@@ -40,10 +45,7 @@
   background: global.$background-color;
   border: none;
   height: 3rem;
-
-  &:hover {
-    background: global.$search-hover-color;
-  }
+  margin-right: 5px;
 }
 
 .bookList {
@@ -79,18 +81,22 @@
 .textEllipsis {
   display: -webkit-box;
   line-clamp: 2;
-  -webkit-line-clamp: 2;
+  -webkit-line-clamp: 3;
   -webkit-box-orient: vertical;
   overflow: hidden;
+  text-overflow: ellipsis;
+  line-height: 1.4;
+  max-height: 4.2em;
 }
 
 .buttonGroup {
   display: flex;
   justify-content: space-around;
   align-items: center;
+  margin-top: auto;
 
   button {
-    width: 5rem;
+    width: 6rem;
     height: 2.5rem;
   }
 }
@@ -144,7 +150,7 @@
   }
 
   .bookList {
-    grid-template-columns: repeat(auto-fill, minmax(18rem, 20rem));
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 18rem));
     justify-content: space-evenly;
   }
 
@@ -156,6 +162,6 @@
 /* Media query for desktops */
 @media screen and (min-width: 1024px) {
   .bookList {
-    grid-template-columns: repeat(auto-fill, minmax(20rem, 22rem));
+    grid-template-columns: repeat(auto-fill, minmax(14rem, 22rem));
   }
 }

@@ -1,13 +1,24 @@
-import { Outlet } from 'react-router-dom';
+import { Outlet, useLocation } from 'react-router-dom';
+import Footer from './Footer';
+import Header from './Header';
 import Menu from './Menu';
 
 const Layout = () => {
+
+    const location = useLocation();
+
+    // Example: show Menu only on `/dashboard` path and its children
+    const showMenu = location.pathname === "/";
+
     return (
         <>
-            <Menu />
-            <main>
+            {showMenu ? <Header /> : <Menu />}
+
+            <main className="my-3">
                 <Outlet />
             </main>
+
+            <Footer />
         </>
     )
 }

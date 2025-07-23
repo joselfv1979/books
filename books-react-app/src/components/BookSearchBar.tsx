@@ -16,6 +16,12 @@ const BookSearchBar = ({ query, setQuery }: Props) => {
         setQuery((prevState) => ({ ...prevState, search: event.target.value, page: 1 }))
     };
 
+    const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
+        if (event.key === 'Enter') {
+            getBooks(query);
+        }
+    };
+
     const handleSearch = () => {
         getBooks(query);
     };
@@ -23,11 +29,14 @@ const BookSearchBar = ({ query, setQuery }: Props) => {
     return (
         <div className={styles.bookSearchBar}>
             <button className={styles.bookSearchButton} onClick={handleSearch}><SearchIcon /></button>
-            <input type="text" id='search'
+            <input
+                type="text"
                 className={styles.bookSearchInput}
-                placeholder='Search for title, author, genre, ISBN, publisher'
+                placeholder="Search for title, author, genre..."
                 value={query?.search ?? ''}
-                onChange={handleInputChange} />
+                onChange={handleInputChange}
+                onKeyDown={handleKeyDown}
+            />
         </div>
     );
 };

@@ -11,7 +11,7 @@ import Book from './pages/Book';
 import Books from './pages/Books';
 import EditBook from './pages/EditBook';
 import EditUser from './pages/EditUser';
-import Home from './pages/Home';
+import Landing from './pages/Landing';
 import Login from './pages/Login';
 import NotFound from './pages/NotFound';
 import Users from './pages/Users';
@@ -29,7 +29,7 @@ const App = () => {
     return (
         <Routes>
             <Route element={<Layout />}>
-                <Route path="/" element={<Home />} />
+                <Route path="/" element={<Landing />} />
                 <Route path="/books" element={<Books />} />
                 <Route path="/book/:id" element={<Book />} />
                 <Route path="/register" element={<AddUser />} />

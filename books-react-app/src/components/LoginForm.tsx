@@ -38,7 +38,7 @@ const LoginForm = ({ login }: Props) => {
                 </span>
                 <input type="text"
                     name="username"
-                    autoComplete="on"
+                    autoComplete="username"
                     className={styles.inputText}
                     placeholder="Enter username"
                     aria-label="Username"
@@ -51,7 +51,7 @@ const LoginForm = ({ login }: Props) => {
                 </span>
                 <input type="password"
                     name="password"
-                    autoComplete="off"
+                    autoComplete="current-password"
                     className={styles.inputText}
                     placeholder="Enter password"
                     aria-label="Password"

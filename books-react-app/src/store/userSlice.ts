@@ -25,6 +25,7 @@ export const userSlice = createSlice({
         logoutUser: (state) => {
             state.authUser = undefined;
             state.user = initialUser;
+            state.users = [];
             state.successMessage = undefined;
             state.errorMessage = undefined;
         },

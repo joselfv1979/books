@@ -11,16 +11,18 @@ const Login = () => {
     const { login } = useAppDispatch();
     const message = getMessage(errorMessage, successMessage);
 
-    if (authUser) return <Navigate to="/" />;
+    if (loading) return <Loader />;
+    if (authUser) return <Navigate to="/books" replace />;
 
     return (
-        loading ? <Loader />
-            : <>
-                {message && <Message message={message} />}
-                <LoginForm login={login} />
-            </>
+        <>
+            {message && <Message message={message} />}
+            <LoginForm login={login} />
+        </>
     );
 };
+
+Login.displayName = 'Login'; // for debugging
 
 export default Login;
 
