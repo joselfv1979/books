@@ -8,11 +8,12 @@ export interface IBook extends Document {
   genre: string[];
   pages: number;
   imagePath: string;
+  copies: number
 }
 
 const BookSchema = new Schema({
-  title: { type: String, unique: true, required: true },
-  author: { type: String, required: true },
+  title: { type: String, required: true },
+  author: { type: String, required: true, unique: true },
   publisher: { type: String, required: true },
   isbn: { type: String, required: true },
   genre: [
@@ -21,6 +22,7 @@ const BookSchema = new Schema({
   pages: { type: Number, required: true },
   description: { type: String },
   imagePath: { type: String },
+  copies: { type: Number, default: 1 },
 }, {
   timestamps: true,
 });

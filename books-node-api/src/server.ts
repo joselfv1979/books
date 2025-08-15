@@ -8,6 +8,7 @@ import { errorHandler } from "./middlewares/errorHandler";
 import morganMiddleware from "./middlewares/morganHandler";
 import authRouter from "./routes/authRoutes";
 import booksRouter from "./routes/bookRoutes";
+import loansRouter from "./routes/loanRoutes";
 import testRouter from "./routes/testRoutes";
 import usersRouter from "./routes/userRoutes";
 import Logger from "./utils/logger";
@@ -35,6 +36,7 @@ connect();
 app.use("/api/auth", authRouter);
 app.use("/api/users", usersRouter);
 app.use("/api/books", booksRouter);
+app.use("/api/loans", loansRouter);
 app.use("/api/seed", testRouter);
 
 // Error handler middleware

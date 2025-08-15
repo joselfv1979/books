@@ -1,5 +1,4 @@
 import { Document, Schema, model } from "mongoose";
-import { IBook } from "./Book";
 import { IRole } from "./Role";
 
 export interface IUser extends Document {
@@ -8,7 +7,7 @@ export interface IUser extends Document {
   password: string;
   roles: Array<IRole>;
   imagePath: string;
-  books: Array<IBook>;
+  membership_date: Date;
 }
 
 export interface UserResponse {
@@ -17,8 +16,8 @@ export interface UserResponse {
   email: string;
   roles: Array<string>;
   imagePath: string;
-  books: Array<IBook>;
   token?: string;
+  membership_date?: Date;
 }
 
 export type AuthUser = Pick<UserResponse, "id" | "username" | "roles" | "token">;
@@ -35,12 +34,7 @@ const UserSchema = new Schema({
       required: true
     },
   ],
-  books: [
-    {
-      type: Schema.Types.ObjectId,
-      ref: "Book",
-    },
-  ],
+  membership_date: { type: Date, default: Date.now },
 }, {
   timestamps: true,
 });
