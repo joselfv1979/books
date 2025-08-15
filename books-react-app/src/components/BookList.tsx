@@ -2,7 +2,7 @@ import { Dispatch, SetStateAction } from 'react';
 import styles from '../assets/scss/books.module.scss';
 import { useAppSelector } from '../hooks/redux-hooks';
 import BookCard from './BookCard';
-import BookSearchBar from './BookSearchBar';
+import BookSearch from './BookSearch';
 import PaginationComponent from './Pagination';
 
 type Props = {
@@ -16,8 +16,7 @@ const BookList = ({ query, setQuery }: Props) => {
 
     return (
         <>
-            <h2 className="text-center mb-4">Listado de Libros</h2>
-            <BookSearchBar query={query} setQuery={setQuery} />
+            <BookSearch query={query} setQuery={setQuery} />
             {books.length > 0 ?
                 <>
                     <div className={styles.bookList}>

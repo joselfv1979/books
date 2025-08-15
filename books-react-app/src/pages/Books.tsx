@@ -12,6 +12,8 @@ interface Query {
     page: number;
 }
 
+// View availability
+// Sort by Title, Author by title, Date (latest/earliest first)
 const Books = () => {
     const { loading, errorMessage, successMessage } = useAppSelector((state) => state.book);
     const { getBooks, deleteBook } = useAppDispatch();

@@ -1,0 +1,61 @@
+@use "./globalStyles.module" as global;
+
+/* Default styles for mobile */
+.searchSection {
+  width: 100%;
+  height: 8rem;
+  background-color: #706a62;
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0 14rem;
+}
+
+.bookSearchBar {
+  display: flex;
+  align-items: center;
+  border: global.$input-border;
+  border-radius: 0.4rem;
+  padding: 5px;
+  width: 90%;
+  margin: 1rem auto;
+  background: global.$background-color;
+
+  &:focus-within {
+    border-color: global.$info-color;
+    box-shadow: global.$input-shadow;
+  }
+}
+
+.bookSearchInput {
+  width: 80%;
+  height: 3rem;
+  border-radius: 0.4rem;
+  border: none;
+  outline: none;
+  flex: 1;
+  background: global.$background-color;
+
+  &:placeholder-shown {
+    text-overflow: ellipsis;
+  }
+}
+
+.bookSearchButton {
+  display: block;
+  background: global.$background-color;
+  border: none;
+  height: 3rem;
+  margin-right: 5px;
+}
+
+/* Media query for tablets */
+@media screen and (min-width: 768px) {
+  .bookSearchBar {
+    width: 35rem;
+  }
+
+  .bookSearchInput {
+    width: 100%;
+  }
+}

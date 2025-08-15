@@ -7,8 +7,27 @@
 
 .bookDraft {
   display: flex;
+  height: 10rem;
+  width: 100%;
+  background-color: rgb(160, 192, 240);
+}
+
+.breadcrumb {
+  background-color: global.$white-color;
+  padding: 1rem;
+}
+
+.imgThumbnail {
+  width: 10rem;
+  height: auto;
+  margin: 1rem;
+}
+
+.cardText {
+  display: flex;
   flex-direction: column;
-  margin: 2rem auto;
+  justify-content: center;
+  margin-left: 1rem;
 }
 
 .backButton {
@@ -17,7 +36,7 @@
   align-items: center;
   border: none;
   background: none;
-  color: global.$blue-dark-color;
+  color: global.$white-color;
   font-size: large;
 }
 

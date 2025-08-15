@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import styles from '../assets/scss/menu.module.scss';
 import { useAppSelector } from '../hooks/redux-hooks';
 import { authUser, isAdmin } from '../store/userSlice';
-import { CloseIcon, HamburguerIcon, LibraryIcon } from './Icons';
+import { CloseIcon, HamburguerIcon } from './Icons';
 import UserLogMenu from './UserLogMenu';
 
 const Menu = () => {
@@ -25,7 +25,6 @@ const Menu = () => {
 
     return (
         <nav className={styles.menu}>
-            <span className={styles.brand}><LibraryIcon /></span>
 
             <button className={styles.hamburguer} onClick={handleShowNavbar}>
                 {showNavbar ? <CloseIcon /> : <HamburguerIcon />}
@@ -36,7 +35,7 @@ const Menu = () => {
                     {menuItems.map((item) => (
                         item &&
                         <NavLink key={item.label} to={item.to}
-                            className={({ isActive }) => (isActive ? styles.active : '')}>
+                            className={({ isActive }) => (isActive ? styles.active : styles.link)}>
                             {item.label}
                         </NavLink>
                     ))}

@@ -14,7 +14,7 @@ const Layout = () => {
         <>
             {showMenu ? <Header /> : <Menu />}
 
-            <main className="my-3">
+            <main>
                 <Outlet />
             </main>
 

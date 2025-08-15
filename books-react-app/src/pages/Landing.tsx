@@ -2,6 +2,7 @@ import React from 'react';
 import { Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import library from '../assets/images/library.png';
+import Carousel from '../components/Carousel';
 
 const LandingPage: React.FC = () => {
     const navigate = useNavigate();
@@ -43,6 +44,13 @@ const LandingPage: React.FC = () => {
                             </div>
                         ))}
                     </div>
+                </div>
+            </section>
+
+            <section id="new-books" className='my-5 text-center'>
+                <div className="container">
+                    <h2>Nuevos Libros</h2>
+                    <Carousel />
                 </div>
             </section>
 

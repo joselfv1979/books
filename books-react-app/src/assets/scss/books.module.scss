@@ -11,43 +11,6 @@
   text-align: center;
 }
 
-.bookSearchBar {
-  display: flex;
-  align-items: center;
-  border: global.$input-border;
-  border-radius: 0.4rem;
-  padding: 5px;
-  width: 90%;
-  margin: 1rem auto;
-
-  &:focus-within {
-    border-color: global.$info-color;
-    box-shadow: global.$input-shadow;
-  }
-}
-
-.bookSearchInput {
-  width: 80%;
-  height: 3rem;
-  border-radius: 0.4rem;
-  border: none;
-  outline: none;
-  flex: 1;
-  background: global.$background-color;
-
-  &:placeholder-shown {
-    text-overflow: ellipsis;
-  }
-}
-
-.bookSearchButton {
-  display: block;
-  background: global.$background-color;
-  border: none;
-  height: 3rem;
-  margin-right: 5px;
-}
-
 .bookList {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
@@ -145,10 +108,6 @@
 
 /* Media query for tablets */
 @media screen and (min-width: 768px) {
-  .bookSearchBar {
-    width: 40rem;
-  }
-
   .bookList {
     grid-template-columns: repeat(auto-fill, minmax(14rem, 18rem));
     justify-content: space-evenly;
