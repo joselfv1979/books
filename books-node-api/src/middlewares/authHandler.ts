@@ -1,5 +1,5 @@
 import { NextFunction, Request, Response } from "express";
-import jwt, { JwtPayload } from "jsonwebtoken";
+import jwt, { JwtPayload, VerifyOptions } from "jsonwebtoken";
 import { CustomError } from "../models/CustomError";
 
 export interface CustomJwt extends JwtPayload {
@@ -34,7 +34,8 @@ const authHandler = (
     return next(new CustomError(401, "token missing or invalid"));
   }
 
-  let decodedToken = <CustomJwt>jwt.verify(token, process.env.SECRET as string);
+  const options: VerifyOptions = { algorithms: ["HS256"] };
+  let decodedToken = <CustomJwt>jwt.verify(token, process.env.SECRET as string, options);
 
   if (!decodedToken) {
     return next(new CustomError(401, "token missing or invalid"));

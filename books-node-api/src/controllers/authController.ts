@@ -17,7 +17,7 @@ export async function loginController(
     const { username, password } = req.body;
 
     // retrieve user from database
-    const user = await getUsernameService(username);
+    const user: IUser | null = await getUsernameService(username);
 
     if (!user) return next(new CustomError(401, "Username doesn't exist"));
 
@@ -30,7 +30,7 @@ export async function loginController(
     const token = generateToken(user.id, username, JSON.stringify(user.roles));
 
     // create a list of role names
-    const roleList = user.roles.map(role => role.name);
+    const roleList = user.roles.map(role => ("name" in role ? role.name : role.toString()));
 
     // returning object
     const loggedUser: AuthUser = {

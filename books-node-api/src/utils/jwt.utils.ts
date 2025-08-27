@@ -14,6 +14,7 @@ export function generateToken(id: string, username: string, role: string) {
   const privateKey = process.env.SECRET as string;
 
   const signInOptions: SignOptions = {
+    algorithm: "HS256",
     expiresIn: '24h'
   };
 

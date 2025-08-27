@@ -6,17 +6,10 @@ if (!DB_CONNECTION) {
   Logger.error("Remember to have environment variables on a file .env");
 }
 
-const options = {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-  useCreateIndex: true,
-  useFindAndModify: false,
-};
-
 //connection mongodb atlas
 export const connect = async () => {
   try {
-    await mongoose.connect(DB_CONNECTION, options);
+    await mongoose.connect(DB_CONNECTION);
     Logger.info("Database connected!");
   } catch (error) {
     Logger.debug(error);

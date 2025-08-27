@@ -51,15 +51,14 @@ export async function getRoleService(roles: string[]) {
 
 export function userToUserResponse(user: IUser) {
 
-  const roleList = user.roles.map(role => role.name);
+  const roleList = user.roles.map(role => ("name" in role ? role.name : role.toString()));
 
   const userResponse: UserResponse = {
     id: user.id,
     username: user.username,
     email: user.email,
     roles: roleList,
-    imagePath: user.imagePath,
-    books: user.books
+    imagePath: user.imagePath
   }
 
   return userResponse;
