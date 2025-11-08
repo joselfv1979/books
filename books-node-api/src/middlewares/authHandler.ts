@@ -8,6 +8,9 @@ export interface CustomJwt extends JwtPayload {
   role?: string
 }
 
+// TODO: Store token in a more professional way (e.g., cookies, local storage)
+// --- Check token duration, refresh token, etc.
+
 const authHandler = (
   request: Request,
   _response: Response,

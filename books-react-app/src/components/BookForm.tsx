@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../assets/scss/bookForm.module.scss';
 import { initialBook } from '../data/ConstantUtils';
 import { Book } from '../types/Book';
+import { ROUTES } from '../utils/constants';
 import { BookFormErrors, validateBook } from '../utils/validateBook';
 import LoadFile from './LoadFile';
 import { TagField } from './TagField';
@@ -15,6 +16,8 @@ export type Props = {
 };
 // Form for creating or editing a book, used in AddBook and EditBook views
 const BookForm = ({ book, saveBook, editing = false }: Props) => {
+
+    if (!book) return <h2>No book found</h2>;
 
     // Book state management
     const [values, setValues] = useState<Book>(book ?? initialBook);
@@ -32,21 +35,21 @@ const BookForm = ({ book, saveBook, editing = false }: Props) => {
         if (files) {
             setValues((prev) => ({ ...prev, image: files[0] }));
         }
-    }
-
-    // removes input error when typing
-    const removeInputError = (name: string) => {
-        setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
+    };
 
     // Input values handler
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
 
-        removeInputError(event.target.name);
+        console.log('year');
+
+        console.log(event.target.name + ': ' + event.target.value);
 
         setValues((prevState) => ({
             ...prevState, [event.target.name]: event.target.value,
         }));
+
+        // removes input error when typing
+        setErrors((prev) => ({ ...prev, [event.target.name]: undefined }));
     };
 
     // Submit form values to views
@@ -60,7 +63,7 @@ const BookForm = ({ book, saveBook, editing = false }: Props) => {
         }
     };
 
-    const handleNavigateToBooks = () => navigate("/books");
+    const handleNavigateToBooks = () => navigate(ROUTES.ALL_BOOKS);
 
     return (
         <form className={styles.bookForm} onSubmit={handleSubmit} data-testid="book-form">
@@ -139,6 +142,34 @@ const BookForm = ({ book, saveBook, editing = false }: Props) => {
 
             <TagField values={values} setValues={setValues} />
 
+            <fieldset className={styles.clusteredField}>
+                <fieldset className={`${styles.textField} ${errors.language && styles.isInvalid}`}>
+                    <input
+                        name="language"
+                        type="text"
+                        autoComplete='off'
+                        value={values.language}
+                        placeholder="Enter language"
+                        onChange={handleChange}
+                        className={styles.bookFormInput}
+                    />
+                    <span className={styles.asterisk}>*</span>
+                </fieldset>
+
+                <fieldset className={`${styles.textField} ${errors.copiesCount && styles.isInvalid}`}>
+                    <input
+                        name="totalCopies"
+                        type="number"
+                        autoComplete='off'
+                        value={values.totalCopies}
+                        placeholder="Enter copies"
+                        onChange={handleChange}
+                        className={styles.bookFormInput}
+                    />
+                    <span className={styles.asterisk}>*</span>
+                </fieldset>
+            </fieldset>
+
             <fieldset className={styles.textField}>
                 <textarea
                     name="description"
@@ -156,6 +187,28 @@ const BookForm = ({ book, saveBook, editing = false }: Props) => {
                     image={values.imagePath}
                     handleFile={handleFile} />
             </fieldset>
+
+            {/* <div>
+                <label htmlFor="date">Pick a date:</label>
+                <input
+                    type="date"
+                    id="date"
+                    name="date"
+                    value={values.publishedYear}
+                    onChange={handleChange}
+                />
+            </div> */}
+            <input
+                type="number"
+                name="publishedYear"
+                min="1000"
+                max={new Date().getFullYear()}
+                value={values.publishedYear}
+                onChange={handleChange}
+                placeholder="YYYY"
+                required
+                className="border p-2 rounded w-full"
+            />
 
             <div className={styles.buttonGroup}>
                 <Button variant="primary" type="submit">

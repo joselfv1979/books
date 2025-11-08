@@ -1,33 +1,167 @@
 @use "./globalStyles.module" as global;
 
 /* Default styles for mobile */
-.bookContainer {
-  margin: 3rem;
-}
 
-.bookDraft {
+.breadcrumbContainer {
+  background-color: #212529;
+  height: 3rem;
   display: flex;
-  height: 10rem;
-  width: 100%;
-  background-color: rgb(160, 192, 240);
+  align-items: center;
 }
 
 .breadcrumb {
-  background-color: global.$white-color;
-  padding: 1rem;
+  padding: 0 10rem;
+  color: global.$white-color;
+}
+
+.crumbText,
+.crumbTextDisplay {
+  color: global.$white-color;
+  font-size: 1.3rem;
+
+  &:hover {
+    filter: brightness(55%);
+  }
+}
+
+.crumbTextDisplay::before {
+  content: "/";
+  color: global.$white-color;
+  margin: 0.5rem;
+}
+
+.bookDraftContainer {
+  position: relative;
+  height: 10rem;
+  width: 100%;
+  background-color: #367d8a;
+  border-top: 3px solid global.$white-color;
+}
+
+.bookDraft {
+  padding: 0 10rem;
+  display: flex;
 }
 
 .imgThumbnail {
-  width: 10rem;
-  height: auto;
-  margin: 1rem;
+  position: absolute;
+  top: 25%;
+  left: 12%;
+  width: 7rem;
+  height: 10rem;
+  border: 1px solid global.$white-color;
+  background-color: global.$white-color;
 }
 
 .cardText {
+  position: absolute;
+  bottom: 2%;
+  left: 20%;
   display: flex;
   flex-direction: column;
   justify-content: center;
-  margin-left: 1rem;
+  margin-left: 2rem;
+  color: global.$white-color;
+}
+
+.reserveCard {
+  position: absolute;
+  top: 30%;
+  left: 75%;
+  gap: 1rem;
+  box-shadow: 0.25rem 0.25rem 1rem rgba(59, 136, 149, 0.6);
+  width: 18rem;
+  height: 16rem;
+  background-color: global.$white-color;
+}
+
+.reserveTitle {
+  background-color: #083e52;
+  color: global.$white-color;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 22%;
+}
+
+.reserveContent {
+  height: 78%;
+  display: grid;
+  grid-template-columns: 3fr;
+  padding: 1.5rem;
+}
+
+.reserveButton {
+  background-color: #367d8a;
+  color: global.$white-color;
+  border: none;
+  padding: 0.5rem 1rem;
+  font-size: 1.2rem;
+  cursor: pointer;
+  transition: background-color 0.3s ease;
+
+  &:hover {
+    background-color: #285f6b;
+  }
+
+  &:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+    background-color: #ccc;
+  }
+}
+
+.reservedText {
+  color: #083e52;
+  font-weight: bold;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 78%;
+}
+
+.reserveButton:disabled {
+  opacity: 0.6;
+  cursor: not-allowed;
+  background-color: #ccc;
+}
+
+.summaryContainer {
+  margin: 4rem;
+}
+
+.summary {
+  padding-left: 10rem;
+  padding-right: 25rem;
+}
+
+.summaryTitle {
+  color: #367d8a;
+}
+
+.detailsContainer {
+  display: flex;
+  margin: 0 4rem;
+}
+
+.details {
+  padding-left: 10rem;
+  padding-right: 20rem;
+}
+
+.detailsTitle {
+  color: #367d8a;
+  margin-bottom: 2rem;
+}
+
+.detailsParagraph {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  width: 30rem;
+}
+
+.detailsHeading {
+  font-weight: bold;
 }
 
 .backButton {

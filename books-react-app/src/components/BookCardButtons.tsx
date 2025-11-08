@@ -1,8 +1,10 @@
 import { Button } from 'react-bootstrap';
+import { useDispatch } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
 import { useAppSelector } from '../hooks/redux-hooks';
+import { openModal } from "../store/uiSlice";
 import { isAdmin } from '../store/userSlice';
+import { ROUTES } from '../utils/constants';
 
 type Props = {
     bookId: string;
@@ -12,15 +14,20 @@ const BookCardButtons = ({ bookId }: Props) => {
 
     const navigate = useNavigate();
     const admin = useAppSelector(isAdmin);
-    const { setItemId, setShowDeleteModal } = useDeleteModalContext();
+    const dispatch = useDispatch();
 
-    const handleEdit = () => navigate(`/book-edit/${bookId}`)
+    const handleEdit = () => navigate(`${ROUTES.EDIT_BOOK}/${bookId}`)
 
-    const handleView = () => navigate(`/book/${bookId}`);
+    const handleView = () => navigate(`${ROUTES.SINGLE_BOOK}/${bookId}`);
+    // const handleView = () => navigate(`/book/${bookId}`);
 
     const handleDelete = () => {
-        setShowDeleteModal(true);
-        setItemId(bookId);
+        dispatch(
+            openModal({
+                type: "CONFIRM_DELETE",
+                data: { entity: "book", id: bookId },
+            })
+        );
     };
 
     return (

@@ -15,6 +15,7 @@ $yellow-color: #ffff00;
 $info-color: #0d6dfc;
 $blue-dark-color: #003366;
 $blue-light-color: #6ec8f5;
+$active-color: #0b5ed7;
 $hover-color: #0b5ed7;
 $search-hover-color: #e8f0ff;
 $disabled-color: #e9ecf0;
@@ -36,13 +37,36 @@ body {
   font-family: $body-font;
 }
 
-.spinner {
-  position: absolute;
+.spinnerOverlay {
+  position: fixed; /* cover the entire viewport */
   top: 0;
   left: 0;
-  bottom: 0;
   right: 0;
-  margin: auto;
+  bottom: 0;
+  background-color: rgba(0, 0, 0, 0.5); /* semi-transparent overlay */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 9999; /* appear above all content */
+}
+
+.spinner {
+  width: 50px;
+  height: 50px;
+  border: 5px solid #f3f3f3; /* light gray border */
+  border-top: 5px solid #3498db; /* blue border top */
+  border-radius: 50%;
+  animation: spin 1s linear infinite;
+}
+
+/* spinner animation */
+@keyframes spin {
+  0% {
+    transform: rotate(0deg);
+  }
+  100% {
+    transform: rotate(360deg);
+  }
 }
 
 main {

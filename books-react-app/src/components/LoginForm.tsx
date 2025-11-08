@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import '../assets/scss/globalStyles.module.scss';
 import styles from '../assets/scss/loginForm.module.scss';
 import { AuthRequest } from '../types/User';
+import { ROUTES } from '../utils/constants';
 import { PasswordIcon, UserIcon } from './Icons';
 
 export type Props = {
@@ -27,7 +28,7 @@ const LoginForm = ({ login }: Props) => {
         login(values);
     };
 
-    const handleNavigateToRegister = () => navigate("/register");
+    const handleNavigateToRegister = () => navigate(ROUTES.ADD_USER);
 
     return (
         <form data-testid="login-form" className={styles.loginForm} onSubmit={handleLogin}>

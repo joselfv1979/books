@@ -1,7 +1,7 @@
 import { afterAll, describe, expect, test } from "@jest/globals";
 import supertest from "supertest";
 import { disconnect } from "../src/config/connect";
-import { app, server } from "../src/server";
+import { app, getServer } from "../src/server";
 
 const api = supertest(app);
 const FAKE_ROUTE = "/fakeRoute";
@@ -27,6 +27,6 @@ describe("Server routes", () => {
 
 afterAll(async () => {
     await disconnect();
-    server.close();
+    getServer().close();
 })
 

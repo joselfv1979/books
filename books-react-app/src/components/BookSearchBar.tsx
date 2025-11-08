@@ -8,7 +8,7 @@ type Props = {
     setQuery: Dispatch<SetStateAction<{ search?: string; page: number }>>
 }
 
-const BookSearch = ({ query, setQuery }: Props) => {
+const BookSearchBar = ({ query, setQuery }: Props) => {
 
     const { getBooks } = useAppDispatch();
 
@@ -29,7 +29,7 @@ const BookSearch = ({ query, setQuery }: Props) => {
     return (
         <div className={styles.searchSection}>
             <LibraryIcon />
-            <h3 className='text-white mx-2'>Library</h3>
+            <h3 className='text-white mb-0 mx-2'>Library</h3>
             <div className={styles.bookSearchBar}>
                 <button className={styles.bookSearchButton} onClick={handleSearch}><SearchIcon /></button>
                 <input
@@ -46,4 +46,4 @@ const BookSearch = ({ query, setQuery }: Props) => {
     );
 };
 
-export default BookSearch;
+export default BookSearchBar;

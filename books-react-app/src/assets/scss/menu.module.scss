@@ -19,14 +19,15 @@
 .showNavbar {
   display: grid;
   grid-template-columns: 1fr 1fr;
-  width: 100%;
+  width: 50%;
   position: absolute;
   top: 8vh;
   left: 0;
   height: 92vh;
   z-index: 1000;
-  transform: translateX(0);
+  transform: translateX(-1rem);
   transition: 0.3s ease;
+  background-color: #212529;
 }
 
 .hideNavbar {
@@ -44,39 +45,32 @@
   background: transparent;
 }
 
-.link {
+.link,
+.login,
+.username {
   color: global.$white-color;
   margin: 1rem;
+}
 
+.link,
+.login {
   &:hover {
-    filter: brightness(55%);
-  }
-
-  &.active {
-    color: global.$blue-light-color;
+    color: global.$hover-color;
   }
 }
 
-.logmenu,
-.activeLogmenu {
-  color: global.$white-color;
+.active,
+.activeLogin {
+  margin: 1rem;
+  color: global.$active-color;
 }
 
-.activeLogmenu {
-  color: global.$blue-light-color;
-}
-
-.loggedUser {
+.userSection {
   display: flex;
   align-items: center;
 }
 
-.username {
-  color: global.$blue-light-color;
-  margin: 1rem;
-}
-
-.logoutIcon {
+.logoutBtn {
   color: global.$white-color;
   cursor: pointer;
   height: 1.5rem;
@@ -109,19 +103,10 @@
     padding: 0;
   }
 
-  .loggedUser {
-    margin-left: auto;
-  }
-
-  .logmenu,
-  .activeLogmenu {
-    display: flex;
-    align-items: center;
-    margin-left: auto;
-  }
-
+  .login,
+  .activeLogin,
+  .userSection,
   .username {
     margin-left: auto;
-    margin-right: 1rem;
   }
 }

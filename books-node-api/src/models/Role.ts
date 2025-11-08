@@ -1,26 +1,23 @@
 import { Document, Schema, model } from "mongoose";
 
-const rolesValidos = {
-    values: ["ADMIN", "USER"],
-    message: '{VALUE} no es un role válido'
-}
+const rolesValidos = ["ADMIN", "USER"];
 
 export interface IRole extends Document {
     name: string;
 };
 
-const RoleSchema = new Schema({
+const RoleSchema = new Schema<IRole>({
     name: { type: String, required: true, default: 'USER', enum: rolesValidos }
 });
 
 RoleSchema.set("toJSON", {
-    transform: (_document, returnedObject) => {
-        returnedObject.id = returnedObject._id;
-        delete returnedObject._id;
+    transform: (_document: Document, returnedObject: Record<string, any>) => {
+        if (returnedObject._id) {
+            returnedObject.id = returnedObject._id.toString();
+            delete returnedObject._id;
+        }
         delete returnedObject.__v;
     },
-}, {
-    timestamps: true,
 });
 
 export default model<IRole>("Role", RoleSchema);

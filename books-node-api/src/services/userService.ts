@@ -3,9 +3,7 @@ import Role, { IRole } from "../models/Role";
 import User, { IUser, UserResponse } from "../models/User";
 
 export async function getUsersService() {
-  return await User.find().populate("books", {
-    title: 1,
-  }).populate('roles');
+  return await User.find().populate('roles');
 }
 
 export async function getUserService(id: string) {

@@ -4,6 +4,7 @@ import { useNavigate } from 'react-router-dom';
 import styles from '../assets/scss/userForm.module.scss';
 import { initialUser } from '../data/ConstantUtils';
 import { User } from '../types/User';
+import { ROUTES } from '../utils/constants';
 import { UserFormErrors, validateUser } from '../utils/validateUser';
 import { MailIcon, PasswordIcon, UserIcon } from './Icons';
 import LoadFile from './LoadFile';
@@ -32,21 +33,17 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
         if (files) {
             setValues((prev) => ({ ...prev, image: files[0] }));
         }
-    }
-
-    // removes input error when typing
-    const removeInputError = (name: string) => {
-        setErrors((prev) => ({ ...prev, [name]: undefined }));
-    }
+    };
 
     // Input values handler
     const handleChange = (event: ChangeEvent<HTMLInputElement>) => {
 
-        removeInputError(event.target.name);
-
         setValues((prevState) => ({
             ...prevState, [event.target.name]: event.target.value,
         }));
+
+        // removes input error when typing
+        setErrors((prev) => ({ ...prev, [event.target.name]: undefined }));
     };
 
     // Submit user
@@ -60,7 +57,8 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
         }
     };
 
-    const handleNavigateToBooks = () => navigate("/books");
+    const handleNavigateToBooks = () => navigate(ROUTES.ALL_BOOKS);
+    const handleNavigateToLogin = () => navigate(ROUTES.LOGIN);
 
     return (
         <form className={styles.userForm} onSubmit={handleSubmit} data-testid="user-form">
@@ -121,7 +119,7 @@ const UserForm = ({ user, saveUser, register = true }: Props) => {
             {register &&
                 <fieldset className={styles.linkField}>
                     <p className="text-center">Do you have an account?</p>
-                    <button type="button" className="btn btn-link text-decoration-none align-self-center" onClick={() => navigate("/login")}>
+                    <button type="button" className="btn btn-link text-decoration-none align-self-center" onClick={handleNavigateToLogin}>
                         Login here
                     </button>
                 </fieldset>}

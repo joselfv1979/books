@@ -3,11 +3,12 @@ import { Button, Card } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
 import library from '../assets/images/library.png';
 import Carousel from '../components/Carousel';
+import { ROUTES } from '../utils/constants';
 
 const LandingPage: React.FC = () => {
     const navigate = useNavigate();
 
-    const handleView = () => navigate('/books');
+    const handleView = () => navigate(ROUTES.ALL_BOOKS);
 
     const services = [
         { id: 'prestamo', title: 'Préstamo de Libros', description: 'Disfruta de una amplia colección de libros disponibles para préstamo.' },
@@ -17,7 +18,7 @@ const LandingPage: React.FC = () => {
 
     return (
         <div className="container">
-            <section id='wellcome' className="row align-items-center justify-content-between">
+            <section id='wellcome' className="row align-items-center justify-content-between mt-5">
                 <div id="library" className="col-md-5">
                     <h2>Bienvenido a nuestra Biblioteca</h2>
                     <p>Gestiona tus préstamos de libros de manera fácil y rápida.</p>

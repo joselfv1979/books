@@ -7,6 +7,8 @@ export type BookFormErrors = {
     publisher?: string,
     isbn?: string,
     pages?: string,
+    language?: string,
+    copiesCount?: string
 }
 
 type Props = {
@@ -18,7 +20,7 @@ type Props = {
 // Validate book function
 export const validateBook = ({ values, errors, setErrors }: Props) => {
 
-    const { title, author, publisher, isbn, pages } = values;
+    const { title, author, publisher, isbn, pages, language, copiesCount } = values;
 
     let isValid = true;
 
@@ -27,6 +29,8 @@ export const validateBook = ({ values, errors, setErrors }: Props) => {
     errors.publisher = publisher ? undefined : 'Publisher is required';
     errors.isbn = isbn ? undefined : 'Isbn is required';
     errors.pages = Number(pages) !== 0 ? undefined : 'Pages is required';
+    errors.language = language ? undefined : 'Language is required';
+    errors.copiesCount = Number(copiesCount) !== 0 ? undefined : 'Copies is required';
 
     setErrors({ ...errors });
 

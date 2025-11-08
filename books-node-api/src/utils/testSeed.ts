@@ -1,4 +1,4 @@
-import { connect } from "../config/connect";
+import { connectDB } from "../config/connect";
 import Book from "../models/Book";
 import Role from "../models/Role";
 import User from "../models/User";
@@ -98,7 +98,7 @@ const createBooks = async () => {
 
 export const seed = async () => {
     try {
-        connect();
+        connectDB();
         await Book.collection.drop();
         await User.collection.drop();
         await Role.collection.drop();

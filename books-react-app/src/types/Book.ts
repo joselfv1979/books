@@ -3,9 +3,13 @@ export type Book = {
     title: string;
     author: string;
     publisher: string;
+    publishedYear: number | undefined;
     isbn: string;
+    language: string;
     genre: string[];
-    pages: number;
+    totalCopies: number | undefined;
+    availableCopies: number | undefined;
+    pages: number | undefined;
     description: string;
     image?: File;
     imagePath: string;
@@ -19,7 +23,4 @@ export interface BookState {
     totalDocs?: string
     totalPages?: string
     book: Book | null;
-    errorMessage?: string;
-    successMessage?: string;
-    loading: boolean;
 }

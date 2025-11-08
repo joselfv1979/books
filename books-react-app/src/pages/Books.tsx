@@ -1,11 +1,6 @@
 import { useEffect, useState } from 'react';
 import BookList from '../components/BookList';
-import DeleteModal from '../components/DeleteModal';
-import { Loader } from '../components/Loader';
-import Message from '../components/Message';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { getMessage } from '../utils/handleMessage';
+import { useAppDispatch } from '../hooks/redux-hooks';
 
 interface Query {
     search?: string;
@@ -15,11 +10,7 @@ interface Query {
 // View availability
 // Sort by Title, Author by title, Date (latest/earliest first)
 const Books = () => {
-    const { loading, errorMessage, successMessage } = useAppSelector((state) => state.book);
-    const { getBooks, deleteBook } = useAppDispatch();
-    const message = getMessage(errorMessage, successMessage);
-
-    const { itemId, showDeleteModal } = useDeleteModalContext();
+    const { getBooks } = useAppDispatch();
 
     const [query, setQuery] = useState<Query>({ page: 1 });
 
@@ -28,12 +19,7 @@ const Books = () => {
     }, [query.page]);
 
     return (
-        loading ? <Loader />
-            : <>
-                {message && <Message message={message} />}
-                {showDeleteModal && <DeleteModal id={itemId} item={'book'} deleteItem={deleteBook} />}
-                <BookList query={query} setQuery={setQuery} />
-            </>
+        <BookList query={query} setQuery={setQuery} />
     );
 };
 

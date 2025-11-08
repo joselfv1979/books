@@ -94,3 +94,51 @@ export const BackArrow = () => (
         <path d="M16 14a2 2 0 0 1-2 2H2a2 2 0 0 1-2-2V2a2 2 0 0 1 2-2h12a2 2 0 0 1 2 2zm-4.5-6.5H5.707l2.147-2.146a.5.5 0 1 0-.708-.708l-3 3a.5.5 0 0 0 0 .708l3 3a.5.5 0 0 0 .708-.708L5.707 8.5H11.5a.5.5 0 0 0 0-1" />
     </svg>
 )
+
+export const FallbackSVG = () => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 400 300"
+        preserveAspectRatio="xMidYMid meet"
+        width="100%"
+        height="100%"
+    >
+        <rect width="100%" height="100%" fill="#e0e0e0" />
+        <g transform="translate(50 50) scale(0.5)">
+            <rect x="0" y="0" width="200" height="150" rx="10" ry="10" fill="#c0c0c0" />
+            <circle cx="50" cy="50" r="20" fill="#a0a0a0" />
+            <polyline
+                points="0,150 60,80 120,150 200,60"
+                fill="none"
+                stroke="#888"
+                stroke-width="5"
+                stroke-linecap="round"
+            />
+        </g>
+        <text
+            x="50%"
+            y="90%"
+            textAnchor="middle"
+            fontFamily="Arial, sans-serif"
+            fontSize="20"
+            fill="#999"
+        >
+            Image not available
+        </text>
+    </svg>
+);
+
+export const SkeletonFallback = () => (
+    <svg
+        xmlns="http://www.w3.org/2000/svg"
+        viewBox="0 0 400 300"
+        preserveAspectRatio="xMidYMid meet"
+        width="100%"
+        height="100%"
+    >
+        <rect width="100%" height="100%" fill="#f0f0f0" />
+        <rect x="20" y="20" width="360" height="200" rx="8" ry="8" fill="#e0e0e0" />
+        <rect x="20" y="230" width="200" height="20" rx="4" ry="4" fill="#e0e0e0" />
+        <rect x="20" y="260" width="150" height="15" rx="4" ry="4" fill="#e0e0e0" />
+    </svg>
+);

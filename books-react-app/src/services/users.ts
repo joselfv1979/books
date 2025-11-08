@@ -12,6 +12,10 @@ const usersUrl = `${import.meta.env.VITE_API_URL}/api/users`;
 export const getAllUsers = async (): Promise<Result<User[], string>> => {
     try {
         const { data } = await axios.get(usersUrl, { headers: getHeaders() });
+        console.log(usersUrl);
+
+        console.log('data', data);
+
         return { success: true, value: data.data };
     } catch (error) {
         return { success: false, message: handleError(error) };

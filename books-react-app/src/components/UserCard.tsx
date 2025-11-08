@@ -1,7 +1,8 @@
 import { Button, Card } from 'react-bootstrap';
+import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import userImage from '../assets/images/user.svg';
 import styles from '../assets/scss/userList.module.scss';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
+import { openModal } from '../store/uiSlice';
 import { User } from '../types/User';
 
 const baseUrl = import.meta.env.VITE_API_URL;
@@ -11,11 +12,16 @@ type Props = {
 };
 
 const UserCard = ({ user }: Props) => {
-    const { setItemId, setShowDeleteModal } = useDeleteModalContext();
+
+    const dispatch = useDispatch();
 
     const deleteUser = () => {
-        setShowDeleteModal(true);
-        setItemId(user.id);
+        dispatch(
+            openModal({
+                type: "CONFIRM_DELETE",
+                data: { entity: "user", id: user.id },
+            })
+        );
     };
 
     const image = user.imagePath ? `${baseUrl}/${user.imagePath}` : userImage;
@@ -23,7 +29,7 @@ const UserCard = ({ user }: Props) => {
     return (
         <Card className={styles.userCard} data-testid={user.username}>
             <div className={styles.frame}>
-                <Card.Img src={image} variant='top' className={styles.userImage} />
+                <Card.Img src={image} variant='top' className={styles.userImage} loading="lazy" />
             </div>
             <Card.Header className={styles.header}>
                 <strong>{user.username}</strong>

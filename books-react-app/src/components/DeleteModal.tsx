@@ -1,28 +1,32 @@
 import Button from 'react-bootstrap/esm/Button';
 import Modal from 'react-bootstrap/Modal';
-import { useDeleteModalContext } from '../context/deleteModal/DeleteModalContext';
-import { AppThunk } from '../store';
+import { useDispatch } from 'react-redux';
+import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import { closeModal, getModal } from '../store/uiSlice';
 
-type Props = {
-    id: string;
-    item: string;
-    deleteItem: (id: string) => AppThunk
-};
+const DeleteModal = () => {
 
-const DeleteModal = ({ id, item, deleteItem }: Props) => {
-    const { showDeleteModal, setShowDeleteModal } = useDeleteModalContext();
+    const dispatch = useDispatch();
+    const { deleteBook, deleteUser } = useAppDispatch();
+    const { isOpen, type, data } = useAppSelector(getModal);
 
-    const handleClose = () => setShowDeleteModal(false);
+    if (!isOpen || type !== "CONFIRM_DELETE") return null;
 
-    const removeItem = () => {
-        deleteItem(id);
-        setShowDeleteModal(false);
+    const handleConfirm = () => {
+        if (data.entity === "user") {
+            deleteUser(data.id);
+        } else if (data.entity === "book") {
+            deleteBook(data.id);
+        }
+        dispatch(closeModal());
     };
 
+    const handleClose = () => dispatch(closeModal());
+
     return (
-        <Modal size="sm" show={showDeleteModal} onHide={handleClose} data-testid="delete-modal">
+        <Modal size="sm" show={isOpen} onHide={handleClose} data-testid="delete-modal">
             <Modal.Header closeButton>
-                <Modal.Title>{`Delete ${item}`}
+                <Modal.Title>{`Delete ${data.entity}`}
                 </Modal.Title>
             </Modal.Header>
             <Modal.Body className="text-center fw-bold">
@@ -32,7 +36,7 @@ const DeleteModal = ({ id, item, deleteItem }: Props) => {
                 <Button variant="secondary" onClick={handleClose}>
                     Cancel
                 </Button>
-                <Button variant="danger" onClick={removeItem} data-testid="delete-item-btn">
+                <Button variant="danger" onClick={handleConfirm} data-testid="delete-item-btn">
                     Delete
                 </Button>
             </Modal.Footer>
