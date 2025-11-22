@@ -1,84 +1,78 @@
 /* Book details */
 import React from 'react';
-import fallbackImage from '../assets/images/fallback.svg';
-import styles from '../assets/scss/book.module.scss';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { getNotification } from '../store/notificationSlice';
 import { Book } from '../types/Book';
+import Info from './Info';
+import Button from "./ui/Button";
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
 type Props = {
     book: Book | null;
     handleLoan: () => void;
+    loading?: boolean;
 };
 
-// TODO: Refactor to smaller components
-// Create view for listing user's loans and returns
+const BookDetail: React.FC<Props> = ({ book, handleLoan, loading }) => {
+    const image = book?.imagePath ? `${baseUrl}/${book.imagePath}` : undefined;
 
-const BookDetail: React.FC<Props> = ({ book, handleLoan }) => {
+    if (!book) return <h2 className="text-center mt-10 text-brand-700">No book found</h2>;
 
-    const notification = useAppSelector(getNotification);
-
-    if (!book) return <h2>No book found</h2>;
-
-    const image = book.imagePath ? `${baseUrl}/${book.imagePath}` : fallbackImage;
-    const labels = ['Title', 'Author', 'ISBN', 'Language', 'Pages', 'Published', 'Subject'];
-    const values = [book.title, book.author, book.isbn, book.language, book.pages, book.publishedYear, book.genre];
+    const disabled = loading || (book.availableCopies ?? 0) <= 0;
 
     return (
-        <>
-            <div className={styles.bookDraftContainer}>
-                {/* Book image & details */}
-                <img src={image}
-                    className={styles.imgThumbnail}
-                    alt={`Portada de ${book.title}`}
-                    loading="lazy"
-                />
-                <div className={styles.cardText}>
-                    <h4 className="card-title">{book.title}</h4>
-                    <h5 className="card-subtitle my-2">{book.author}</h5>
-                    <h5>{book.publishedYear}</h5>
-                    <p>{book.publisher}</p>
+        <div className="grid gap-8 md:grid-cols-[300px_1fr]">
+            <div className="space-y-4">
+                <div className="aspect-[3/4] bg-surface-muted rounded-lg overflow-hidden flex items-center justify-center">
+                    {image ? (
+                        <img
+                            src={image}
+                            alt={book.title}
+                            className="w-full h-full object-cover"
+                            loading="lazy"
+                        />
+                    ) : (
+                        <span className="text-sm text-brand-700">No cover</span>
+                    )}
                 </div>
-                {/* Reserve card */}
-                <div className={styles.reserveCard}>
-                    <div className={styles.reserveTitle}>
-                        {notification?.type === 'success' ? <h4>Loan created</h4> : <h4>Reserve it!</h4>}
+                <Button disabled={disabled} loading={loading} onClick={handleLoan}>
+                    {disabled ? (loading ? "Processing…" : "Not Available") : "Reserve"}
+                </Button>
+            </div>
+
+            <div className="space-y-6">
+                <header>
+                    <h1 className="text-2xl mb-1">{book.title}</h1>
+                    <p className="text-base text-brand-700">{book.author}</p>
+                </header>
+
+                <section className="grid grid-cols-2 sm:grid-cols-3 gap-4">
+                    <Info label="ISBN" value={book.isbn} />
+                    <Info label="Language" value={book.language} />
+                    <Info label="Published" value={book.publishedYear} />
+                    <Info label="Pages" value={book.pages} />
+                    <Info label="Available" value={book.availableCopies} />
+                    <Info label="Total" value={book.totalCopies} />
+                </section>
+
+                <section>
+                    <h2 className="text-base font-semibold mb-2">Description</h2>
+                    <p className="text-base text-brand-800">
+                        {book.description || "No description."}
+                    </p>
+                </section>
+
+                <section>
+                    <h2 className="text-base font-semibold mb-2">Subjects</h2>
+                    <div className="flex flex-wrap gap-2">
+                        {book.genre.map(g => (
+                            <span key={g} className="badge">
+                                {g}
+                            </span>
+                        ))}
                     </div>
-                    {notification?.type === 'success' ? <h4 className={styles.reservedText}>Book reserved</h4>
-                        : (<div className={styles.reserveContent}>
-                            <p className="card-subtitle my-2">Total copies: {book.totalCopies}</p>
-                            <p className="card-subtitle my-2">Available copies: {book.availableCopies}</p>
-                            <button className={styles.reserveButton}
-                                //  disabled={notification?.type === 'success'}
-                                onClick={handleLoan}>
-                                Place reservation
-                            </button>
-                        </div>)}
-                </div>
+                </section>
             </div>
-            {/* Book description */}
-            {<div className={styles.summaryContainer}>
-                <div className={styles.summary}>
-                    <h5 className={styles.summaryTitle}>Summary</h5>
-                    <p className="card-text mt-4">{book.description ?? 'No description available.'}</p>
-                </div>
-            </div>}
-            {/* Book details */}
-            <div className={styles.detailsContainer}>
-                <div className={styles.details}>
-                    <h5 className={styles.detailsTitle}>Record details</h5>
-                    {
-                        labels.map((label, index) => (
-                            <p className={styles.detailsParagraph} key={index}>
-                                <span className={styles.detailsHeading}>{label}:</span> <span>{values[index]}</span>
-                            </p>
-                        ))
-                    }
-                </div>
-            </div>
-        </>
+        </div>
     );
 };
 

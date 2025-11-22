@@ -1,5 +1,4 @@
 import { useState } from 'react';
-import { BoxArrowRight } from 'react-bootstrap-icons';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from '../assets/scss/menu.module.scss';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
@@ -52,7 +51,6 @@ const Menu = () => {
                     {authUser ?
                         <div className={styles.userSection}>
                             <span className={styles.username} data-testid={authUser.username}>Hello, {authUser.username}</span>
-                            <BoxArrowRight className={styles.logoutBtn} data-testid="logout-btn" onClick={handleLogoutUser} />
                         </div>
                         : <NavLink to={ROUTES.LOGIN} className={({ isActive }) => isActive ? styles.activeLogin : styles.login}>Login</NavLink>}
                 </div>

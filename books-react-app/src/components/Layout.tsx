@@ -1,15 +1,39 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
-import { Outlet, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
 import { clearNotification } from '../store/notificationSlice';
-import { ROUTES } from '../utils/constants';
-import Footer from './Footer';
 import Header from './Header';
-import Menu from './Menu';
-import Notification from './Notification';
 
-const Layout = () => {
+// const Layout = () => {
 
+//     const location = useLocation();
+//     const dispatch = useDispatch();
+
+//     useEffect(() => {
+//         // Clear the notification whenever a child route changes
+//         dispatch(clearNotification());
+//     }, [location, dispatch]);
+
+//     // Show Header only on `/dashboard` path
+//     const showHeader = location.pathname === ROUTES.LANDING;
+
+//     return (
+//         <>
+//             {showHeader ? <Header /> : <Menu />}
+
+//             <Notification />
+
+//             <main>
+//                 <Outlet />
+//             </main>
+
+//             <Footer />
+//         </>
+//     )
+// }
+
+
+const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     const location = useLocation();
     const dispatch = useDispatch();
 
@@ -18,22 +42,17 @@ const Layout = () => {
         dispatch(clearNotification());
     }, [location, dispatch]);
 
-    // Show Header only on `/dashboard` path
-    const showHeader = location.pathname === ROUTES.LANDING;
-
     return (
-        <>
-            {showHeader ? <Header /> : <Menu />}
+        <div className="min-h-screen flex flex-col">
+            <Header />
 
-            <Notification />
+            <main className="layout-container flex-1 py-6">{children}</main>
 
-            <main>
-                <Outlet />
-            </main>
-
-            <Footer />
-        </>
-    )
-}
+            <footer className="border-t py-4 text-center text-xs text-brand-600">
+                © {new Date().getFullYear()} Smart Library
+            </footer>
+        </div>
+    );
+};
 
 export default Layout;

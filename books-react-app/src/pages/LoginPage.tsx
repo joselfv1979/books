@@ -3,7 +3,7 @@ import LoginForm from '../components/LoginForm';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
 import { ROUTES } from '../utils/constants';
 
-const Login = () => {
+const LoginPage = () => {
 
     const { authUser } = useAppSelector((state) => state.user);
     const { login } = useAppDispatch();
@@ -13,7 +13,7 @@ const Login = () => {
     return <LoginForm login={login} />;
 };
 
-Login.displayName = 'Login'; // for debugging
+LoginPage.displayName = 'LoginPage'; // for debugging
 
-export default Login;
+export default LoginPage;
 
