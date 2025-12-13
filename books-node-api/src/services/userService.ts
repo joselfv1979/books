@@ -1,4 +1,3 @@
-import { ObjectId } from "mongodb";
 import Role, { IRole } from "../models/Role";
 import User, { IUser, UserResponse } from "../models/User";
 
@@ -7,7 +6,7 @@ export async function getUsersService() {
 }
 
 export async function getUserService(id: string) {
-  return await User.findById(new ObjectId(id)).populate('roles');
+  return await User.findById(id).populate('roles');
 }
 
 export async function getUsernameService(username: string) {
@@ -23,11 +22,11 @@ export async function createUserService(user: IUser) {
 }
 
 export async function updateUserService(id: string, user: IUser) {
-  return await User.findByIdAndUpdate(new ObjectId(id), user, { new: true }).populate('roles');
+  return await User.findByIdAndUpdate(id, user, { new: true }).populate('roles');
 }
 
 export async function deleteUserService(id: string) {
-  return await User.findByIdAndDelete(new ObjectId(id));
+  return await User.findByIdAndDelete(id);
 }
 
 export async function getRoleService(roles: string[]) {

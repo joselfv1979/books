@@ -26,5 +26,10 @@ export default defineConfig({
       framework: "react",
       bundler: "vite",
     },
+    specPattern: 'cypress/component/**/*.{cy,spec}.{js,jsx,ts,tsx}',
+  },
+
+  typescript: {
+    tsconfig: './config/tsconfig.json',
   },
 });

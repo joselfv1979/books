@@ -1,5 +1,4 @@
 import { Dispatch, SetStateAction } from 'react';
-import styles from '../assets/scss/books.module.scss';
 import { useAppSelector } from '../hooks/redux-hooks';
 import BookCard from './BookCard';
 import BookSearchBar from './BookSearchBar';
@@ -19,16 +18,16 @@ const BookList = ({ query, setQuery }: Props) => {
             <BookSearchBar query={query} setQuery={setQuery} />
             {books.length > 0 ?
                 <>
-                    <div className={styles.bookList}>
+                    <div>
                         {books.map((book) => (
                             <div key={book.id}>
-                                <BookCard book={book} styles={styles} />
+                                <BookCard book={book} />
                             </div>
                         ))}
                     </div>
                     <PaginationComponent setQuery={setQuery} />
                 </>
-                : <h2 className={styles.noBookTitle}>No books found</h2>
+                : <h2>No books found</h2>
             }
         </>
 

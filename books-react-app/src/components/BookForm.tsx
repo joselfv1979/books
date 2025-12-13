@@ -1,225 +1,257 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
-import { Button } from 'react-bootstrap';
 import { useNavigate } from 'react-router-dom';
-import styles from '../assets/scss/bookForm.module.scss';
 import { initialBook } from '../data/ConstantUtils';
 import { Book } from '../types/Book';
 import { ROUTES } from '../utils/constants';
 import { BookFormErrors, validateBook } from '../utils/validateBook';
 import LoadFile from './LoadFile';
 import { TagField } from './TagField';
+import Button from './ui/Button';
 
 export type Props = {
     book: Book | null;
     saveBook: (data: Book) => void;
-    editing: boolean; // book editing flag
+    editing: boolean;
 };
-// Form for creating or editing a book, used in AddBook and EditBook views
+
 const BookForm = ({ book, saveBook, editing = false }: Props) => {
+    if (!book) return <h2 className="text-center text-2xl font-semibold">No book found</h2>;
 
-    if (!book) return <h2>No book found</h2>;
-
-    // Book state management
     const [values, setValues] = useState<Book>(book ?? initialBook);
-    // Form errors state
     const [errors, setErrors] = useState<BookFormErrors>({});
-
-    // Book pictures loader
     const fileInput = useRef<HTMLInputElement>(null);
-
     const navigate = useNavigate();
 
-    // Image files handler
     const handleFile = (e: ChangeEvent<HTMLInputElement>) => {
-        const { files } = e.target;
-        if (files) {
-            setValues((prev) => ({ ...prev, image: files[0] }));
-        }
+        const file = e.target.files?.[0];
+        if (file) setValues(prev => ({ ...prev, image: file }));
     };
 
-    // Input values handler
     const handleChange = (event: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>) => {
-
-        console.log('year');
-
-        console.log(event.target.name + ': ' + event.target.value);
-
-        setValues((prevState) => ({
-            ...prevState, [event.target.name]: event.target.value,
-        }));
-
-        // removes input error when typing
-        setErrors((prev) => ({ ...prev, [event.target.name]: undefined }));
+        const { name, value } = event.target;
+        setValues(prev => ({ ...prev, [name]: value }));
+        setErrors(prev => ({ ...prev, [name]: undefined }));
     };
 
-    // Submit form values to views
     const handleSubmit = (event: FormEvent<HTMLFormElement>) => {
         event.preventDefault();
-
         const { isValid } = validateBook({ values, errors, setErrors });
-
-        if (isValid) {
-            saveBook(values);
-        }
+        if (isValid) saveBook(values);
     };
 
     const handleNavigateToBooks = () => navigate(ROUTES.ALL_BOOKS);
 
     return (
-        <form className={styles.bookForm} onSubmit={handleSubmit} data-testid="book-form">
+        <form
+            onSubmit={handleSubmit}
+            data-testid="book-form"
+            className="card max-w-2xl mx-auto space-y-6 p-8"
+        >
+            <h3 className="text-center text-2xl font-semibold">
+                {editing ? 'Edit Book' : 'New Book'}
+            </h3>
+            <span className="text-[11px] text-brand-700 block text-center">
+                Required fields *
+            </span>
 
-            <h3 className={styles.title}>{`${editing ? 'Edit' : 'New'} Book`}</h3>
-            <span className={styles.warning}>Required fields.</span>
-
-            <fieldset className={`${styles.textField} ${errors.title && styles.isInvalid}`}>
+            {/* Title */}
+            <div className="space-y-2">
+                <label htmlFor="title" className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                    Title *
+                </label>
                 <input
+                    id="title"
                     name="title"
                     type="text"
-                    autoComplete='off'
+                    autoComplete="off"
                     value={values.title}
                     placeholder="Enter title"
                     onChange={handleChange}
-                    className={styles.bookFormInput}
+                    className="input"
+                    required
                 />
-                <span className={styles.asterisk}>*</span>
-            </fieldset>
+                {errors.title && <p className="text-[11px] text-danger-500">{errors.title}</p>}
+            </div>
 
-            <fieldset className={`${styles.textField} ${errors.author && styles.isInvalid}`}>
+            {/* Author */}
+            <div className="space-y-2">
+                <label htmlFor="author" className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                    Author *
+                </label>
                 <input
+                    id="author"
                     name="author"
                     type="text"
-                    autoComplete='off'
+                    autoComplete="off"
                     value={values.author}
                     placeholder="Enter author"
                     onChange={handleChange}
-                    className={styles.bookFormInput}
+                    className="input"
+                    required
                 />
-                <span className={styles.asterisk}>*</span>
-            </fieldset>
+                {errors.author && <p className="text-[11px] text-danger-500">{errors.author}</p>}
+            </div>
 
-            <fieldset className={`${styles.textField} ${errors.publisher && styles.isInvalid}`}>
+            {/* Publisher */}
+            <div className="space-y-2">
+                <label htmlFor="publisher" className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                    Publisher *
+                </label>
                 <input
+                    id="publisher"
                     name="publisher"
                     type="text"
-                    autoComplete='off'
+                    autoComplete="off"
                     value={values.publisher}
                     placeholder="Enter publisher"
                     onChange={handleChange}
-                    className={styles.bookFormInput}
+                    className="input"
+                    required
                 />
-                <span className={styles.asterisk}>*</span>
-            </fieldset>
+                {errors.publisher && <p className="text-[11px] text-danger-500">{errors.publisher}</p>}
+            </div>
 
-            <fieldset className={styles.clusteredField}>
-
-                <fieldset className={`${styles.isbnField} ${errors.isbn && styles.isInvalid}`}>
+            {/* ISBN and Pages - responsive grid */}
+            <div className="grid grid-cols-1 md:grid-cols-2 gap-4">
+                <div className="space-y-2">
+                    <label htmlFor="isbn" className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                        ISBN *
+                    </label>
                     <input
+                        id="isbn"
                         name="isbn"
                         type="text"
-                        autoComplete='off'
+                        autoComplete="off"
                         value={values.isbn}
-                        placeholder="Enter isbn"
+                        placeholder="Enter ISBN"
                         onChange={handleChange}
-                        className={styles.bookFormInput}
+                        className="input"
+                        required
                     />
-                    <span className={styles.asterisk}>*</span>
-                </fieldset>
+                    {errors.isbn && <p className="text-[11px] text-danger-500">{errors.isbn}</p>}
+                </div>
 
-                <fieldset className={`${styles.pagesField} ${errors.pages && styles.isInvalid}`}>
+                <div className="space-y-2">
+                    <label htmlFor="pages" className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                        Pages *
+                    </label>
                     <input
+                        id="pages"
                         name="pages"
                         type="number"
-                        autoComplete='off'
+                        autoComplete="off"
                         value={values.pages}
                         placeholder="Enter pages"
                         onChange={handleChange}
-                        className={styles.bookFormInput}
+                        className="input"
+                        required
+                        min="1"
                     />
-                    <span className={styles.asterisk}>*</span>
-                </fieldset>
+                    {errors.pages && <p className="text-[11px] text-danger-500">{errors.pages}</p>}
+                </div>
+            </div>
 
-            </fieldset>
-
+            {/* Tags */}
             <TagField values={values} setValues={setValues} />
 
-            <fieldset className={styles.clusteredField}>
-                <fieldset className={`${styles.textField} ${errors.language && styles.isInvalid}`}>
+            {/* Language, Copies, and Year - responsive grid */}
+            <div className="grid grid-cols-1 md:grid-cols-3 gap-4">
+                <div className="space-y-2">
+                    <label htmlFor="language" className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                        Language *
+                    </label>
                     <input
+                        id="language"
                         name="language"
                         type="text"
-                        autoComplete='off'
+                        autoComplete="off"
                         value={values.language}
                         placeholder="Enter language"
                         onChange={handleChange}
-                        className={styles.bookFormInput}
+                        className="input"
+                        required
                     />
-                    <span className={styles.asterisk}>*</span>
-                </fieldset>
+                    {errors.language && <p className="text-[11px] text-danger-500">{errors.language}</p>}
+                </div>
 
-                <fieldset className={`${styles.textField} ${errors.copiesCount && styles.isInvalid}`}>
+                <div className="space-y-2">
+                    <label htmlFor="totalCopies" className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                        Copies *
+                    </label>
                     <input
+                        id="totalCopies"
                         name="totalCopies"
                         type="number"
-                        autoComplete='off'
+                        autoComplete="off"
                         value={values.totalCopies}
                         placeholder="Enter copies"
                         onChange={handleChange}
-                        className={styles.bookFormInput}
+                        className="input"
+                        required
+                        min="1"
                     />
-                    <span className={styles.asterisk}>*</span>
-                </fieldset>
-            </fieldset>
+                    {errors.copiesCount && <p className="text-[11px] text-danger-500">{errors.copiesCount}</p>}
+                </div>
 
-            <fieldset className={styles.textField}>
+                <div className="space-y-2">
+                    <label htmlFor="publishedYear" className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                        Year *
+                    </label>
+                    <input
+                        id="publishedYear"
+                        name="publishedYear"
+                        type="number"
+                        min="1000"
+                        max={new Date().getFullYear()}
+                        value={values.publishedYear}
+                        onChange={handleChange}
+                        placeholder="YYYY"
+                        className="input"
+                        required
+                    />
+                </div>
+            </div>
+
+            {/* Description */}
+            <div className="space-y-2">
+                <label htmlFor="description" className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                    Description
+                </label>
                 <textarea
+                    id="description"
                     name="description"
-                    autoComplete='off'
+                    autoComplete="off"
                     value={values.description}
                     placeholder="Leave a comment here"
                     onChange={handleChange}
-                    className={styles.bookFormTextarea}
+                    className="input min-h-[100px] resize-y"
+                    rows={4}
                 />
-            </fieldset>
+            </div>
 
-            <fieldset className={styles.photoField}>
+            {/* Photo Upload */}
+            <div className="space-y-2">
+                <label className="text-sm font-medium uppercase tracking-wide text-brand-700">
+                    Cover Image
+                </label>
                 <LoadFile
                     fileInput={fileInput}
                     image={values.imagePath}
-                    handleFile={handleFile} />
-            </fieldset>
-
-            {/* <div>
-                <label htmlFor="date">Pick a date:</label>
-                <input
-                    type="date"
-                    id="date"
-                    name="date"
-                    value={values.publishedYear}
-                    onChange={handleChange}
+                    handleFile={handleFile}
                 />
-            </div> */}
-            <input
-                type="number"
-                name="publishedYear"
-                min="1000"
-                max={new Date().getFullYear()}
-                value={values.publishedYear}
-                onChange={handleChange}
-                placeholder="YYYY"
-                required
-                className="border p-2 rounded w-full"
-            />
+            </div>
 
-            <div className={styles.buttonGroup}>
-                <Button variant="primary" type="submit">
+            {/* Action Buttons */}
+            <div className="flex flex-col sm:flex-row gap-4 pt-4">
+                <Button type="submit" variant="primary" className="flex-1">
                     Submit
                 </Button>
-                <Button variant="info" onClick={handleNavigateToBooks}>
+                <Button type="button" variant="outline" onClick={handleNavigateToBooks} className="flex-1">
                     Cancel
                 </Button>
             </div>
         </form>
     );
-}
+};
 
 export default BookForm;

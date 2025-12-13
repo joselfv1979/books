@@ -52,6 +52,9 @@ export const getBookController = async (
     const book = await getBookService(id);
     if (!book) return next(new CustomError(404, "Book not found"));
 
+    console.log('book ', book);
+    
+
     res.status(200).json({ success: true, data: book });
   } catch (error) {
     Logger.debug(error);

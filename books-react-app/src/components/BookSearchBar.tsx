@@ -21,7 +21,7 @@ const BookSearchBar = ({ query, setQuery }: Props) => {
     const [localValue, setLocalValue] = useState(query.search ?? "");
 
     const handleInputChange = (event: ChangeEvent<HTMLInputElement>) => {
-        setQuery((prevState) => ({ ...prevState, search: event.target.value, page: 1 }))
+        setLocalValue(event.target.value);
     };
 
     const commitSearch = () => {

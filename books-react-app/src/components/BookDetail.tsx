@@ -1,8 +1,12 @@
 /* Book details */
 import React from 'react';
+import { useNavigate } from 'react-router-dom';
 import { Book } from '../types/Book';
+import { useAppSelector } from '../hooks/redux-hooks';
+import { ROUTES } from '../utils/constants';
 import Info from './Info';
 import Button from "./ui/Button";
+import { isAdmin } from '../store/userSlice';
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
@@ -13,15 +17,30 @@ type Props = {
 };
 
 const BookDetail: React.FC<Props> = ({ book, handleLoan, loading }) => {
-    const image = book?.imagePath ? `${baseUrl}/${book.imagePath}` : undefined;
 
     if (!book) return <h2 className="text-center mt-10 text-brand-700">No book found</h2>;
 
     const disabled = loading || (book.availableCopies ?? 0) <= 0;
+    const admin = useAppSelector(isAdmin);
+
+    const navigate = useNavigate();
+    const image = book?.imagePath ? `${baseUrl}/${book.imagePath}` : undefined;
+
+    const handleEdit = () => {
+        if (book?.id) navigate(`${ROUTES.EDIT_BOOK}/${book.id}`);
+    };
 
     return (
-        <div className="grid gap-8 md:grid-cols-[300px_1fr]">
-            <div className="space-y-4">
+        <div className="relative">
+            {admin && (
+                <div className="absolute top-0 right-0 z-10">
+                    <Button variant="outline" onClick={handleEdit}>
+                        Edit
+                    </Button>
+                </div>
+            )}
+            <div className="grid gap-8 md:grid-cols-[300px_1fr]">
+                <div className="space-y-4">
                 <div className="aspect-[3/4] bg-surface-muted rounded-lg overflow-hidden flex items-center justify-center">
                     {image ? (
                         <img
@@ -71,6 +90,7 @@ const BookDetail: React.FC<Props> = ({ book, handleLoan, loading }) => {
                         ))}
                     </div>
                 </section>
+            </div>
             </div>
         </div>
     );

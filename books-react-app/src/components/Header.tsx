@@ -16,7 +16,7 @@ const Header: React.FC = () => {
     { to: "/books", label: "Books" },
     authUser && { to: `/loans/${authUser.id}`, label: "Loans" },
     authUser && { to: `/users/${authUser.id}/edit`, label: "Profile" },
-    admin && { to: "/books/new", label: "New Book" },
+    admin && { to: "/new-book", label: "New Book" },
     admin && { to: "/users", label: "Users" },
     { to: "/contact", label: "Contact" }
   ].filter(Boolean) as { to: string; label: string }[];
@@ -29,10 +29,10 @@ const Header: React.FC = () => {
         </Link>
 
         <nav className="flex gap-5 text-base flex-1">
-          {links.map(l => (
+          {links.map(link => (
             <NavLink
-              key={l.to}
-              to={l.to}
+              key={link.to}
+              to={link.to}
               className={({ isActive }) =>
                 `transition-colors ${
                   isActive
@@ -41,7 +41,7 @@ const Header: React.FC = () => {
                 }`
               }
             >
-              {l.label}
+              {link.label}
             </NavLink>
           ))}
         </nav>

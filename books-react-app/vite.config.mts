@@ -8,6 +8,14 @@ export default defineConfig(({ mode }) => {
 
     return {
         plugins: [react()],
+        css: {
+            postcss: './config/postcss.config.js',
+            preprocessorOptions: {
+                scss: {
+                    api: 'modern-compiler'
+                }
+            }
+        },
         preview: {
             port: Number(env.VITE_PORT),
             strictPort: true,
@@ -29,13 +37,6 @@ export default defineConfig(({ mode }) => {
             },
         },
         host: true,
-        css: {
-            preprocessorOptions: {
-                scss: {
-                    api: 'modern-compiler'
-                }
-            }
-        },
         build: {
             outDir: 'build',
             sourcemap: true,

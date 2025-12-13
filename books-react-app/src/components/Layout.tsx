@@ -3,6 +3,7 @@ import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
 import { clearNotification } from '../store/notificationSlice';
 import Header from './Header';
+import Notification from './Notification';
 
 // const Layout = () => {
 
@@ -45,6 +46,8 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     return (
         <div className="min-h-screen flex flex-col">
             <Header />
+
+            <Notification />
 
             <main className="layout-container flex-1 py-6">{children}</main>
 
