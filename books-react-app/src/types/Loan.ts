@@ -7,8 +7,15 @@ export interface Loan {
     returned: boolean;
 }
 
+export interface LoanWithBookInfo extends Loan {
+    bookId: string;
+    imagePath?: string;
+    title?: string;
+    author?: string;
+}
+
 export interface LoanState {
-    loans: Loan[];
+    loans: LoanWithBookInfo[];
     loan: Loan | null;
 }
 

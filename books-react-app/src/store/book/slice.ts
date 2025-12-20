@@ -1,6 +1,6 @@
 import { createSlice, PayloadAction } from '@reduxjs/toolkit';
-import { Book, BookState } from '../types/Book';
-import { QueryResponse } from '../types/Query';
+import { Book, BookState } from '../../types/Book';
+import { QueryResponse } from '../../types/Query';
 
 const initialBookState: BookState = {
     books: [],

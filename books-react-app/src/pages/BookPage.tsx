@@ -1,28 +1,38 @@
 import React, { useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 import BookDetail from "../components/BookDetail";
 import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
-import { Book } from "../types/Book";
+import { ROUTES } from "../utils/constants";
 
 const BookPage: React.FC = () => {
+
     const { id } = useParams();
-    const { fetchBook, addLoan } = useAppDispatch();
-    const book = useAppSelector(
-        s => (s.book.books as Book[]).find(b => b.id === id) || s.book.book || null
-    );
-    const uiLoading = useAppSelector(s => s.ui.loading);
+    const navigate = useNavigate();
+    
+    const loading = useAppSelector(state => state.ui.loading);
+    const book = useAppSelector(state => state.book.book);
+    const authUser = useAppSelector(state => state.user.authUser);
+    const loans = useAppSelector(state => state.loan.loans);
+
+    const { fetchBook, addLoan, fetchLoansByUser } = useAppDispatch();
 
     const handleLoan = () => {
-        // addLoan(book.id) etc.
+        if (!authUser) return navigate(ROUTES.LOGIN);        
+        if (!book) return;        
+        addLoan({ bookId: book.id, userId: authUser.id });
     };
 
     useEffect(() => {
         if (id) fetchBook(id);
     }, [id]);
 
+    useEffect(() => {
+        if (authUser) fetchLoansByUser(authUser.id);
+    }, [authUser]);
+
     return (
         <div className="space-y-6">
-            <BookDetail book={book} handleLoan={handleLoan} loading={uiLoading} />
+            <BookDetail book={book} loans={loans} handleLoan={handleLoan} loading={loading} />
         </div>
     );
 };

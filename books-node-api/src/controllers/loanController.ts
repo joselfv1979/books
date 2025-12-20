@@ -2,7 +2,7 @@ import { NextFunction, Request, Response } from "express";
 import { CustomError } from "../models/CustomError";
 import { ILoan } from "../models/Loan";
 import { ResBody } from "../models/Response";
-import { borrowCopy, getLoansByUserService, returnLoanService } from "../services/loanService";
+import { borrowCopy, getLoansByUserService, LoanWithBookInfo, returnLoanService } from "../services/loanService";
 
 export const createLoanController = async (
     req: Request,
@@ -50,7 +50,7 @@ export const returnLoanController = async (
 
 export const getLoansByUserController = async (
     req: Request,
-    res: Response<ResBody<ILoan[]>>,
+    res: Response<ResBody<LoanWithBookInfo[]>>,
     next: NextFunction
 ) => {
     try {
@@ -58,6 +58,8 @@ export const getLoansByUserController = async (
         if (!userId) return next(new CustomError(400, "Bad request"));
 
         const loans = await getLoansByUserService(userId);
+        console.info(loans[0]);
+        
         if (!loans) return next(new CustomError(404, "No loans found"));
 
         res.status(200).json({ success: true, data: loans });

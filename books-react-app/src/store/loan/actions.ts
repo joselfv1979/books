@@ -1,9 +1,11 @@
-import { AppThunk } from ".";
-import { borrowCopy, getLoansByUser } from "../services/loans";
-import { LoanRequest } from "../types/Loan";
-import { createLoan, setUserLoans } from "./loanSlice";
-import { showNotification } from "./notificationSlice";
-import { setLoading } from "./uiSlice";
+import { AppThunk } from "..";
+import { borrowCopy, getLoansByUser, returnLoan } from "../../services/loans";
+import { LoanRequest } from "../../types/Loan";
+import { showNotification } from "../notification";
+import { setLoading } from "../ui";
+import { loanActions } from "./slice";
+
+const { createLoan, returnLoanAction, setUserLoans } = loanActions;
 
 const addLoan = ({ userId, bookId }: LoanRequest): AppThunk => async (dispatch) => {
 
@@ -35,5 +37,19 @@ const fetchLoansByUser = (userId: string): AppThunk => async (dispatch) => {
     dispatch(setLoading(false));
 };
 
-export { addLoan, fetchLoansByUser };
+const returnLoanThunk = (loanId: string): AppThunk => async (dispatch) => {
+    dispatch(setLoading(true));
 
+    const response = await returnLoan(loanId);
+
+    if (response.success) {
+        dispatch(returnLoanAction(loanId));
+        dispatch(showNotification({ type: 'success', message: 'Book returned successfully' }));
+    } else {
+        dispatch(showNotification({ type: 'error', message: `Failed to return book: ${response.message}` }));
+    }
+
+    dispatch(setLoading(false));
+};
+
+export { addLoan, fetchLoansByUser, returnLoanThunk };

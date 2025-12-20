@@ -3,11 +3,6 @@ import { useAppDispatch } from '../hooks/redux-hooks';
 import { LibraryIcon, SearchIcon } from './Icons';
 import Button from './ui/Button';
 
-// type Props = {
-//     query: { search?: string; page: number; };
-//     setQuery: Dispatch<SetStateAction<{ search?: string; page: number }>>
-// }
-
 type QueryState = { search?: string; page: number };
 
 interface Props {
@@ -85,35 +80,6 @@ const BookSearchBar = ({ query, setQuery }: Props) => {
             )}
         </div>
     );
-
-    // const handleKeyDown = (event: React.KeyboardEvent<HTMLInputElement>) => {
-    //     if (event.key === 'Enter') {
-    //         getBooks(query);
-    //     }
-    // };
-
-    // const handleSearch = () => {
-    //     getBooks(query);
-    // };
-
-    // return (
-    //     <div className={styles.searchSection}>
-    //         <LibraryIcon />
-    //         <h3 className='text-white mb-0 mx-2'>Library</h3>
-    //         <div className={styles.bookSearchBar}>
-    //             <button className={styles.bookSearchButton} onClick={handleSearch}><SearchIcon /></button>
-    //             <input
-    //                 type="text"
-    //                 name='search'
-    //                 className={styles.bookSearchInput}
-    //                 placeholder="Search for title, author, genre..."
-    //                 value={query?.search ?? ''}
-    //                 onChange={handleInputChange}
-    //                 onKeyDown={handleKeyDown}
-    //             />
-    //         </div>
-    //     </div>
-    // );
 };
 
 export default BookSearchBar;

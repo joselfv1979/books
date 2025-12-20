@@ -20,7 +20,7 @@ export const getAllBooks = async (params: Query): Promise<Result<QueryResponse, 
 
 // Request to get one book by id
 export const getBook = async (id: string): Promise<Result<Book, string>> => {
-    try {
+    try {        
         const { data } = await axios.get(`${url}/${id}`);
         return { success: true, value: data.data };
     } catch (error) {

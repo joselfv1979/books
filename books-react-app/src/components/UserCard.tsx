@@ -1,8 +1,7 @@
-import { Button, Card } from 'react-bootstrap';
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
 import userImage from '../assets/images/user.svg';
 import styles from '../assets/scss/userList.module.scss';
-import { openModal } from '../store/uiSlice';
+import { openModal } from '../store/ui';
 import { User } from '../types/User';
 
 const baseUrl = import.meta.env.VITE_API_URL;
@@ -27,24 +26,9 @@ const UserCard = ({ user }: Props) => {
     const image = user.imagePath ? `${baseUrl}/${user.imagePath}` : userImage;
 
     return (
-        <Card className={styles.userCard} data-testid={user.username}>
-            <div className={styles.frame}>
-                <Card.Img src={image} variant='top' className={styles.userImage} loading="lazy" />
-            </div>
-            <Card.Header className={styles.header}>
-                <strong>{user.username}</strong>
-            </Card.Header>
-            <Card.Body>
-                <Card.Text>
-                    <strong>Email:</strong> {user.email}
-                </Card.Text>
-                <div className={styles.buttonGroup}>
-                    <Button variant="danger" data-testid="delete-user-btn" onClick={deleteUser}>
-                        Delete
-                    </Button>
-                </div>
-            </Card.Body>
-        </Card>
+        <div className={styles.userCard} data-testid="user-card">
+            user
+        </div>
     );
 };
 

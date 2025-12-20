@@ -8,9 +8,6 @@ const Loader = () => {
     if (!loading) return null;
 
     return (
-        // <div className={globalStyles.spinnerOverlay}>
-        //     <Spinner data-testid="loader" animation="border" className={globalStyles.spinner} />
-        // </div>
         <div className={globalStyles.spinnerOverlay}>
             <div className={globalStyles.spinner}></div>
         </div>

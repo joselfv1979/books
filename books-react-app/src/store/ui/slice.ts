@@ -1,6 +1,6 @@
 // src/redux/uiSlice.ts
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { RootState } from ".";
+import { RootState } from "..";
 
 interface ModalPayload {
     type: "CONFIRM_DELETE";

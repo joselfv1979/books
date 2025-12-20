@@ -1,14 +1,14 @@
 import { Action, combineReducers, configureStore, PreloadedState, ThunkAction } from '@reduxjs/toolkit';
 import { persistReducer, persistStore, } from 'redux-persist';
 import storage from 'redux-persist/lib/storage';
-import * as bookActions from './bookActions';
-import bookReducer from './bookSlice';
-import * as loanActions from './loanActions';
-import loanReducer from './loanSlice';
-import notificationReducer from './notificationSlice';
-import uiReducer from "./uiSlice";
-import * as userActions from './userActions';
-import userReducer, { userSlice } from './userSlice';
+import * as bookActions from './book/actions';
+import bookReducer from './book';
+import * as loanActions from './loan/actions';
+import loanReducer from './loan';
+import notificationReducer from './notification';
+import uiReducer from "./ui";
+import * as userActions from './user/actions';
+import userReducer, { userSlice } from './user';
 
 const { actions } = userSlice;
 

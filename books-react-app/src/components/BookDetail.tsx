@@ -6,22 +6,26 @@ import { useAppSelector } from '../hooks/redux-hooks';
 import { ROUTES } from '../utils/constants';
 import Info from './Info';
 import Button from "./ui/Button";
-import { isAdmin } from '../store/userSlice';
+import { isAdmin } from '../store/user';
+import { LoanWithBookInfo } from '../types/Loan';
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
 type Props = {
     book: Book | null;
+    loans: LoanWithBookInfo[];
     handleLoan: () => void;
     loading?: boolean;
 };
 
-const BookDetail: React.FC<Props> = ({ book, handleLoan, loading }) => {
+const BookDetail: React.FC<Props> = ({ book, loans, handleLoan, loading }) => {
 
-    if (!book) return <h2 className="text-center mt-10 text-brand-700">No book found</h2>;
-
-    const disabled = loading || (book.availableCopies ?? 0) <= 0;
     const admin = useAppSelector(isAdmin);
+
+    if (!book) return <h2 className="text-center mt-10 text-brand-700">No book found</h2>;    
+
+    const isBookBorrowed = loans.some(loan => loan.bookId === book.id && !loan.returned);
+    const disabled = loading || (book.availableCopies ?? 0) <= 0 || isBookBorrowed;
 
     const navigate = useNavigate();
     const image = book?.imagePath ? `${baseUrl}/${book.imagePath}` : undefined;
@@ -54,7 +58,7 @@ const BookDetail: React.FC<Props> = ({ book, handleLoan, loading }) => {
                     )}
                 </div>
                 <Button disabled={disabled} loading={loading} onClick={handleLoan}>
-                    {disabled ? (loading ? "Processing…" : "Not Available") : "Reserve"}
+                    {loading ? "Processing…" : isBookBorrowed ? "Reserved" : disabled ? "Not Available" : "Reserve"}
                 </Button>
             </div>
 

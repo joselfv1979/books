@@ -1,38 +1,9 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { clearNotification } from '../store/notificationSlice';
+import { clearNotification } from '../store/notification';
 import Header from './Header';
 import Notification from './Notification';
-
-// const Layout = () => {
-
-//     const location = useLocation();
-//     const dispatch = useDispatch();
-
-//     useEffect(() => {
-//         // Clear the notification whenever a child route changes
-//         dispatch(clearNotification());
-//     }, [location, dispatch]);
-
-//     // Show Header only on `/dashboard` path
-//     const showHeader = location.pathname === ROUTES.LANDING;
-
-//     return (
-//         <>
-//             {showHeader ? <Header /> : <Menu />}
-
-//             <Notification />
-
-//             <main>
-//                 <Outlet />
-//             </main>
-
-//             <Footer />
-//         </>
-//     )
-// }
-
 
 const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     const location = useLocation();

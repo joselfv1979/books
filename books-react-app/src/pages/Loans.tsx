@@ -20,8 +20,8 @@ const Loans = () => {
         <div>
             <h1 className="text-2xl text-center m-3 font-bold">Loans Page</h1>
             <ul>
-                {loans.map((loan) => (
-                    <li key={loan.id}>{loan.dueDate}</li>
+                {loans.map((loan, index) => (
+                    <li key={loan.id || `loan-${index}`}>{loan.dueDate}</li>
                 ))}
             </ul>
         </div>

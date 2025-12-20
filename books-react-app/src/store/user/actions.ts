@@ -1,9 +1,9 @@
-import { AppThunk, persistor } from '.';
-import { createUser, getAllUsers, getUser, loginUser, removeUser, updateUser } from '../services/users';
-import { AuthRequest, User } from '../types/User';
-import { showNotification } from './notificationSlice';
-import { setLoading } from './uiSlice';
-import { userSlice } from './userSlice';
+import { AppThunk, persistor } from '..';
+import { createUser, getAllUsers, getUser, loginUser, removeUser, updateUser } from '../../services/users';
+import { AuthRequest, User } from '../../types/User';
+import { showNotification } from '../notification';
+import { setLoading } from '../ui';
+import { userSlice } from './slice';
 
 const { actions } = userSlice;
 
@@ -19,7 +19,7 @@ export const login = (user: AuthRequest): AppThunk =>
             dispatch(actions.loginUser(response.value));
             localStorage.setItem('token', JSON.stringify(response.value.token));
             //dispatch(showNotification({ type: 'success', message: 'User logged in successfully' }));
-            // Clear persisted storage so data isn’t rehydrated
+            // Clear persisted storage so data isn't rehydrated
             await persistor.purge();
         } else {
             dispatch(showNotification({ type: 'error', message: `Failed to log in user: ${response.message}` }));
@@ -33,7 +33,7 @@ export const logout = (): AppThunk => async (dispatch) => {
     localStorage.removeItem('token');
     dispatch(actions.logoutUser());
 
-    // Clear persisted storage so data isn’t rehydrated
+    // Clear persisted storage so data isn't rehydrated
     await persistor.purge();
 };
 
@@ -131,4 +131,3 @@ export const editUser = (user: User): AppThunk => async (dispatch) => {
 export const clearCurrentUser = (): AppThunk => (dispatch) => {
     dispatch(actions.clearCurrentUser());
 };
-

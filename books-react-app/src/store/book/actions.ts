@@ -1,10 +1,10 @@
-import { AppThunk } from ".";
-import { createBook, getAllBooks, getBook, removeBook, updateBook } from "../services/books";
-import { Book } from "../types/Book";
-import { Query } from "../types/Query";
-import { bookSlice } from "./bookSlice";
-import { showNotification } from "./notificationSlice";
-import { setLoading } from "./uiSlice";
+import { AppThunk } from "..";
+import { createBook, getAllBooks, getBook, removeBook, updateBook } from "../../services/books";
+import { Book } from "../../types/Book";
+import { Query } from "../../types/Query";
+import { showNotification } from "../notification";
+import { setLoading } from "../ui";
+import { bookSlice } from "./slice";
 
 const { actions } = bookSlice;
 
@@ -95,4 +95,3 @@ export const editBook = (book: Book): AppThunk => async (dispatch) => {
 export const clearCurrentBook = (): AppThunk => (dispatch) => {
     dispatch(actions.clearCurrentBook());
 };
-

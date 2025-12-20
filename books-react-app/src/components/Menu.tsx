@@ -2,7 +2,7 @@ import { useState } from 'react';
 import { NavLink, useNavigate } from 'react-router-dom';
 import styles from '../assets/scss/menu.module.scss';
 import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { isAdmin } from '../store/userSlice';
+import { isAdmin } from '../store/user';
 import { ROUTES } from '../utils/constants';
 import { CloseIcon, HamburguerIcon } from './Icons';
 

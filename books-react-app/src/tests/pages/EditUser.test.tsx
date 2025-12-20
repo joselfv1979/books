@@ -1,6 +1,6 @@
 import { screen, waitFor } from '@testing-library/react';
 import EditUser from '../../pages/EditUser';
-import * as actions from '../../store/userActions';
+import * as actions from '../../store/user/actions';
 import { user1, userState } from '../utils/data';
 import { customRender } from '../utils/test-utils';
 
