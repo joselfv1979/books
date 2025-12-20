@@ -1,8 +1,8 @@
 import { AppThunk } from "..";
-import { borrowCopy, getLoansByUser, returnLoan } from "../../services/loans";
-import { LoanRequest } from "../../types/Loan";
-import { showNotification } from "../notification";
-import { setLoading } from "../ui";
+import { borrowCopy, getLoansByUser, returnLoan } from "@/services/loans";
+import { LoanRequest } from "@/types/Loan";
+import { showNotification } from "@/store/notification";
+import { setLoading } from "@/store/ui";
 import { loanActions } from "./slice";
 
 const { createLoan, returnLoanAction, setUserLoans } = loanActions;

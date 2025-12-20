@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { type User } from '../types/User';
+import { type User } from '@/types/User';
 
 export type UserFormErrors = {
     fullname?: string,

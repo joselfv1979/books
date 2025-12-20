@@ -1,5 +1,5 @@
 import { Link } from 'react-router-dom';
-import { Book } from '../types/Book';
+import { Book } from '@/types/Book';
 import Card from "./ui/Card";
 
 const baseUrl = import.meta.env.VITE_API_URL;

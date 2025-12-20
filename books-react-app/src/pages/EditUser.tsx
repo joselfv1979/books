@@ -1,7 +1,7 @@
 import { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import UserForm from "../components/UserForm";
-import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
+import UserForm from "@/components/UserForm";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
 
 const EditUser = () => {
     const { id } = useParams();

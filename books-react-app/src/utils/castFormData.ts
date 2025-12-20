@@ -1,5 +1,5 @@
-import { Book } from '../types/Book';
-import { User } from '../types/User';
+import { Book } from '@/types/Book';
+import { User } from '@/types/User';
 
 // function to create a FormData object from a User object
 export const castUserToFormData = (user: User) => {

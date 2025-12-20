@@ -1,9 +1,9 @@
 import { fireEvent, renderHook } from '@testing-library/react';
 import { useLocation } from 'react-router-dom';
 import { vi } from 'vitest';
-import UserForm from '../../components/UserForm';
-import { initialUser } from '../../data/ConstantUtils';
-import { customRender, screen } from '../utils/test-utils';
+import UserForm from '@/components/UserForm';
+import { initialUser } from '@/data/ConstantUtils';
+import { customRender, screen } from '@/tests/utils/test-utils';
 
 vi.mock('react-router-dom', async () => {
     const actual = await vi.importActual('react-router-dom');

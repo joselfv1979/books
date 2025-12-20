@@ -1,9 +1,9 @@
 import React from 'react';
-import { AppRoutes } from './components/AppRoutes';
-import DeleteModal from './components/DeleteModal';
-import Layout from './components/Layout';
-import Loader from './components/Loader';
-import { useAppSelector } from './hooks/redux-hooks';
+import { AppRoutes } from '@/components/AppRoutes';
+import DeleteModal from '@/components/DeleteModal';
+import Layout from '@/components/Layout';
+import Loader from '@/components/Loader';
+import { useAppSelector } from '@/hooks/redux-hooks';
 // Removed globalStyles.module.scss (now using Tailwind)
 
 /**

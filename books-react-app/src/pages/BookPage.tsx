@@ -1,8 +1,8 @@
 import React, { useEffect } from "react";
 import { useNavigate, useParams } from "react-router-dom";
-import BookDetail from "../components/BookDetail";
-import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
-import { ROUTES } from "../utils/constants";
+import BookDetail from "@/components/BookDetail";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
+import { ROUTES } from "@/utils/constants";
 
 const BookPage: React.FC = () => {
 

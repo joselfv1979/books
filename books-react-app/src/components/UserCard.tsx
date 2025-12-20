@@ -1,8 +1,8 @@
 import { useDispatch } from 'react-redux/es/hooks/useDispatch';
-import userImage from '../assets/images/user.svg';
-import styles from '../assets/scss/userList.module.scss';
-import { openModal } from '../store/ui';
-import { User } from '../types/User';
+import userImage from '@/assets/images/user.svg';
+import styles from '@/assets/scss/userList.module.scss';
+import { openModal } from '@/store/ui';
+import { User } from '@/types/User';
 
 const baseUrl = import.meta.env.VITE_API_URL;
 

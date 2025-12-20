@@ -1,7 +1,7 @@
 import { screen } from '@testing-library/react';
-import AddUser from '../../pages/AddUser';
-import { userState } from '../utils/data';
-import { customRender } from '../utils/test-utils';
+import AddUser from '@/pages/AddUser';
+import { userState } from '@/tests/utils/data';
+import { customRender } from '@/tests/utils/test-utils';
 
 describe('AddUser userForm', () => {
 

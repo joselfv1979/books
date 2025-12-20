@@ -1,5 +1,5 @@
-import { Book } from "../types/Book";
-import { User } from "../types/User";
+import { Book } from "@/types/Book";
+import { User } from "@/types/User";
 
 // User empty object
 export const initialUser: User = {

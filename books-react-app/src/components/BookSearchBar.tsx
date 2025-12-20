@@ -1,5 +1,5 @@
 import { ChangeEvent, Dispatch, SetStateAction, useState } from 'react';
-import { useAppDispatch } from '../hooks/redux-hooks';
+import { useAppDispatch } from '@/hooks/redux-hooks';
 import { LibraryIcon, SearchIcon } from './Icons';
 import Button from './ui/Button';
 

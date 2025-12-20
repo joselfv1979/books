@@ -1,5 +1,5 @@
 import React, { ChangeEvent, RefObject, useState } from "react";
-import defaultImage from "../assets/images/default-image.svg";
+import defaultImage from "@/assets/images/default-image.svg";
 import Button from "./ui/Button";
 
 const baseUrl = import.meta.env.VITE_API_URL;

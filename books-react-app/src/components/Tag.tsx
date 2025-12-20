@@ -1,4 +1,4 @@
-import styles from '../assets/scss/bookForm.module.scss';
+import styles from '@/assets/scss/bookForm.module.scss';
 
 interface Props {
     tag: string;

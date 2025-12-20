@@ -1,7 +1,7 @@
 import React from "react";
 import { Link, NavLink } from "react-router-dom";
-import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
-import { isAdmin } from "../store/user";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
+import { isAdmin } from "@/store/user";
 
 const Header: React.FC = () => {
   const authUser = useAppSelector(s => s.user.authUser);

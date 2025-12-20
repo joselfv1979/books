@@ -1,9 +1,9 @@
 import React, { ChangeEvent, FormEvent, useRef, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { initialUser } from "../data/ConstantUtils";
-import { User } from "../types/User";
-import { ROUTES } from "../utils/constants";
-import { UserFormErrors, validateUser } from "../utils/validateUser";
+import { initialUser } from "@/data/ConstantUtils";
+import { User } from "@/types/User";
+import { ROUTES } from "@/utils/constants";
+import { UserFormErrors, validateUser } from "@/utils/validateUser";
 import LoadFile from "./LoadFile";
 import Button from "./ui/Button";
 

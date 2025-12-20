@@ -1,5 +1,5 @@
 import React from "react";
-import { useAppSelector } from "../hooks/redux-hooks";
+import { useAppSelector } from "@/hooks/redux-hooks";
 
 const AccountPage: React.FC = () => {
     const user = useAppSelector(s => s.user.user);

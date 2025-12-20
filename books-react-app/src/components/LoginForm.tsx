@@ -1,7 +1,7 @@
 import { ChangeEvent, FormEvent, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { AuthRequest } from '../types/User';
-import { ROUTES } from '../utils/constants';
+import { AuthRequest } from '@/types/User';
+import { ROUTES } from '@/utils/constants';
 import Button from './ui/Button';
 
 export type Props = {

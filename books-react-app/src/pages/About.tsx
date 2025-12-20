@@ -1,5 +1,5 @@
-// import styles from '../assets/scss/aboutPage.module.scss';
-// import { EmailIcon, GitHubIcon, LinkedInIcon } from '../components/Icons';
+// import styles from '@/assets/scss/aboutPage.module.scss';
+// import { EmailIcon, GitHubIcon, LinkedInIcon } from '@/components/Icons';
 
 // const About = () => {
 //     return (
@@ -25,7 +25,7 @@
 // export default About;
 
 import React from "react";
-import { EmailIcon, GitHubIcon, LinkedInIcon } from "../components/Icons"; // ensure these exist
+import { EmailIcon, GitHubIcon, LinkedInIcon } from "@/components/Icons"; // ensure these exist
 
 const backend = ["TypeScript", "Node", "Express", "MongoDB", "Mongoose"];
 const frontend = ["TypeScript", "React", "Redux", "TailwindCSS", "Vite"];

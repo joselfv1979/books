@@ -1,8 +1,8 @@
 import { AppThunk, persistor } from '..';
-import { createUser, getAllUsers, getUser, loginUser, removeUser, updateUser } from '../../services/users';
-import { AuthRequest, User } from '../../types/User';
-import { showNotification } from '../notification';
-import { setLoading } from '../ui';
+import { createUser, getAllUsers, getUser, loginUser, removeUser, updateUser } from '@/services/users';
+import { AuthRequest, User } from '@/types/User';
+import { showNotification } from '@/store/notification';
+import { setLoading } from '@/store/ui';
 import { userSlice } from './slice';
 
 const { actions } = userSlice;

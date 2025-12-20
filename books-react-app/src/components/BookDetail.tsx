@@ -1,13 +1,13 @@
 /* Book details */
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { Book } from '../types/Book';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { ROUTES } from '../utils/constants';
+import { Book } from '@/types/Book';
+import { useAppSelector } from '@/hooks/redux-hooks';
+import { ROUTES } from '@/utils/constants';
 import Info from './Info';
 import Button from "./ui/Button";
-import { isAdmin } from '../store/user';
-import { LoanWithBookInfo } from '../types/Loan';
+import { isAdmin } from '@/store/user';
+import { LoanWithBookInfo } from '@/types/Loan';
 
 const baseUrl = import.meta.env.VITE_API_URL;
 

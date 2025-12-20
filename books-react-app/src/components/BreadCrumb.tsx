@@ -1,6 +1,6 @@
 import React from 'react';
 import { Link } from 'react-router-dom';
-import styles from '../assets/scss/book.module.scss';
+import styles from '@/assets/scss/book.module.scss';
 
 type Props = {
     currentPage: string;

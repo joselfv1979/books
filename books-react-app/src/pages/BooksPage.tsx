@@ -1,8 +1,8 @@
 import React, { useEffect, useState } from "react";
-import BookCard from "../components/BookCard";
-import BookSearchBar from "../components/BookSearchBar";
-import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
-import { Book } from "../types/Book";
+import BookCard from "@/components/BookCard";
+import BookSearchBar from "@/components/BookSearchBar";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
+import { Book } from "@/types/Book";
 
 interface Query {
     search?: string;

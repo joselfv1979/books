@@ -1,10 +1,10 @@
 import axios from 'axios';
-import { Book } from '../types/Book';
-import { Query, QueryResponse } from '../types/Query';
-import { Result } from '../types/Result';
-import { getHeaders } from '../utils/authHeader';
-import { castBookToFormData } from '../utils/castFormData';
-import { handleError } from '../utils/handleError';
+import { Book } from '@/types/Book';
+import { Query, QueryResponse } from '@/types/Query';
+import { Result } from '@/types/Result';
+import { getHeaders } from '@/utils/authHeader';
+import { castBookToFormData } from '@/utils/castFormData';
+import { handleError } from '@/utils/handleError';
 
 const url = `${import.meta.env.VITE_API_URL}/api/books`;
 

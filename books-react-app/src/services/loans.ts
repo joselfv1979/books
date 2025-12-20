@@ -1,8 +1,8 @@
 import axios from 'axios';
-import { Loan, LoanWithBookInfo } from '../types/Loan';
-import { Result } from '../types/Result';
-import { getHeaders } from '../utils/authHeader';
-import { handleError } from '../utils/handleError';
+import { Loan, LoanWithBookInfo } from '@/types/Loan';
+import { Result } from '@/types/Result';
+import { getHeaders } from '@/utils/authHeader';
+import { handleError } from '@/utils/handleError';
 
 const url = `${import.meta.env.VITE_API_URL}/api/loans`;
 

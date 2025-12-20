@@ -2,9 +2,9 @@ import { fireEvent, renderHook } from '@testing-library/react';
 import userEvent from '@testing-library/user-event';
 import { useLocation } from 'react-router-dom';
 import { vi } from 'vitest';
-import BookForm from '../../components/BookForm';
-import { initialBook } from '../../data/ConstantUtils';
-import { customRender, screen } from '../utils/test-utils';
+import BookForm from '@/components/BookForm';
+import { initialBook } from '@/data/ConstantUtils';
+import { customRender, screen } from '@/tests/utils/test-utils';
 
 const mockNavigate = vi.fn();
 

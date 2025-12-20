@@ -1,6 +1,6 @@
 import { useEffect, useState } from 'react';
-import BookList from '../components/BookList';
-import { useAppDispatch } from '../hooks/redux-hooks';
+import BookList from '@/components/BookList';
+import { useAppDispatch } from '@/hooks/redux-hooks';
 
 interface Query {
     search?: string;

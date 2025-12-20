@@ -1,7 +1,7 @@
 import { Navigate } from 'react-router-dom';
-import LoginForm from '../components/LoginForm';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { ROUTES } from '../utils/constants';
+import LoginForm from '@/components/LoginForm';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { ROUTES } from '@/utils/constants';
 
 const LoginPage = () => {
 

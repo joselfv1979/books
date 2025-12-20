@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useParams } from 'react-router-dom';
-import BookForm from '../components/BookForm';
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
+import BookForm from '@/components/BookForm';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
 
 const BookEdit = () => {
     const { id } = useParams();

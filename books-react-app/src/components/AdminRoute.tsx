@@ -1,7 +1,7 @@
 import { Navigate, Outlet } from 'react-router-dom';
-import { useAppSelector } from '../hooks/redux-hooks';
-import { isAdmin } from '../store/user';
-import { ROUTES } from '../utils/constants';
+import { useAppSelector } from '@/hooks/redux-hooks';
+import { isAdmin } from '@/store/user';
+import { ROUTES } from '@/utils/constants';
 
 const AdminRoute = () => {
     const admin = useAppSelector(isAdmin);

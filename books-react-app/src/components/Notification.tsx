@@ -1,6 +1,6 @@
 import { useEffect } from 'react';
-import { useAppSelector, useAppDispatch } from '../hooks/redux-hooks';
-import { clearNotification, getNotification } from '../store/notification';
+import { useAppSelector, useAppDispatch } from '@/hooks/redux-hooks';
+import { clearNotification, getNotification } from '@/store/notification';
 import { useDispatch } from 'react-redux';
 
 const MESSAGE_TIMEOUT = 3000;

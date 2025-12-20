@@ -3,7 +3,7 @@ import { PropsWithChildren } from "react";
 import { Provider } from "react-redux";
 import { MemoryRouter } from "react-router-dom";
 import { PreloadedState } from "redux";
-import { AppStore, RootState, setupStore } from "../../store";
+import { AppStore, RootState, setupStore } from "@/store";
 
 // This type interface extends the default options for render from RTL, as well
 // as allows the user to specify other things such as initialState, store.

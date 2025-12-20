@@ -1,6 +1,6 @@
 import { Dispatch, SetStateAction } from "react";
-import styles from '../assets/scss/books.module.scss';
-import { useAppSelector } from "../hooks/redux-hooks";
+import styles from '@/assets/scss/books.module.scss';
+import { useAppSelector } from "@/hooks/redux-hooks";
 
 type Props = {
     setQuery: Dispatch<SetStateAction<{ search?: string; page: number }>>;

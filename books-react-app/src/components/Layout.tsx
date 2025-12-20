@@ -1,7 +1,7 @@
 import { useEffect } from 'react';
 import { useDispatch } from 'react-redux';
 import { useLocation } from 'react-router-dom';
-import { clearNotification } from '../store/notification';
+import { clearNotification } from '@/store/notification';
 import Header from './Header';
 import Notification from './Notification';
 

@@ -1,7 +1,7 @@
 import { A11y, Autoplay, Navigation, Pagination, Scrollbar } from 'swiper/modules';
 import { Swiper, SwiperSlide } from "swiper/react";
 import 'swiper/swiper-bundle.css';
-import { useAppSelector } from '../hooks/redux-hooks';
+import { useAppSelector } from '@/hooks/redux-hooks';
 
 const baseUrl = import.meta.env.VITE_API_URL;
 

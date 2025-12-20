@@ -1,5 +1,5 @@
-import { useAppDispatch, useAppSelector } from '../hooks/redux-hooks';
-import { getModal } from '../store/ui';
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { getModal } from '@/store/ui';
 import React, { useRef } from "react";
 import Button from './ui/Button';
 

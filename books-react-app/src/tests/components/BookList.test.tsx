@@ -1,9 +1,9 @@
 import { screen, within } from '@testing-library/react';
 import { vi } from 'vitest';
-import BookList from '../../components/BookList';
-import { bookState } from '../../tests/utils/data';
-import { Book } from '../../types/Book';
-import { customRender } from '../utils/test-utils';
+import BookList from '@/components/BookList';
+import { bookState } from '@/tests/utils/data';
+import { Book } from '@/types/Book';
+import { customRender } from '@/tests/utils/test-utils';
 
 const query = { search: '', page: 1 };
 const setQuery = vi.fn();

@@ -1,7 +1,7 @@
 
-import BookForm from '../components/BookForm';
-import { initialBook } from '../data/ConstantUtils';
-import { useAppDispatch } from '../hooks/redux-hooks';
+import BookForm from '@/components/BookForm';
+import { initialBook } from '@/data/ConstantUtils';
+import { useAppDispatch } from '@/hooks/redux-hooks';
 
 // TODO: Review form attributes
 

@@ -1,5 +1,5 @@
 import { createSlice, PayloadAction } from "@reduxjs/toolkit";
-import { Loan, LoanState, LoanWithBookInfo } from "../../types/Loan";
+import { Loan, LoanState, LoanWithBookInfo } from "@/types/Loan";
 
 const initialState: LoanState = {
     loans: [],

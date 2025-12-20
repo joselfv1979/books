@@ -1,6 +1,6 @@
-import UserForm from '../components/UserForm';
-import { initialUser } from '../data/ConstantUtils';
-import { useAppDispatch } from '../hooks/redux-hooks';
+import UserForm from '@/components/UserForm';
+import { initialUser } from '@/data/ConstantUtils';
+import { useAppDispatch } from '@/hooks/redux-hooks';
 
 const AddUser = () => {
     const { addUser } = useAppDispatch();

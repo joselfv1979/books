@@ -1,5 +1,5 @@
-import globalStyles from "../assets/scss/globalStyles.module.scss";
-import { useAppSelector } from "../hooks/redux-hooks";
+import globalStyles from "@/assets/scss/globalStyles.module.scss";
+import { useAppSelector } from "@/hooks/redux-hooks";
 
 const Loader = () => {
 

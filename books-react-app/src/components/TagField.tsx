@@ -1,6 +1,6 @@
 import { ChangeEvent, Dispatch, Fragment, SetStateAction, useState } from "react";
-import styles from '../assets/scss/bookForm.module.scss';
-import { Book } from "../types/Book";
+import styles from '@/assets/scss/bookForm.module.scss';
+import { Book } from "@/types/Book";
 import Tag from "./Tag";
 
 interface Props {

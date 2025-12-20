@@ -1,9 +1,9 @@
 import { AppThunk } from "..";
-import { createBook, getAllBooks, getBook, removeBook, updateBook } from "../../services/books";
-import { Book } from "../../types/Book";
-import { Query } from "../../types/Query";
-import { showNotification } from "../notification";
-import { setLoading } from "../ui";
+import { createBook, getAllBooks, getBook, removeBook, updateBook } from "@/services/books";
+import { Book } from "@/types/Book";
+import { Query } from "@/types/Query";
+import { showNotification } from "@/store/notification";
+import { setLoading } from "@/store/ui";
 import { bookSlice } from "./slice";
 
 const { actions } = bookSlice;

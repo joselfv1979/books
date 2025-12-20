@@ -1,9 +1,9 @@
 import { ChangeEvent, FormEvent, useRef, useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { initialBook } from '../data/ConstantUtils';
-import { Book } from '../types/Book';
-import { ROUTES } from '../utils/constants';
-import { BookFormErrors, validateBook } from '../utils/validateBook';
+import { initialBook } from '@/data/ConstantUtils';
+import { Book } from '@/types/Book';
+import { ROUTES } from '@/utils/constants';
+import { BookFormErrors, validateBook } from '@/utils/validateBook';
 import LoadFile from './LoadFile';
 import { TagField } from './TagField';
 import Button from './ui/Button';

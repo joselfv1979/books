@@ -1,6 +1,6 @@
 import React from "react";
-import { LoanWithBookInfo } from "../types/Loan";
-import { useAppDispatch } from "../hooks/redux-hooks";
+import { LoanWithBookInfo } from "@/types/Loan";
+import { useAppDispatch } from "@/hooks/redux-hooks";
 import Card from "./ui/Card";
 import Button from "./ui/Button";
 

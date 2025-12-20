@@ -1,5 +1,5 @@
 import { Dispatch, SetStateAction } from 'react';
-import { useAppSelector } from '../hooks/redux-hooks';
+import { useAppSelector } from '@/hooks/redux-hooks';
 import BookCard from './BookCard';
 import BookSearchBar from './BookSearchBar';
 import PaginationComponent from './Pagination';

@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
-import LoanList from "../components/LoanList";
-import { useAppDispatch, useAppSelector } from "../hooks/redux-hooks";
+import LoanList from "@/components/LoanList";
+import { useAppDispatch, useAppSelector } from "@/hooks/redux-hooks";
 
 const LoansPage: React.FC = () => {
 

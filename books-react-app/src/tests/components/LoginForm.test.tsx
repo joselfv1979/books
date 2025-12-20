@@ -1,7 +1,7 @@
 import userEvent from '@testing-library/user-event';
 import { vi } from 'vitest';
-import LoginForm from '../../components/LoginForm';
-import { customRender, screen } from '../utils/test-utils';
+import LoginForm from '@/components/LoginForm';
+import { customRender, screen } from '@/tests/utils/test-utils';
 
 const login = vi.fn();
 const mockNavigate = vi.fn();

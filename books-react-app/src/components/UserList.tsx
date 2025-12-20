@@ -1,5 +1,5 @@
-import styles from '../assets/scss/userList.module.scss';
-import { useAppSelector } from '../hooks/redux-hooks';
+import styles from '@/assets/scss/userList.module.scss';
+import { useAppSelector } from '@/hooks/redux-hooks';
 import UserCard from './UserCard';
 
 const UserList = () => {

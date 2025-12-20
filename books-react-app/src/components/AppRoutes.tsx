@@ -1,18 +1,18 @@
 import { Route, Routes } from "react-router-dom";
-import About from "../pages/About";
-import AccountPage from "../pages/AccountPage";
-import AddUser from "../pages/AddUser";
-import BookPage from "../pages/BookPage";
-import BooksPage from "../pages/BooksPage";
-import LandingPage from "../pages/LandingPage";
-import LoansPage from "../pages/LoansPage";
-import LoginPage from "../pages/LoginPage";
-import { ROUTES } from "../utils/constants";
+import About from "@/pages/About";
+import AccountPage from "@/pages/AccountPage";
+import AddUser from "@/pages/AddUser";
+import BookPage from "@/pages/BookPage";
+import BooksPage from "@/pages/BooksPage";
+import LandingPage from "@/pages/LandingPage";
+import LoansPage from "@/pages/LoansPage";
+import LoginPage from "@/pages/LoginPage";
+import { ROUTES } from "@/utils/constants";
 import AdminRoute from "./AdminRoute";
-import AddBook from "../pages/AddBook";
-import EditBook from "../pages/EditBook";
-import Users from "../pages/Users";
-import NotFound from "../pages/NotFound";
+import AddBook from "@/pages/AddBook";
+import EditBook from "@/pages/EditBook";
+import Users from "@/pages/Users";
+import NotFound from "@/pages/NotFound";
 
 export const AppRoutes = () => {
     return (
