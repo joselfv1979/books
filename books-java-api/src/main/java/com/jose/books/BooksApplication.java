@@ -18,7 +18,7 @@ public class BooksApplication {
 	}
 
 	@Bean
-	public ModelMapper getModelMapper() {
+	public static ModelMapper modelMapper() {
 		return new ModelMapper();
 	}
 
