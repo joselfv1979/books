@@ -8,6 +8,8 @@ import { userSlice } from './slice';
 const { actions } = userSlice;
 
 // Action to sign in one user
+
+// TODO: Replace localStorage with more secure storage mechanism: Cookies with HttpOnly and Secure flags
 export const login = (user: AuthRequest): AppThunk =>
     async (dispatch) => {
 
