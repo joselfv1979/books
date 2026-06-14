@@ -21,13 +21,13 @@ type Props = {
 const BookDetail: React.FC<Props> = ({ book, loans, handleLoan, loading }) => {
 
     const admin = useAppSelector(isAdmin);
+    const navigate = useNavigate();
 
-    if (!book) return <h2 className="text-center mt-10 text-brand-700">No book found</h2>;    
+    if (!book) return <h2 className="text-center mt-10 text-brand-700">No book found</h2>;
 
     const isBookBorrowed = loans.some(loan => loan.bookId === book.id && !loan.returned);
     const disabled = loading || (book.availableCopies ?? 0) <= 0 || isBookBorrowed;
 
-    const navigate = useNavigate();
     const image = book?.imagePath ? `${baseUrl}/${book.imagePath}` : undefined;
 
     const handleEdit = () => {
