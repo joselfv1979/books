@@ -4,6 +4,62 @@
 
 :root {
   --layout-max: 76rem;
+
+  --color-ink-50: #f0ece4;
+  --color-ink-100: #d9d2c5;
+  --color-ink-200: #b9aea0;
+  --color-ink-300: #9e978e;
+  --color-ink-400: #7a7166;
+  --color-ink-500: #5c5449;
+  --color-ink-600: #3d3730;
+  --color-ink-700: #2a2621;
+  --color-ink-800: #1a1916;
+  --color-ink-900: #0f0f13;
+
+  --color-gold-50: #fdf6e8;
+  --color-gold-100: #f9eac6;
+  --color-gold-200: #f2d692;
+  --color-gold-300: #e8c472;
+  --color-gold-400: #dbaa48;
+  --color-gold-500: #c8913e;
+  --color-gold-600: #a0702a;
+  --color-gold-700: #7a5422;
+  --color-gold-800: #5c3f1c;
+  --color-gold-900: #3d2a14;
+
+  --color-page: #0f0f13;
+  --color-page-card: #1a1a23;
+  --color-page-border: #2a2a3a;
+  --color-page-overlay: rgba(15, 15, 19, 0.85);
+}
+
+[data-theme="light"] {
+  --color-ink-50: #1a1a2e;
+  --color-ink-100: #2d2d44;
+  --color-ink-200: #44445a;
+  --color-ink-300: #5c5c72;
+  --color-ink-400: #74748a;
+  --color-ink-500: #8c8ca2;
+  --color-ink-600: #a4a4ba;
+  --color-ink-700: #bcbcd2;
+  --color-ink-800: #d4d4ea;
+  --color-ink-900: #e8e8f0;
+
+  --color-gold-50: #fdf6e8;
+  --color-gold-100: #f9eac6;
+  --color-gold-200: #f2d692;
+  --color-gold-300: #e8c472;
+  --color-gold-400: #dbaa48;
+  --color-gold-500: #c8913e;
+  --color-gold-600: #a0702a;
+  --color-gold-700: #7a5422;
+  --color-gold-800: #5c3f1c;
+  --color-gold-900: #3d2a14;
+
+  --color-page: #f5f0eb;
+  --color-page-card: #ffffff;
+  --color-page-border: #e2ddd6;
+  --color-page-overlay: rgba(245, 240, 235, 0.85);
 }
 
 html {
@@ -27,7 +83,8 @@ a {
 }
 
 ::selection {
-  @apply bg-gold-500/30 text-ink-50;
+  background-color: color-mix(in srgb, var(--color-gold-500) 30%, transparent);
+  color: var(--color-ink-50);
 }
 
 .btn {
@@ -36,10 +93,20 @@ a {
     disabled:opacity-50 disabled:cursor-not-allowed;
 }
 .btn-primary {
- @apply bg-gold-500 text-page hover:bg-gold-400 hover:-translate-y-0.5 shadow-gold-500/10 hover:shadow-lg;
+  @apply text-page hover:-translate-y-0.5 hover:shadow-lg;
+  background-color: var(--color-gold-500);
+  --tw-shadow-color: color-mix(in srgb, var(--color-gold-500) 10%, transparent);
 }
+.btn-primary:hover {
+  background-color: var(--color-gold-400);
+}
+
 .btn-outline {
- @apply border border-gold-500/30 text-gold-400 hover:bg-gold-500/8 hover:border-gold-400 hover:-translate-y-0.5;
+  @apply text-gold-400 hover:border-gold-400 hover:-translate-y-0.5;
+  border: 1px solid color-mix(in srgb, var(--color-gold-500) 30%, transparent);
+}
+.btn-outline:hover {
+  background-color: color-mix(in srgb, var(--color-gold-500) 10%, transparent);
 }
 
 .card {
@@ -47,15 +114,29 @@ a {
 }
 
 .card-hover {
- @apply hover:border-gold-500/30 hover:-translate-y-1 hover:shadow-2xl hover:shadow-gold-500/10;
+  @apply hover:-translate-y-1 hover:shadow-2xl;
+}
+.card-hover:hover {
+  border-color: color-mix(in srgb, var(--color-gold-500) 30%, transparent);
+  --tw-shadow-color: color-mix(in srgb, var(--color-gold-500) 10%, transparent);
 }
 
 .input {
   @apply w-full rounded-sm border border-page-border bg-page-card px-3 py-2 text-ink-50
-    focus:border-gold-500/50 focus:ring-1 focus:ring-gold-500/30 outline-none text-sm transition-all;
+    outline-none text-sm transition-all;
+  border-color: var(--color-page-border);
 }
+.input:focus {
+  border-color: color-mix(in srgb, var(--color-gold-500) 50%, transparent);
+  --tw-ring-color: color-mix(in srgb, var(--color-gold-500) 30%, transparent);
+  --tw-ring-offset-shadow: var(--tw-ring-inset) 0 0 0 var(--tw-ring-offset-width) var(--tw-ring-offset-color);
+  --tw-ring-shadow: var(--tw-ring-inset) 0 0 0 calc(1px + var(--tw-ring-offset-width)) var(--tw-ring-color);
+  box-shadow: var(--tw-ring-offset-shadow), var(--tw-ring-shadow), var(--tw-shadow, 0 0 #0000);
+}
+
 .badge {
-  @apply inline-block rounded-sm bg-gold-500/10 text-gold-400 text-xs font-medium tracking-wider uppercase px-2.5 py-1;
+  @apply inline-block rounded-sm text-gold-400 text-xs font-medium tracking-wider uppercase px-2.5 py-1;
+  background-color: color-mix(in srgb, var(--color-gold-500) 10%, transparent);
 }
 .layout-container {
  @apply max-w-[var(--layout-max)] mx-auto px-6 sm:px-8;
@@ -69,7 +150,8 @@ a {
   @apply fixed top-0 left-0 right-0 z-50 bg-transparent;
 }
 .landing-header.scrolled {
-  @apply bg-page/90 backdrop-blur-md;
+  @apply backdrop-blur-md;
+  background-color: color-mix(in srgb, var(--color-page) 90%, transparent);
 }
 
 .noise-overlay {
@@ -79,7 +161,7 @@ a {
 }
 
 .gradient-glow {
-  background: radial-gradient(ellipse at 50% 0%, rgba(200, 145, 62, 0.08) 0%, transparent 70%);
+  background: radial-gradient(ellipse at 50% 0%, color-mix(in srgb, var(--color-gold-500) 8%, transparent) 0%, transparent 70%);
 }
 
 .delay-100 { animation-delay: 100ms; }

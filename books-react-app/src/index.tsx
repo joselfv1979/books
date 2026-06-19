@@ -6,6 +6,7 @@ import { PersistGate } from 'redux-persist/integration/react';
 import App from '@/App';
 import '@/index.css'; // Tailwind CSS
 import { persistor, store } from '@/store';
+import { ThemeContextProvider } from '@/context/theme/ThemeContextProvider';
 
 // Create a root for React 18
 const container = document.getElementById('root');
@@ -14,10 +15,12 @@ const root = createRoot(container);
 
 root.render(
     <React.StrictMode>
-        <BrowserRouter future={{ v7_startTransition: true, v7_relativeSplatPath: true }}>
+        <BrowserRouter>
             <Provider store={store}>
                 <PersistGate loading={null} persistor={persistor}>
-                    <App />
+                    <ThemeContextProvider>
+                        <App />
+                    </ThemeContextProvider>
                 </PersistGate>
             </Provider>
         </BrowserRouter>

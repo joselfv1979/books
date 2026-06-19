@@ -17,7 +17,6 @@ export const login = (user: AuthRequest): AppThunk =>
 
         if (response.success) {
             dispatch(actions.loginUser(response.value));
-            localStorage.setItem('token', JSON.stringify(response.value.token));
             //dispatch(showNotification({ type: 'success', message: 'User logged in successfully' }));
             // Clear persisted storage so data isn't rehydrated
             await persistor.purge();
@@ -30,7 +29,6 @@ export const login = (user: AuthRequest): AppThunk =>
 
 // Action to logout a user
 export const logout = (): AppThunk => async (dispatch) => {
-    localStorage.removeItem('token');
     dispatch(actions.logoutUser());
 
     // Clear persisted storage so data isn't rehydrated

@@ -38,7 +38,7 @@ export const castBookToFormData = (book: Book) => {
     formData.append('author', author);
     formData.append('publisher', publisher);
     formData.append('isbn', isbn);
-    formData.append('language', language);
+    formData.append('language', language ?? '');
 
     for (const item of genre) {
         formData.append('genre', item.toString());
@@ -51,8 +51,11 @@ export const castBookToFormData = (book: Book) => {
     formData.append('description', description.toString());
 
     // if a new file is received, otherwise appends the current file path
-    image ? formData.append('image', image)
-        : formData.append('imagePath', imagePath);
+    if (image) {
+        formData.append('image', image);
+    } else {
+        formData.append('imagePath', imagePath);
+    }
 
     return formData;
 };

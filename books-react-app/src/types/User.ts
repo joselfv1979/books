@@ -4,6 +4,8 @@ export interface UserState {
   users: User[];
   user: User | null;
   authUser?: AuthUser;
+  loading?: boolean;
+  successMessage?: string;
 }
 
 export type Role = 'ADMIN' | 'USER';

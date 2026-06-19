@@ -3,8 +3,16 @@
   "version": "0.1.0",
   "private": true,
   "browserslist": {
-    "production": [">0.2%","not dead","not op_mini all"],
-    "development": ["last 1 chrome version","last 1 firefox version","last 1 safari version"]
+    "production": [
+      ">0.2%",
+      "not dead",
+      "not op_mini all"
+    ],
+    "development": [
+      "last 1 chrome version",
+      "last 1 firefox version",
+      "last 1 safari version"
+    ]
   },
   "dependencies": {
     "@reduxjs/toolkit": "1.9.1",
@@ -21,6 +29,9 @@
     "web-vitals": "2.1.3"
   },
   "devDependencies": {
+    "@tailwindcss/forms": "0.5.7",
+    "@tailwindcss/line-clamp": "0.4.4",
+    "@tailwindcss/typography": "0.5.10",
     "@testing-library/dom": "10.4.0",
     "@testing-library/jest-dom": "6.6.3",
     "@testing-library/react": "13.4.0",
@@ -34,11 +45,14 @@
     "@typescript-eslint/parser": "5.47.1",
     "@vitejs/plugin-react": "4.3.3",
     "@vitest/coverage-v8": "2.1.3",
-    "@tailwindcss/forms": "0.5.7",
-    "@tailwindcss/typography": "0.5.10",
-    "@tailwindcss/line-clamp": "0.4.4",
     "autoprefixer": "10.4.22",
     "clsx": "2.1.1",
+    "cypress": "13.14.1",
+    "eslint-plugin-cypress": "2.15.1",
+    "eslint-plugin-react": "7.34.2",
+    "globals": "15.4.0",
+    "jest-environment-jsdom": "29.6.2",
+    "jsdom": "25.0.1",
     "postcss": "8.4.47",
     "sass-embedded": "1.80.4",
     "tailwindcss": "3.4.14",
@@ -47,13 +61,7 @@
     "typescript": "4.9.4",
     "vite": "5.4.10",
     "vite-tsconfig-paths": "5.0.1",
-    "vitest": "2.1.3",
-    "cypress": "13.14.1",
-    "eslint-plugin-cypress": "2.15.1",
-    "eslint-plugin-react": "7.34.2",
-    "globals": "15.4.0",
-    "jest-environment-jsdom": "29.6.2",
-    "jsdom": "25.0.1"
+    "vitest": "2.1.3"
   },
   "scripts": {
     "cy:open": "cross-env CYPRESS_ENV=test cypress open",

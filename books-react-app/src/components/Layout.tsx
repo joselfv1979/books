@@ -10,20 +10,21 @@ const Layout: React.FC<React.PropsWithChildren> = ({ children }) => {
     const dispatch = useDispatch();
 
     useEffect(() => {
-        // Clear the notification whenever a child route changes
         dispatch(clearNotification());
     }, [location, dispatch]);
 
     return (
-        <div className="min-h-screen flex flex-col">
+        <div className="min-h-screen flex flex-col bg-page">
             <Header />
 
             <Notification />
 
-            <main className="layout-container flex-1 py-6">{children}</main>
+            <main className="flex-1">{children}</main>
 
-            <footer className="border-t py-4 text-center text-xs text-brand-600">
-                © {new Date().getFullYear()} Smart Library
+            <footer className="border-t border-page-border py-6 text-center">
+                <p className="text-xs text-ink-400 font-sans tracking-wide">
+                    &copy; {new Date().getFullYear()} Smart Library &mdash; The Reading Room
+                </p>
             </footer>
         </div>
     );

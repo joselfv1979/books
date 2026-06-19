@@ -20,7 +20,7 @@ type Props = {
 // Validate book function
 export const validateBook = ({ values, errors, setErrors }: Props) => {
 
-    const { title, author, publisher, isbn, pages, language, copiesCount } = values;
+    const { title, author, publisher, isbn, pages, language, totalCopies } = values;
 
     let isValid = true;
 
@@ -30,7 +30,7 @@ export const validateBook = ({ values, errors, setErrors }: Props) => {
     errors.isbn = isbn ? undefined : 'Isbn is required';
     errors.pages = Number(pages) !== 0 ? undefined : 'Pages is required';
     errors.language = language ? undefined : 'Language is required';
-    errors.copiesCount = Number(copiesCount) !== 0 ? undefined : 'Copies is required';
+    errors.copiesCount = Number(totalCopies) !== 0 ? undefined : 'Copies is required';
 
     setErrors({ ...errors });
 

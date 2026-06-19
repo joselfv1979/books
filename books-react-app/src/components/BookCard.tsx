@@ -1,11 +1,26 @@
-import { Link } from 'react-router-dom';
+import { Link, useNavigate } from 'react-router-dom';
 import { Book } from '@/types/Book';
 import Card from "./ui/Card";
+import { useAppDispatch, useAppSelector } from '@/hooks/redux-hooks';
+import { isAdmin } from '@/store/user';
+import { deleteBook } from '@/store/book/actions';
+import { ROUTES } from '@/utils/constants';
 
 const baseUrl = import.meta.env.VITE_API_URL;
 
 const BookCard: React.FC<{ book: Book }> = ({ book }) => {
     const image = book.imagePath ? `${baseUrl}/${book.imagePath}` : undefined;
+    const admin = useAppSelector(isAdmin);
+    const { deleteBook } = useAppDispatch();
+    const navigate = useNavigate();
+
+    const handleDelete = () => {
+        deleteBook(book.id);
+    };
+
+    const handleUpdate = () => {
+        navigate(`${ROUTES.EDIT_BOOK}/${book.id}`);
+    };
 
     return (
         <Card className="group p-5 md:p-6 overflow-hidden flex flex-col h-full">
@@ -58,12 +73,29 @@ const BookCard: React.FC<{ book: Book }> = ({ book }) => {
                 </div>
 
                 <div className="mt-auto">
-                    <Link
-                        to={`/book/${book.id}`}
-                        className="btn btn-primary w-full text-base"
-                    >
-                        Details
-                    </Link>
+                    {admin ? (
+                        <div className="flex gap-2">
+                            <button
+                                onClick={handleUpdate}
+                                className="btn btn-primary w-full text-base"
+                            >
+                                Update
+                            </button>
+                            <button
+                                onClick={handleDelete}
+                                className="btn w-full text-base bg-red-600 text-white hover:bg-red-700"
+                            >
+                                Delete
+                            </button>
+                        </div>
+                    ) : (
+                        <Link
+                            to={`/book/${book.id}`}
+                            className="btn btn-primary w-full text-base"
+                        >
+                            Details
+                        </Link>
+                    )}
                 </div>
             </div>
         </Card>
