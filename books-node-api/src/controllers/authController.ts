@@ -32,6 +32,15 @@ export async function loginController(
     // create a list of role names
     const roleList = user.roles.map(role => ("name" in role ? role.name : role.toString()));
 
+    // Set HttpOnly cookie
+    res.cookie("token", token, {
+      httpOnly: true,
+      secure: process.env.NODE_ENV === "production",
+      sameSite: "lax",
+      maxAge: 24 * 60 * 60 * 1000, // 24 hours
+      path: "/",
+    });
+
     // returning object
     const loggedUser: AuthUser = {
       id: user.id,

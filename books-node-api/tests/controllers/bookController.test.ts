@@ -58,7 +58,7 @@ describe('getBooksController', () => {
         };
 
         const res = await api.post(BOOKS_ROUTE)
-            .set("authorization", token)
+            .set("Cookie", `token=${token}`)
             .send(newBook);
 
         expect(res.status).toEqual(201);
@@ -76,7 +76,7 @@ describe('getBooksController', () => {
         };
 
         const res = await api.post(BOOKS_ROUTE)
-            .set("authorization", token)
+            .set("Cookie", `token=${token}`)
             .send(faultyBook);
 
         expect(res.status).toEqual(400);
@@ -91,7 +91,7 @@ describe('getBooksController', () => {
         const bookToUpdate = { ...book, author: "Juan Manuel" };
 
         const res = await api.put(`${BOOKS_ROUTE}/${book?._id}`)
-            .set("authorization", token)
+            .set("Cookie", `token=${token}`)
             .send(bookToUpdate);
 
         expect(res.status).toEqual(201);
@@ -104,7 +104,7 @@ describe('getBooksController', () => {
         const book = await Book.findOne({ title: 'Delete book test' }).lean();
 
         const res = await api.delete(`${BOOKS_ROUTE}/${book?._id}`)
-            .set("authorization", token);
+            .set("Cookie", `token=${token}`);
 
         expect(res.status).toEqual(204);
         expect(res.ok).toBe(true);
@@ -155,7 +155,7 @@ describe('Error status code 500', () => {
         };
 
         const res = await api.post(BOOKS_ROUTE)
-            .set("authorization", token)
+            .set("Cookie", `token=${token}`)
             .send(newBook);
 
         expect(res.status).toEqual(500);
@@ -175,7 +175,7 @@ describe('Error status code 500', () => {
 
         const res = await api
             .put(`${BOOKS_ROUTE}/${book?._id}`)
-            .set("authorization", token)
+            .set("Cookie", `token=${token}`)
             .send(bookToUpdate);
 
         expect(res.status).toEqual(500);
@@ -192,7 +192,7 @@ describe('Error status code 500', () => {
 
         const res = await api
             .delete(`${BOOKS_ROUTE}/${book?._id}`)
-            .set("authorization", token);
+            .set("Cookie", `token=${token}`);
 
         expect(res.status).toEqual(500);
         expect(res.body).toHaveProperty('data', null);

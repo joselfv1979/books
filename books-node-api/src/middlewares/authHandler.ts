@@ -8,25 +8,12 @@ export interface CustomJwt extends JwtPayload {
   role?: string
 }
 
-// TODO: Store token in a more professional way (e.g., cookies, local storage)
-// --- Check token duration, refresh token, etc.
-
 const authHandler = (
   request: Request,
   _response: Response,
   next: NextFunction
 ) => {
-  const authorization = request.get("authorization");
-
-  if (!authorization) {
-    return next(new CustomError(401, "Unauthorized"));
-  }
-
-  let token = "";
-
-  if (authorization.toLowerCase().startsWith("bearer")) {
-    token = authorization.substring(7);
-  }
+  const token = request.cookies?.token;
 
   if (
     !token ||

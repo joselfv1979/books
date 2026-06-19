@@ -1,0 +1,14 @@
+{
+    "configurations": [
+        {
+            "type": "java",
+            "name": "Spring Boot-BooksApplication<books>",
+            "request": "launch",
+            "cwd": "${workspaceFolder}",
+            "mainClass": "com.jose.books.BooksApplication",
+            "projectName": "books",
+            "args": "",
+            "envFile": "${workspaceFolder}/.env"
+        }
+    ]
+}

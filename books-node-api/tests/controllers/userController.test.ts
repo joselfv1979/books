@@ -26,7 +26,7 @@ describe('getUsersController', () => {
 
         const res = await api
             .get(USERS_ROUTE)
-            .set("authorization", token);
+            .set("Cookie", `token=${token}`);
 
         expect(res.status).toEqual(200);
         expect(res.body.success).toBe(true);
@@ -39,7 +39,7 @@ describe('getUsersController', () => {
 
         const res = await api
             .get(`${USERS_ROUTE}/${user?.id}`)
-            .set("authorization", token);
+            .set("Cookie", `token=${token}`);
 
         expect(res.status).toEqual(200);
         expect(res.body.success).toBe(true);
@@ -54,7 +54,7 @@ describe('getUsersController', () => {
 
         const res = await api
             .put(`${USERS_ROUTE}/${userToUpdate._id}`)
-            .set("authorization", token)
+            .set("Cookie", `token=${token}`)
             .send(userToUpdate);
 
         expect(res.status).toEqual(201);
@@ -70,7 +70,7 @@ describe('getUsersController', () => {
 
         const res = await api
             .put(`${USERS_ROUTE}/1234`)
-            .set("authorization", token)
+            .set("Cookie", `token=${token}`)
             .send(noEmailUser);
 
         expect(res.status).toEqual(400);
@@ -84,7 +84,7 @@ describe('getUsersController', () => {
 
         const response = await api
             .delete(`${USERS_ROUTE}/${user?._id}`)
-            .set("authorization", token);
+            .set("Cookie", `token=${token}`);
 
         expect(response.status).toEqual(204);
         expect(response.ok).toBe(true);
@@ -100,7 +100,7 @@ describe('Error status code 500', () => {
 
         const res = await api
             .get(USERS_ROUTE)
-            .set("authorization", token);
+            .set("Cookie", `token=${token}`);
 
         expect(res.status).toEqual(500);
         expect(res.body).toHaveProperty('data', null);
@@ -117,7 +117,7 @@ describe('Error status code 500', () => {
 
         const res = await api
             .get(`${USERS_ROUTE}/${user?.id}`)
-            .set("authorization", token);
+            .set("Cookie", `token=${token}`);
 
         expect(res.status).toEqual(500);
         expect(res.body).toHaveProperty('data', null);
@@ -134,7 +134,7 @@ describe('Error status code 500', () => {
 
         const res = await api
             .put(`${USERS_ROUTE}/${user?._id}`)
-            .set("authorization", token)
+            .set("Cookie", `token=${token}`)
             .send(userToUpdate);
 
         expect(res.status).toEqual(500);
@@ -152,7 +152,7 @@ describe('Error status code 500', () => {
 
         const res = await api
             .delete(`${USERS_ROUTE}/${user?.id}`)
-            .set("authorization", token);
+            .set("Cookie", `token=${token}`);
 
         expect(res.status).toEqual(500);
         expect(res.body).toHaveProperty('data', null);

@@ -15,7 +15,7 @@ export const getToken = async () => {
 
     const res = await api.post(`${LOGIN_ROUTE}`).send(credentials);
 
-    token = `bearer ${res.body.data.token}`
+    token = res.body.data.token;
 
     return token;
 };
